@@ -1,0 +1,29 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-student",
+      "description": "A happy student looking at a laptop, thinking about their future career.",
+      "imageUrl": "https://picsum.photos/seed/student-future/1200/800",
+      "imageHint": "student education"
+    },
+    {
+      "id": "science-stream",
+      "description": "Students in a science lab performing experiments.",
+      "imageUrl": "https://picsum.photos/seed/science-lab/800/600",
+      "imageHint": "science laboratory"
+    },
+    {
+      "id": "arts-stream",
+      "description": "Creative arts studio with paintings and sculptures.",
+      "imageUrl": "https://picsum.photos/seed/arts-studio/800/600",
+      "imageHint": "arts painting"
+    },
+    {
+      "id": "tech-stream",
+      "description": "Modern technology and engineering workshop.",
+      "imageUrl": "https://picsum.photos/seed/tech-workshop/800/600",
+      "imageHint": "technology engineering"
+    }
+  ]
+}
