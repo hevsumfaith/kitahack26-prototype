@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { INTEREST_CATEGORIES, STRENGTHS_LIST, AVAILABLE_STREAMS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 
@@ -36,6 +36,27 @@ export default function AssessmentPage() {
     setSelectedStrengths(prev => 
       prev.includes(strength) ? prev.filter(s => s !== strength) : [...prev, strength]
     );
+  };
+
+  const handleShare = () => {
+    if (result) {
+      const match = Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0);
+      const text = `I just completed the StreamWise assessment! My top recommendation is the ${result.mostSuitableStream} stream with a ${match}% compatibility match. Check it out!`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'My StreamWise Recommendation',
+          text: text,
+          url: window.location.origin,
+        }).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(text);
+        toast({
+          title: "Copied to Clipboard",
+          description: "Your results summary has been copied to your clipboard.",
+        });
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -200,8 +221,16 @@ export default function AssessmentPage() {
 
         {step === 5 && result && (
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <Card className="border-none shadow-2xl bg-gradient-to-br from-primary to-secondary text-primary-foreground">
-              <CardHeader className="text-center pb-2">
+            <Card className="border-none shadow-2xl bg-gradient-to-br from-primary to-secondary text-primary-foreground overflow-hidden">
+              <CardHeader className="text-center pb-2 relative">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute right-4 top-4 rounded-full bg-white/10 hover:bg-white/20 text-white"
+                  onClick={handleShare}
+                >
+                  <Share2 size={20} />
+                </Button>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider mx-auto mb-2">
                   Top Recommendation
                 </div>
@@ -241,11 +270,11 @@ export default function AssessmentPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <Button onClick={handleShare} variant="outline" size="lg" className="flex-1 rounded-full">
+                <Share2 className="mr-2" size={18} /> Share Results
+              </Button>
               <Button asChild size="lg" className="flex-1 rounded-full">
                 <Link href="/dashboard">View Dashboard</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="flex-1 rounded-full">
-                <Link href="/streams">Explore Subjects</Link>
               </Button>
             </div>
           </div>
