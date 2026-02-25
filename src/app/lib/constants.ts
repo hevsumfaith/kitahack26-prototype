@@ -33,27 +33,29 @@ export const AVAILABLE_STREAMS = [
 ];
 
 export const INTEREST_CATEGORIES = [
-  "Solving complex math problems",
-  "Conducting scientific experiments",
-  "Writing stories or poetry",
-  "Drawing or designing visuals",
-  "Working with computers and code",
-  "Helping people or community service",
-  "Building or fixing things",
-  "Leading a team or organizing events",
-  "Analyzing financial data or news",
-  "Studying history or different cultures"
+  "Solving complex mathematical puzzles",
+  "Conducting laboratory experiments",
+  "Exploring literature and creative writing",
+  "Digital art and graphic design",
+  "Coding and software development",
+  "Volunteering and social work",
+  "Mechanical repairs and DIY projects",
+  "Public speaking and debating",
+  "Financial markets and entrepreneurship",
+  "Learning about global history and politics",
+  "Environmental conservation and nature",
+  "Psychology and understanding human behavior"
 ];
 
 export const STRENGTHS_LIST = [
   "Analytical Thinking",
-  "Creativity",
-  "Communication",
-  "Logical Reasoning",
-  "Problem Solving",
-  "Leadership",
-  "Detail Oriented",
-  "Technological Fluency",
-  "Empathy",
-  "Financial Literacy"
+  "Creative Problem Solving",
+  "Effective Communication",
+  "Mathematical Aptitude",
+  "Scientific Curiosity",
+  "Team Leadership",
+  "Meticulous Attention to Detail",
+  "Technical Troubleshooting",
+  "Empathetic Reasoning",
+  "Strategic Planning"
 ];

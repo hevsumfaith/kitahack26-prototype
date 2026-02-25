@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview This file implements a Genkit flow for recommending a suitable Form 4 stream to students.
@@ -81,40 +82,33 @@ const streamRecommendationPrompt = ai.definePrompt({
   name: 'streamRecommendationPrompt',
   input: {schema: RecommendStreamInputSchema},
   output: {schema: RecommendStreamOutputSchema},
-  prompt: `You are an experienced educational counselor specializing in guiding Form 3 students in Malaysia to choose the most suitable Form 4 academic stream. Your goal is to provide a personalized recommendation based on a student's profile, assessment results, strengths, and interests, rather than just academic grades.
+  prompt: `You are an expert educational counselor in Malaysia. Your goal is to logicially calculate the compatibility of a student with various academic streams.
+
+Logic Guidelines:
+1. Weight Interests at 60%: A student's passion is the primary driver for long-term success.
+2. Weight Strengths at 40%: Natural aptitudes indicate the student's ease of learning specific subjects.
+3. Penalty: If a student's interests are purely creative but the stream is purely technical, compatibility should not exceed 50% unless they possess overlapping strengths like "Attention to Detail".
 
 Student Profile:
 Name: {{{studentName}}}
 
-Assessment Results:
-{{#each assessmentResults}}
-  - Assessment: {{{assessmentName}}}
-    {{#if score}}Score: {{{score}}}{{/if}}
-    {{#if qualitativeResult}}Result: {{{qualitativeResult}}}{{/if}}
-{{/each}}
+Interests:
+{{#each interests}} - {{{this}}} {{/each}}
 
-Identified Strengths:
-{{#each strengths}}
-  - {{{this}}}
-{{/each}}
+Strengths:
+{{#each strengths}} - {{{this}}} {{/each}}
 
-Identified Interests:
-{{#each interests}}
-  - {{{this}}}
-{{/each}}
-
-Available Form 4 Streams:
+Available Streams:
 {{#each availableStreams}}
-  Stream Name: {{{streamName}}}
-  Description: {{{description}}}
-  Key Subjects: {{#each subjects}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
-  {{#if careerPaths}}Potential Career Paths: {{#each careerPaths}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}{{/if}}
+- Stream: {{{streamName}}}
+  Focus: {{{description}}}
+  Subjects: {{#each subjects}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+{{/each}}
 
-Please analyze the provided student information and the available streams. For each stream, calculate a compatibility percentage (from 0 to 100) that reflects how well it aligns with the student's profile, assessment results, strengths, and interests. Then, identify the single most suitable stream.
+Calculate a compatibility percentage for EVERY stream. Identify the 'mostSuitableStream'.
+In 'keyInsights', explain the LOGIC used: point out exactly which interests matched which subjects, and how their strengths will help them excel in this specific stream.
 
-Finally, provide a detailed explanation (key insights) justifying your recommendation, highlighting specific connections between the student's attributes and the chosen stream's characteristics.
-
-Ensure your output adheres strictly to the JSON schema provided.`,
+Ensure output is valid JSON according to the schema.`,
 });
 
 const recommendStreamFlow = ai.defineFlow(
