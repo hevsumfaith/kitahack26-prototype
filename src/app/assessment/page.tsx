@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -38,10 +37,10 @@ export default function AssessmentPage() {
     );
   };
 
-  const handleShare = () => {
+  const handleShareResults = () => {
     if (result) {
       const match = Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0);
-      const text = `Hey! I just used StreamWise AI and it recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! 🚀 Try it out:`;
+      const text = `🚀 I just found my future Form 4 stream using StreamWise AI! It recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! Try it out for yourself:`;
       const url = window.location.origin;
 
       if (navigator.share) {
@@ -228,7 +227,7 @@ export default function AssessmentPage() {
                   variant="ghost" 
                   size="icon" 
                   className="absolute right-4 top-4 rounded-full bg-white/10 hover:bg-white/20 text-white"
-                  onClick={handleShare}
+                  onClick={handleShareResults}
                 >
                   <Share2 size={20} />
                 </Button>
@@ -271,7 +270,7 @@ export default function AssessmentPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Button onClick={handleShare} variant="outline" size="lg" className="flex-1 rounded-full">
+              <Button onClick={handleShareResults} variant="outline" size="lg" className="flex-1 rounded-full">
                 <Share2 className="mr-2" size={18} /> Share Results
               </Button>
               <Button asChild size="lg" className="flex-1 rounded-full">

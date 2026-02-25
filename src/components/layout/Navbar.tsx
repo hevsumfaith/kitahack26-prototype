@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -22,7 +21,7 @@ export function Navbar() {
   const handleSharePrototype = () => {
     const shareData = {
       title: 'StreamWise Prototype',
-      text: 'Check out this AI-powered academic stream guidance prototype!',
+      text: 'Check out this AI-powered academic stream guidance prototype! It helps Form 3 students find their future Form 4 stream.',
       url: typeof window !== 'undefined' ? window.location.origin : '',
     };
 
@@ -32,7 +31,7 @@ export function Navbar() {
       navigator.clipboard.writeText(shareData.url);
       toast({
         title: "Link Copied",
-        description: "The prototype URL has been copied to your clipboard.",
+        description: "The prototype URL has been copied to your clipboard. Share it with your friends!",
       });
     }
   };
@@ -59,11 +58,11 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={handleSharePrototype} className="rounded-full">
-              <Share2 size={16} className="mr-2" /> Share
+          <div className="flex items-center gap-2 ml-4">
+            <Button variant="ghost" size="sm" onClick={handleSharePrototype} className="rounded-full text-muted-foreground hover:text-primary">
+              <Share2 size={16} className="mr-2" /> Share Prototype
             </Button>
-            <Button variant="default" className="rounded-full px-6" asChild>
+            <Button variant="default" className="rounded-full px-6 shadow-md hover:shadow-lg transition-all" asChild>
               <Link href="/assessment">Get Started</Link>
             </Button>
           </div>
@@ -93,9 +92,14 @@ export function Navbar() {
                     {item.label}
                   </Link>
                 ))}
-                <Button className="w-full mt-4" asChild onClick={() => setIsOpen(false)}>
-                  <Link href="/assessment">Get Started</Link>
-                </Button>
+                <div className="pt-6 border-t flex flex-col gap-4">
+                  <Button variant="outline" className="w-full" onClick={handleSharePrototype}>
+                    <Share2 size={18} className="mr-2" /> Share Prototype
+                  </Button>
+                  <Button className="w-full" asChild onClick={() => setIsOpen(false)}>
+                    <Link href="/assessment">Get Started</Link>
+                  </Button>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
