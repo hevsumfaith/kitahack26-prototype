@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, User, BookOpen, LayoutDashboard, Menu, Share2, Languages } from "lucide-react";
+import { GraduationCap, User, BookOpen, LayoutDashboard, Menu, Share2, Languages, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useTheme } from "@/components/providers/ThemeProvider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +19,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
   const { language, setLanguage, t } = useLanguage();
+  const { theme, setTheme } = useTheme();
 
   const navItems = [
     { label: t("nav.dashboard"), href: "/dashboard", icon: LayoutDashboard },
@@ -68,6 +70,15 @@ export function Navbar() {
           ))}
           
           <div className="flex items-center gap-2 ml-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="rounded-full text-muted-foreground hover:text-primary"
+            >
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </Button>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="rounded-full">
@@ -92,6 +103,14 @@ export function Navbar() {
 
         {/* Mobile Nav */}
         <div className="md:hidden flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </Button>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
