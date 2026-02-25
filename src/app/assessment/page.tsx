@@ -12,9 +12,11 @@ import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommen
 import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export default function AssessmentPage() {
   const { toast } = useToast();
+  const { language, t } = useLanguage();
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
@@ -40,7 +42,9 @@ export default function AssessmentPage() {
   const handleShareResults = () => {
     if (result) {
       const match = Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0);
-      const text = `🚀 I just found my future Form 4 stream using StreamWise AI! It recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! Try it out for yourself:`;
+      const text = language === 'en' 
+        ? `🚀 I just found my future Form 4 stream using StreamWise AI! It recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! Try it out:`
+        : `🚀 Saya baru sahaja menemui aliran Tingkatan 4 masa depan saya menggunakan StreamWise AI! Ia mengesyorkan aliran ${result.mostSuitableStream} untuk saya dengan padanan ${match}%! Cuba sekarang:`;
       const url = window.location.origin;
 
       if (navigator.share) {
@@ -52,8 +56,8 @@ export default function AssessmentPage() {
       } else {
         navigator.clipboard.writeText(`${text} ${url}`);
         toast({
-          title: "Copied to Clipboard",
-          description: "Your results and link have been copied!",
+          title: language === 'en' ? "Copied to Clipboard" : "Disalin ke Papan Klip",
+          description: language === 'en' ? "Your results and link have been copied!" : "Keputusan dan pautan anda telah disalin!",
         });
       }
     }
@@ -62,8 +66,8 @@ export default function AssessmentPage() {
   const handleSubmit = async () => {
     if (!name || selectedInterests.length === 0 || selectedStrengths.length === 0) {
       toast({
-        title: "Incomplete Assessment",
-        description: "Please fill in all sections before submitting.",
+        title: t("assessment.readyTitle"),
+        description: language === 'en' ? "Please fill in all sections before submitting." : "Sila isi semua bahagian sebelum menghantar.",
         variant: "destructive"
       });
       return;
@@ -71,11 +75,20 @@ export default function AssessmentPage() {
 
     setIsSubmitting(true);
     try {
+      // Convert available streams to the current language format for the AI to understand better context if needed
+      const localizedStreams = AVAILABLE_STREAMS.map(s => ({
+        streamName: s.streamName[language],
+        description: s.description[language],
+        subjects: s.subjects[language],
+        careerPaths: s.careerPaths[language]
+      }));
+
       const output = await recommendStream({
         studentName: name,
+        language: language,
         interests: selectedInterests,
         strengths: selectedStrengths,
-        availableStreams: AVAILABLE_STREAMS,
+        availableStreams: localizedStreams,
         assessmentResults: [
           { assessmentName: "Interest Survey", qualitativeResult: "Self-reported interests in academic and creative fields." },
           { assessmentName: "Strengths Profiler", qualitativeResult: "Identification of core personal and cognitive strengths." }
@@ -86,8 +99,8 @@ export default function AssessmentPage() {
     } catch (error) {
       console.error(error);
       toast({
-        title: "Recommendation Failed",
-        description: "An error occurred while processing your results. Please try again.",
+        title: language === 'en' ? "Recommendation Failed" : "Syor Gagal",
+        description: language === 'en' ? "An error occurred while processing your results." : "Ralat berlaku semasa memproses keputusan anda.",
         variant: "destructive"
       });
     } finally {
@@ -102,8 +115,10 @@ export default function AssessmentPage() {
       <main className="flex-grow container mx-auto px-4 py-12 max-w-3xl">
         <div className="mb-8 flex flex-col gap-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Assessment {step <= totalSteps ? `Step ${step}` : 'Complete'}</span>
-            <span className="text-sm text-muted-foreground">{Math.round(progress)}% Complete</span>
+            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+              {step <= totalSteps ? `${t("assessment.step")} ${step}` : t("assessment.complete")}
+            </span>
+            <span className="text-sm text-muted-foreground">{Math.round(progress)}% {language === 'en' ? 'Complete' : 'Selesai'}</span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
@@ -114,23 +129,23 @@ export default function AssessmentPage() {
               <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <Brain size={32} />
               </div>
-              <CardTitle className="text-2xl">Welcome to StreamWise Assessment</CardTitle>
-              <CardDescription>Let's start by getting to know you. What's your name?</CardDescription>
+              <CardTitle className="text-2xl">{t("assessment.welcome")}</CardTitle>
+              <CardDescription>{t("assessment.welcomeDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">{t("assessment.nameLabel")}</Label>
                 <input
                   id="name"
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder={t("assessment.namePlaceholder")}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="flex h-12 w-full rounded-md border border-input bg-background px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
                 />
               </div>
               <Button onClick={() => setStep(2)} disabled={!name} className="w-full h-12 text-lg">
-                Continue <ArrowRight className="ml-2" />
+                {t("assessment.continue")} <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
           </Card>
@@ -139,24 +154,24 @@ export default function AssessmentPage() {
         {step === 2 && (
           <Card className="border-none shadow-xl">
             <CardHeader>
-              <CardTitle>Your Interests</CardTitle>
-              <CardDescription>Select everything that excites or interests you.</CardDescription>
+              <CardTitle>{t("assessment.interestsTitle")}</CardTitle>
+              <CardDescription>{t("assessment.interestsDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {INTEREST_CATEGORIES.map((item) => (
-                  <div key={item} className="flex items-center space-x-3 p-4 rounded-xl border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => toggleInterest(item)}>
-                    <Checkbox id={item} checked={selectedInterests.includes(item)} onCheckedChange={() => toggleInterest(item)} />
-                    <Label htmlFor={item} className="cursor-pointer font-medium leading-tight">{item}</Label>
+                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => toggleInterest(item[language])}>
+                    <Checkbox id={item.en} checked={selectedInterests.includes(item[language])} onCheckedChange={() => toggleInterest(item[language])} />
+                    <Label htmlFor={item.en} className="cursor-pointer font-medium leading-tight">{item[language]}</Label>
                   </div>
                 ))}
               </div>
               <div className="flex gap-4 mt-6">
                 <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
-                  <ArrowLeft className="mr-2" /> Back
+                  <ArrowLeft className="mr-2" /> {t("assessment.back")}
                 </Button>
                 <Button onClick={() => setStep(3)} disabled={selectedInterests.length === 0} className="flex-1">
-                  Next <ArrowRight className="ml-2" />
+                  {t("assessment.next")} <ArrowRight className="ml-2" />
                 </Button>
               </div>
             </CardContent>
@@ -166,24 +181,24 @@ export default function AssessmentPage() {
         {step === 3 && (
           <Card className="border-none shadow-xl">
             <CardHeader>
-              <CardTitle>Your Strengths</CardTitle>
-              <CardDescription>What are you naturally good at? Choose at least 3.</CardDescription>
+              <CardTitle>{t("assessment.strengthsTitle")}</CardTitle>
+              <CardDescription>{t("assessment.strengthsDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <div className="grid grid-cols-2 gap-3">
                 {STRENGTHS_LIST.map((item) => (
-                  <div key={item} className="flex items-center space-x-3 p-4 rounded-xl border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => toggleStrength(item)}>
-                    <Checkbox id={item} checked={selectedStrengths.includes(item)} onCheckedChange={() => toggleStrength(item)} />
-                    <Label htmlFor={item} className="cursor-pointer font-medium">{item}</Label>
+                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => toggleStrength(item[language])}>
+                    <Checkbox id={item.en} checked={selectedStrengths.includes(item[language])} onCheckedChange={() => toggleStrength(item[language])} />
+                    <Label htmlFor={item.en} className="cursor-pointer font-medium">{item[language]}</Label>
                   </div>
                 ))}
               </div>
               <div className="flex gap-4 mt-6">
                 <Button variant="outline" onClick={() => setStep(2)} className="flex-1">
-                  <ArrowLeft className="mr-2" /> Back
+                  <ArrowLeft className="mr-2" /> {t("assessment.back")}
                 </Button>
                 <Button onClick={() => setStep(4)} disabled={selectedStrengths.length < 3} className="flex-1">
-                  Next <ArrowRight className="ml-2" />
+                  {t("assessment.next")} <ArrowRight className="ml-2" />
                 </Button>
               </div>
             </CardContent>
@@ -193,25 +208,25 @@ export default function AssessmentPage() {
         {step === 4 && (
           <Card className="border-none shadow-xl">
             <CardHeader className="text-center">
-              <CardTitle>Ready for Result?</CardTitle>
-              <CardDescription>We've gathered enough info to analyze your profile using our AI compatibility engine.</CardDescription>
+              <CardTitle>{t("assessment.readyTitle")}</CardTitle>
+              <CardDescription>{t("assessment.readyDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 text-center">
               <div className="p-6 bg-muted rounded-2xl">
-                <h4 className="font-bold mb-2">Summary for {name}</h4>
-                <p className="text-sm text-muted-foreground">{selectedInterests.length} Interests selected</p>
-                <p className="text-sm text-muted-foreground">{selectedStrengths.length} Strengths identified</p>
+                <h4 className="font-bold mb-2">{t("assessment.summary")} {name}</h4>
+                <p className="text-sm text-muted-foreground">{selectedInterests.length} {t("assessment.interestsSelected")}</p>
+                <p className="text-sm text-muted-foreground">{selectedStrengths.length} {t("assessment.strengthsIdentified")}</p>
               </div>
               
               <div className="flex gap-4">
                 <Button variant="outline" onClick={() => setStep(3)} className="flex-1">
-                  <ArrowLeft className="mr-2" /> Back
+                  <ArrowLeft className="mr-2" /> {t("assessment.back")}
                 </Button>
                 <Button onClick={handleSubmit} className="flex-1 bg-secondary hover:bg-secondary/90" disabled={isSubmitting}>
                   {isSubmitting ? (
-                    <><Loader2 className="mr-2 animate-spin" /> Analyzing...</>
+                    <><Loader2 className="mr-2 animate-spin" /> {t("assessment.analyzing")}</>
                   ) : (
-                    <><Sparkles className="mr-2" /> Generate Recommendation</>
+                    <><Sparkles className="mr-2" /> {t("assessment.generate")}</>
                   )}
                 </Button>
               </div>
@@ -232,14 +247,14 @@ export default function AssessmentPage() {
                   <Share2 size={20} />
                 </Button>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider mx-auto mb-2">
-                  Top Recommendation
+                  {t("assessment.topRecommendation")}
                 </div>
                 <CardTitle className="text-3xl md:text-4xl">{result.mostSuitableStream}</CardTitle>
               </CardHeader>
               <CardContent className="text-center pt-0">
                 <div className="text-5xl font-bold mb-6">
                   {Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0)}%
-                  <span className="text-xl font-normal opacity-80 ml-1">Match</span>
+                  <span className="text-xl font-normal opacity-80 ml-1">{t("assessment.match")}</span>
                 </div>
                 <p className="text-lg leading-relaxed opacity-90 max-w-xl mx-auto italic">
                   "{result.keyInsights}"
@@ -249,7 +264,7 @@ export default function AssessmentPage() {
 
             <div className="grid gap-6">
               <h3 className="text-xl font-bold flex items-center gap-2">
-                <CheckCircle2 className="text-secondary" /> Other Stream Compatibility
+                <CheckCircle2 className="text-secondary" /> {t("assessment.otherStreams")}
               </h3>
               <div className="grid gap-4">
                 {result.streamCompatibility
@@ -271,10 +286,10 @@ export default function AssessmentPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Button onClick={handleShareResults} variant="outline" size="lg" className="flex-1 rounded-full">
-                <Share2 className="mr-2" size={18} /> Share Results
+                <Share2 className="mr-2" size={18} /> {language === 'en' ? 'Share Results' : 'Kongsi Keputusan'}
               </Button>
               <Button asChild size="lg" className="flex-1 rounded-full">
-                <Link href="/dashboard">View Dashboard</Link>
+                <Link href="/dashboard">{t("assessment.viewDashboard")}</Link>
               </Button>
             </div>
           </div>

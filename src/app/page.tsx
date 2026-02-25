@@ -1,3 +1,4 @@
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -5,8 +6,10 @@ import { GraduationCap, Brain, Compass, Target, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export default function Home() {
+  const { t } = useLanguage();
   const heroImage = PlaceHolderImages.find(img => img.id === "hero-student");
 
   return (
@@ -20,22 +23,22 @@ export default function Home() {
             <div className="lg:w-1/2 flex flex-col gap-6 text-center lg:text-left z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold w-fit mx-auto lg:mx-0">
                 <Target size={16} />
-                Empowering Form 3 Students
+                {t("hero.badge")}
               </div>
               <h1 className="text-4xl md:text-6xl font-headline font-bold leading-tight">
-                Unlock Your Potential with <span className="text-primary">The Right Stream</span>
+                {t("hero.title")} <span className="text-primary">{t("hero.subtitle")}</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0">
-                StreamWise uses AI to help you choose your Form 4 academic stream based on your unique interests and strengths, not just your exam results.
+                {t("hero.desc")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button size="lg" asChild className="rounded-full px-8">
                   <Link href="/assessment">
-                    Take Assessment <ArrowRight className="ml-2" size={18} />
+                    {t("hero.cta")} <ArrowRight className="ml-2" size={18} />
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild className="rounded-full px-8">
-                  <Link href="/streams">Explore Streams</Link>
+                  <Link href="/streams">{t("hero.explore")}</Link>
                 </Button>
               </div>
             </div>
@@ -61,27 +64,27 @@ export default function Home() {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-3xl font-headline font-bold mb-4">How StreamWise Helps You</h2>
-              <p className="text-muted-foreground">We focus on holistic education and guidance, ensuring you're placed where you'll thrive most.</p>
+              <h2 className="text-3xl font-headline font-bold mb-4">{t("features.title")}</h2>
+              <p className="text-muted-foreground">{t("features.desc")}</p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  title: "Smart Assessments",
-                  desc: "Engaging quizzes that evaluate your true interests, personality, and natural aptitudes.",
+                  title: t("features.smart.title"),
+                  desc: t("features.smart.desc"),
                   icon: Brain,
                   color: "bg-blue-100 text-blue-600"
                 },
                 {
-                  title: "AI Recommendations",
-                  desc: "Advanced AI analyzes your profile to suggest the best stream with detailed compatibility scores.",
+                  title: t("features.ai.title"),
+                  desc: t("features.ai.desc"),
                   icon: Compass,
                   color: "bg-green-100 text-green-600"
                 },
                 {
-                  title: "Career Guidance",
-                  desc: "Understand where each stream leads with our comprehensive career path directory.",
+                  title: t("features.career.title"),
+                  desc: t("features.career.desc"),
                   icon: GraduationCap,
                   color: "bg-orange-100 text-orange-600"
                 }
@@ -107,10 +110,10 @@ export default function Home() {
             </div>
             <span className="font-headline font-bold text-primary">StreamWise</span>
           </div>
-          <p className="text-sm text-muted-foreground">© 2024 StreamWise Malaysia. Supporting SDG 4: Quality Education.</p>
+          <p className="text-sm text-muted-foreground">{t("footer.rights")}</p>
           <div className="flex gap-6">
-            <Link href="#" className="text-sm text-muted-foreground hover:text-primary">Privacy Policy</Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-primary">Terms of Service</Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:text-primary">{t("footer.privacy")}</Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:text-primary">{t("footer.terms")}</Link>
           </div>
         </div>
       </footer>

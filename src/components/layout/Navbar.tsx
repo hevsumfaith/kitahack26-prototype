@@ -1,27 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, User, BookOpen, LayoutDashboard, Menu, Share2 } from "lucide-react";
+import { GraduationCap, User, BookOpen, LayoutDashboard, Menu, Share2, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
+  const { language, setLanguage, t } = useLanguage();
 
   const navItems = [
-    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Assessment", href: "/assessment", icon: GraduationCap },
-    { label: "Streams", href: "/streams", icon: BookOpen },
-    { label: "Profile", href: "/profile", icon: User },
+    { label: t("nav.dashboard"), href: "/dashboard", icon: LayoutDashboard },
+    { label: t("nav.assessment"), href: "/assessment", icon: GraduationCap },
+    { label: t("nav.streams"), href: "/streams", icon: BookOpen },
+    { label: t("nav.profile"), href: "/profile", icon: User },
   ];
 
   const handleSharePrototype = () => {
     const shareData = {
       title: 'StreamWise Prototype',
-      text: 'Check out this AI-powered academic stream guidance prototype! It helps Form 3 students find their future Form 4 stream.',
+      text: t("nav.share") + ': Check out this AI-powered academic stream guidance prototype!',
       url: typeof window !== 'undefined' ? window.location.origin : '',
     };
 
@@ -30,8 +38,8 @@ export function Navbar() {
     } else {
       navigator.clipboard.writeText(shareData.url);
       toast({
-        title: "Link Copied",
-        description: "The prototype URL has been copied to your clipboard. Share it with your friends!",
+        title: language === 'en' ? "Link Copied" : "Pautan Disalin",
+        description: language === 'en' ? "The prototype URL has been copied to your clipboard." : "URL prototaip telah disalin ke papan klip anda.",
       });
     }
   };
@@ -58,18 +66,44 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
+          
           <div className="flex items-center gap-2 ml-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="rounded-full">
+                  <Languages size={16} className="mr-2" />
+                  {language === 'en' ? 'EN' : 'MS'}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('ms')}>Bahasa Melayu</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button variant="ghost" size="sm" onClick={handleSharePrototype} className="rounded-full text-muted-foreground hover:text-primary">
-              <Share2 size={16} className="mr-2" /> Share Prototype
+              <Share2 size={16} className="mr-2" /> {t("nav.share")}
             </Button>
             <Button variant="default" className="rounded-full px-6 shadow-md hover:shadow-lg transition-all" asChild>
-              <Link href="/assessment">Get Started</Link>
+              <Link href="/assessment">{t("nav.getStarted")}</Link>
             </Button>
           </div>
         </nav>
 
         {/* Mobile Nav */}
         <div className="md:hidden flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Languages size={20} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('ms')}>Bahasa Melayu</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button variant="ghost" size="icon" onClick={handleSharePrototype}>
             <Share2 size={20} />
           </Button>
@@ -94,10 +128,10 @@ export function Navbar() {
                 ))}
                 <div className="pt-6 border-t flex flex-col gap-4">
                   <Button variant="outline" className="w-full" onClick={handleSharePrototype}>
-                    <Share2 size={18} className="mr-2" /> Share Prototype
+                    <Share2 size={18} className="mr-2" /> {t("nav.share")}
                   </Button>
                   <Button className="w-full" asChild onClick={() => setIsOpen(false)}>
-                    <Link href="/assessment">Get Started</Link>
+                    <Link href="/assessment">{t("nav.getStarted")}</Link>
                   </Button>
                 </div>
               </div>

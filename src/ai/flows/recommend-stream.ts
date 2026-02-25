@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview This file implements a Genkit flow for recommending a suitable Form 4 stream to students.
@@ -13,6 +12,7 @@ import {z} from 'genkit';
 
 const RecommendStreamInputSchema = z.object({
   studentName: z.string().describe('The name of the student.'),
+  language: z.enum(['en', 'ms']).default('en').describe('The output language for insights.'),
   assessmentResults: z
     .array(
       z.object({
@@ -84,6 +84,8 @@ const streamRecommendationPrompt = ai.definePrompt({
   output: {schema: RecommendStreamOutputSchema},
   prompt: `You are an expert educational counselor in Malaysia. Your goal is to logicially calculate the compatibility of a student with various academic streams.
 
+Language Output Instruction: Provide the 'keyInsights' in the requested language: {{{language}}}. (en = English, ms = Bahasa Melayu).
+
 Logic Guidelines:
 1. Weight Interests at 60%: A student's passion is the primary driver for long-term success.
 2. Weight Strengths at 40%: Natural aptitudes indicate the student's ease of learning specific subjects.
@@ -106,7 +108,7 @@ Available Streams:
 {{/each}}
 
 Calculate a compatibility percentage for EVERY stream. Identify the 'mostSuitableStream'.
-In 'keyInsights', explain the LOGIC used: point out exactly which interests matched which subjects, and how their strengths will help them excel in this specific stream.
+In 'keyInsights', explain the LOGIC used: point out exactly which interests matched which subjects, and how their strengths will help them excel in this specific stream. Use the language {{{language}}}.
 
 Ensure output is valid JSON according to the schema.`,
 });
