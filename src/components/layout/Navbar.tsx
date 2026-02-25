@@ -2,13 +2,15 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, User, BookOpen, LayoutDashboard, Menu } from "lucide-react";
+import { GraduationCap, User, BookOpen, LayoutDashboard, Menu, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = useToast();
 
   const navItems = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -16,6 +18,24 @@ export function Navbar() {
     { label: "Streams", href: "/streams", icon: BookOpen },
     { label: "Profile", href: "/profile", icon: User },
   ];
+
+  const handleSharePrototype = () => {
+    const shareData = {
+      title: 'StreamWise Prototype',
+      text: 'Check out this AI-powered academic stream guidance prototype!',
+      url: typeof window !== 'undefined' ? window.location.origin : '',
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData).catch((err) => console.log('Error sharing', err));
+    } else {
+      navigator.clipboard.writeText(shareData.url);
+      toast({
+        title: "Link Copied",
+        description: "The prototype URL has been copied to your clipboard.",
+      });
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
@@ -39,11 +59,21 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-          <Button variant="default" className="rounded-full px-6">Get Started</Button>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" onClick={handleSharePrototype} className="rounded-full">
+              <Share2 size={16} className="mr-2" /> Share
+            </Button>
+            <Button variant="default" className="rounded-full px-6" asChild>
+              <Link href="/assessment">Get Started</Link>
+            </Button>
+          </div>
         </nav>
 
         {/* Mobile Nav */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center gap-2">
+          <Button variant="ghost" size="icon" onClick={handleSharePrototype}>
+            <Share2 size={20} />
+          </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -63,7 +93,9 @@ export function Navbar() {
                     {item.label}
                   </Link>
                 ))}
-                <Button className="w-full mt-4">Get Started</Button>
+                <Button className="w-full mt-4" asChild onClick={() => setIsOpen(false)}>
+                  <Link href="/assessment">Get Started</Link>
+                </Button>
               </div>
             </SheetContent>
           </Sheet>

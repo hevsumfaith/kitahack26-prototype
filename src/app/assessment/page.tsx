@@ -41,19 +41,20 @@ export default function AssessmentPage() {
   const handleShare = () => {
     if (result) {
       const match = Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0);
-      const text = `I just completed the StreamWise assessment! My top recommendation is the ${result.mostSuitableStream} stream with a ${match}% compatibility match. Check it out!`;
-      
+      const text = `Hey! I just used StreamWise AI and it recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! 🚀 Try it out:`;
+      const url = window.location.origin;
+
       if (navigator.share) {
         navigator.share({
           title: 'My StreamWise Recommendation',
           text: text,
-          url: window.location.origin,
+          url: url,
         }).catch(console.error);
       } else {
-        navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(`${text} ${url}`);
         toast({
           title: "Copied to Clipboard",
-          description: "Your results summary has been copied to your clipboard.",
+          description: "Your results and link have been copied!",
         });
       }
     }
