@@ -74,19 +74,19 @@ export default function Home() {
                   title: t("features.smart.title"),
                   desc: t("features.smart.desc"),
                   icon: Brain,
-                  color: "bg-blue-100 text-blue-600"
+                  color: "bg-primary/10 text-primary"
                 },
                 {
                   title: t("features.ai.title"),
                   desc: t("features.ai.desc"),
                   icon: Compass,
-                  color: "bg-green-100 text-green-600"
+                  color: "bg-secondary/10 text-secondary"
                 },
                 {
                   title: t("features.career.title"),
                   desc: t("features.career.desc"),
                   icon: GraduationCap,
-                  color: "bg-orange-100 text-orange-600"
+                  color: "bg-accent/20 text-accent-foreground"
                 }
               ].map((feature, i) => (
                 <div key={i} className="bg-background p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-4">
