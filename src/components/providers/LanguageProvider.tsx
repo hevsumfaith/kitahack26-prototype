@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
@@ -20,6 +21,8 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.profile": "Profile",
     "nav.share": "Share Prototype",
     "nav.getStarted": "Get Started",
+    "nav.login": "Log In",
+    "nav.logout": "Log Out",
     "hero.title": "Unlock Your Potential with",
     "hero.subtitle": "The Right Path",
     "hero.desc": "HalaTuju uses AI to help you choose your Form 4 academic stream based on your unique interests and strengths, not just your exam results.",
@@ -83,7 +86,16 @@ const translations: Record<Language, Record<string, string>> = {
     "dashboard.tip3": "Talk to Experts: Discuss your report with counselors.",
     "dashboard.needHelp": "Need Help?",
     "dashboard.contactCounselor": "Contact our educational counselors for a personalized 1-on-1 session.",
-    "dashboard.schedule": "Schedule a Call"
+    "dashboard.schedule": "Schedule a Call",
+    "profile.title": "My Profile",
+    "profile.subtitle": "Manage your data and view your academic journey.",
+    "profile.noUser": "Please log in to view your profile.",
+    "profile.completion": "Profile Completion",
+    "profile.recentResults": "Recent Assessment Results",
+    "profile.date": "Date",
+    "profile.recommendation": "Recommended Stream",
+    "profile.matchScore": "Match Score",
+    "profile.viewDetails": "View Details"
   },
   ms: {
     "nav.dashboard": "Papan Pemuka",
@@ -92,6 +104,8 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.profile": "Profil",
     "nav.share": "Kongsi Prototaip",
     "nav.getStarted": "Bermula",
+    "nav.login": "Log Masuk",
+    "nav.logout": "Log Keluar",
     "hero.title": "Buka Potensi Anda dengan",
     "hero.subtitle": "Hala Tuju yang Tepat",
     "hero.desc": "HalaTuju menggunakan AI untuk membantu anda memilih aliran akademik Tingkatan 4 berdasarkan minat dan kekuatan unik anda, bukan sekadar keputusan peperiksaan.",
@@ -155,7 +169,16 @@ const translations: Record<Language, Record<string, string>> = {
     "dashboard.tip3": "Bincang dengan Pakar: Bincangkan laporan anda dengan kaunselor.",
     "dashboard.needHelp": "Perlukan Bantuan?",
     "dashboard.contactCounselor": "Hubungi kaunselor pendidikan kami untuk sesi peribadi 1-ke-1.",
-    "dashboard.schedule": "Jadualkan Panggilan"
+    "dashboard.schedule": "Jadualkan Panggilan",
+    "profile.title": "Profil Saya",
+    "profile.subtitle": "Urus data anda dan lihat perjalanan akademik anda.",
+    "profile.noUser": "Sila log masuk untuk melihat profil anda.",
+    "profile.completion": "Kesempurnaan Profil",
+    "profile.recentResults": "Keputusan Penilaian Terkini",
+    "profile.date": "Tarikh",
+    "profile.recommendation": "Aliran Disyorkan",
+    "profile.matchScore": "Skor Padanan",
+    "profile.viewDetails": "Lihat Butiran"
   }
 };
 

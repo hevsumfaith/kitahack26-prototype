@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -13,6 +14,9 @@ import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2 }
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function AssessmentPage() {
   const { toast } = useToast();
@@ -23,6 +27,18 @@ export default function AssessmentPage() {
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<RecommendStreamOutput | null>(null);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
+
+  useEffect(() => {
+    if (!auth) return;
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser?.displayName && !name) {
+        setName(currentUser.displayName);
+      }
+    });
+    return () => unsubscribe();
+  }, [name]);
 
   const totalSteps = 4;
   const progress = (step / totalSteps) * 100;
@@ -92,8 +108,21 @@ export default function AssessmentPage() {
           { assessmentName: "Interest Survey", qualitativeResult: "Self-reported interests in academic and creative fields." }
         ]
       });
+
       setResult(output);
       setStep(5);
+
+      if (user && db) {
+        await addDoc(collection(db, "assessments"), {
+          userId: user.uid,
+          studentName: name,
+          mostSuitableStream: output.mostSuitableStream,
+          compatibilityPercentage: output.streamCompatibility.find(s => s.streamName === output.mostSuitableStream)?.compatibilityPercentage || 0,
+          timestamp: serverTimestamp(),
+          language: language
+        });
+      }
+
     } catch (error) {
       console.error(error);
       toast({
@@ -116,7 +145,9 @@ export default function AssessmentPage() {
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">
               {step <= totalSteps ? `${t("assessment.step")} ${step}` : t("assessment.complete")}
             </span>
-            <span className="text-sm text-muted-foreground">{Math.round(progress)}% {language === 'en' ? 'Complete' : 'Selesai'}</span>
+            <span className="text-sm text-muted-foreground">
+              {step <= totalSteps ? Math.round(progress) : 100}% {language === 'en' ? 'Complete' : 'Selesai'}
+            </span>
           </div>
           <Progress value={progress} className="h-2 bg-secondary/20" />
         </div>
