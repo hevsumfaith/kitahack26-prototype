@@ -28,7 +28,7 @@ export function Navbar() {
 
   const handleSharePrototype = () => {
     const shareData = {
-      title: 'StreamWise Prototype',
+      title: 'HalaTuju Prototype',
       text: t("nav.share") + ': Check out this AI-powered academic stream guidance prototype!',
       url: typeof window !== 'undefined' ? window.location.origin : '',
     };
@@ -51,7 +51,7 @@ export function Navbar() {
           <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
             <GraduationCap size={24} />
           </div>
-          <span className="text-xl font-headline font-bold tracking-tight text-primary">StreamWise</span>
+          <span className="text-xl font-headline font-bold tracking-tight text-primary">HalaTuju</span>
         </Link>
 
         {/* Desktop Nav */}

@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { LanguageProvider } from '@/components/providers/LanguageProvider';
 
 export const metadata: Metadata = {
-  title: 'StreamWise | Find Your Future Stream',
+  title: 'HalaTuju | Find Your Future Stream',
   description: 'AI-powered guidance for Form 3 students in Malaysia.',
 };
 

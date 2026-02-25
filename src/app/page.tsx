@@ -108,7 +108,7 @@ export default function Home() {
             <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground">
               <GraduationCap size={16} />
             </div>
-            <span className="font-headline font-bold text-primary">StreamWise</span>
+            <span className="font-headline font-bold text-primary">HalaTuju</span>
           </div>
           <p className="text-sm text-muted-foreground">{t("footer.rights")}</p>
           <div className="flex gap-6">

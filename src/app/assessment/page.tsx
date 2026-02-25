@@ -43,13 +43,13 @@ export default function AssessmentPage() {
     if (result) {
       const match = Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0);
       const text = language === 'en' 
-        ? `🚀 I just found my future Form 4 stream using StreamWise AI! It recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! Try it out:`
-        : `🚀 Saya baru sahaja menemui aliran Tingkatan 4 masa depan saya menggunakan StreamWise AI! Ia mengesyorkan aliran ${result.mostSuitableStream} untuk saya dengan padanan ${match}%! Cuba sekarang:`;
+        ? `🚀 I just found my future Form 4 stream using HalaTuju AI! It recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! Try it out:`
+        : `🚀 Saya baru sahaja menemui aliran Tingkatan 4 masa depan saya menggunakan HalaTuju AI! Ia mengesyorkan aliran ${result.mostSuitableStream} untuk saya dengan padanan ${match}%! Cuba sekarang:`;
       const url = window.location.origin;
 
       if (navigator.share) {
         navigator.share({
-          title: 'My StreamWise Recommendation',
+          title: 'My HalaTuju Recommendation',
           text: text,
           url: url,
         }).catch(console.error);
@@ -75,7 +75,6 @@ export default function AssessmentPage() {
 
     setIsSubmitting(true);
     try {
-      // Convert available streams to the current language format for the AI to understand better context if needed
       const localizedStreams = AVAILABLE_STREAMS.map(s => ({
         streamName: s.streamName[language],
         description: s.description[language],
