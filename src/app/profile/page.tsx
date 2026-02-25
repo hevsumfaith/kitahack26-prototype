@@ -28,9 +28,13 @@ export default function ProfilePage() {
   const [history, setHistory] = useState<AssessmentHistory[]>([]);
 
   useEffect(() => {
+    if (!auth) {
+        setLoading(false);
+        return;
+    }
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
+      if (currentUser && db) {
         await fetchHistory(currentUser.uid);
       }
       setLoading(false);
@@ -39,6 +43,7 @@ export default function ProfilePage() {
   }, []);
 
   const fetchHistory = async (uid: string) => {
+    if (!db) return;
     const q = query(
       collection(db, "assessments"),
       where("userId", "==", uid),
@@ -52,9 +57,17 @@ export default function ProfilePage() {
     setHistory(results);
   };
 
+  /**
+   * EDIT THIS FUNCTION to change the login popup on the profile page.
+   */
   const handleLogin = async () => {
+    if (!auth) return;
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   if (loading) {
@@ -73,6 +86,7 @@ export default function ProfilePage() {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow container mx-auto px-4 py-20 text-center">
+          {/* Custom Popup/Dialog for non-logged in users */}
           <Card className="max-w-md mx-auto border-none shadow-xl p-8">
             <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
               <LogIn size={40} />
@@ -112,7 +126,7 @@ export default function ProfilePage() {
             <p className="text-muted-foreground mb-4">{user.email}</p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <div className="bg-secondary/10 px-4 py-2 rounded-full text-secondary text-sm font-semibold flex items-center gap-2">
-                <Calendar size={16} /> Joined {new Date(user.metadata.creationTime!).toLocaleDateString()}
+                <Calendar size={16} /> Joined {user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Recently'}
               </div>
             </div>
           </div>
@@ -159,7 +173,7 @@ export default function ProfilePage() {
                           <div>
                             <h4 className="font-bold text-primary">{item.mostSuitableStream}</h4>
                             <p className="text-xs text-muted-foreground flex items-center gap-1">
-                              <Calendar size={12} /> {item.timestamp?.toDate().toLocaleDateString() || "Just now"}
+                              <Calendar size={12} /> {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleDateString() : "Just now"}
                             </p>
                           </div>
                           <div className="text-right">

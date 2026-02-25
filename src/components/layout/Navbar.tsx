@@ -33,6 +33,10 @@ export function Navbar() {
     return () => unsubscribe();
   }, []);
 
+  /**
+   * EDIT THIS FUNCTION to change how the login popup behaves
+   * or to add custom logic after a successful login.
+   */
   const handleLogin = async () => {
     if (!auth) {
       toast({
@@ -44,6 +48,7 @@ export function Navbar() {
     }
     const provider = new GoogleAuthProvider();
     try {
+      // This triggers the standard Google Login Popup
       await signInWithPopup(auth, provider);
       toast({
         title: language === 'en' ? "Welcome!" : "Selamat Datang!",
