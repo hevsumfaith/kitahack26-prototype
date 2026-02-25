@@ -27,7 +27,7 @@ export default function DashboardPage() {
             </h1>
             <p className="text-muted-foreground mt-1">{t("dashboard.desc")}</p>
           </div>
-          <Button asChild size="lg" className="rounded-full">
+          <Button asChild size="lg" className="rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
             <Link href="/assessment">
               <Sparkles className="mr-2" size={18} /> {t("dashboard.newAssessment")}
             </Link>
@@ -38,7 +38,7 @@ export default function DashboardPage() {
           {/* Main Stats */}
           <div className="lg:col-span-2 flex flex-col gap-8">
             <div className="grid sm:grid-cols-2 gap-6">
-              <Card className="border-none shadow-md bg-gradient-to-br from-primary/10 to-transparent">
+              <Card className="border-none shadow-md bg-gradient-to-br from-primary/10 to-transparent border-t-4 border-primary">
                 <CardHeader className="pb-2">
                   <CardDescription className="text-primary font-bold uppercase text-xs tracking-widest">{t("dashboard.activeGoals")}</CardDescription>
                   <CardTitle className="text-2xl">{language === 'en' ? 'Form 4 Stream' : 'Aliran Tingkatan 4'}</CardTitle>
@@ -53,10 +53,10 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-none shadow-md">
+              <Card className="border-none shadow-md bg-gradient-to-br from-secondary/10 to-transparent border-t-4 border-secondary">
                 <CardHeader className="pb-2">
-                  <CardDescription className="font-bold uppercase text-xs tracking-widest">{language === 'en' ? 'Completion' : 'Kesempurnaan'}</CardDescription>
-                  <CardTitle className="text-2xl">{t("dashboard.profileProgress")}</CardTitle>
+                  <CardDescription className="text-secondary font-bold uppercase text-xs tracking-widest">{language === 'en' ? 'Completion' : 'Kesempurnaan'}</CardDescription>
+                  <CardTitle className="text-2xl text-secondary">{t("dashboard.profileProgress")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-2">
@@ -64,7 +64,7 @@ export default function DashboardPage() {
                       <span>{language === 'en' ? 'Progress' : 'Kemajuan'}</span>
                       <span className="font-bold">60%</span>
                     </div>
-                    <Progress value={60} className="h-2" />
+                    <Progress value={60} className="h-2 bg-secondary/20" />
                   </div>
                 </CardContent>
               </Card>
@@ -73,8 +73,8 @@ export default function DashboardPage() {
             {/* Assessment History */}
             <Card className="border-none shadow-md">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <History size={20} className="text-muted-foreground" /> {t("dashboard.history")}
+                <CardTitle className="flex items-center gap-2 text-accent">
+                  <History size={20} className="text-accent" /> {t("dashboard.history")}
                 </CardTitle>
                 <CardDescription>
                   {language === 'en' ? 'Track how your interests and recommendations evolve.' : 'Jejaki bagaimana minat dan syor anda berkembang.'}
@@ -91,10 +91,10 @@ export default function DashboardPage() {
                         </div>
                         <div className="flex items-center gap-4">
                           <div className="text-right">
-                            <span className="text-sm font-bold block">{item.compatibility}% {t("assessment.match")}</span>
+                            <span className="text-sm font-bold block text-primary">{item.compatibility}% {t("assessment.match")}</span>
                             <span className="text-[10px] uppercase text-green-500 font-bold tracking-wider">{t("dashboard.high")}</span>
                           </div>
-                          <Button variant="ghost" size="sm" asChild>
+                          <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary hover:bg-secondary/10">
                             <Link href="/assessment">{t("dashboard.viewReport")}</Link>
                           </Button>
                         </div>
@@ -112,7 +112,7 @@ export default function DashboardPage() {
 
           {/* Sidebar / Quick Info */}
           <div className="flex flex-col gap-6">
-            <Card className="border-none shadow-md bg-secondary text-secondary-foreground">
+            <Card className="border-none shadow-md bg-accent text-accent-foreground">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Info size={18} /> {t("dashboard.quickTips")}
@@ -127,11 +127,11 @@ export default function DashboardPage() {
 
             <Card className="border-none shadow-md">
               <CardHeader>
-                <CardTitle className="text-lg">{t("dashboard.needHelp")}</CardTitle>
+                <CardTitle className="text-lg text-primary">{t("dashboard.needHelp")}</CardTitle>
               </CardHeader>
               <CardContent className="text-sm">
                 <p className="text-muted-foreground mb-4">{t("dashboard.contactCounselor")}</p>
-                <Button variant="outline" className="w-full">{t("dashboard.schedule")}</Button>
+                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">{t("dashboard.schedule")}</Button>
               </CardContent>
             </Card>
           </div>

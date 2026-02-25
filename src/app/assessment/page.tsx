@@ -89,8 +89,7 @@ export default function AssessmentPage() {
         strengths: selectedStrengths,
         availableStreams: localizedStreams,
         assessmentResults: [
-          { assessmentName: "Interest Survey", qualitativeResult: "Self-reported interests in academic and creative fields." },
-          { assessmentName: "Strengths Profiler", qualitativeResult: "Identification of core personal and cognitive strengths." }
+          { assessmentName: "Interest Survey", qualitativeResult: "Self-reported interests in academic and creative fields." }
         ]
       });
       setResult(output);
@@ -119,13 +118,13 @@ export default function AssessmentPage() {
             </span>
             <span className="text-sm text-muted-foreground">{Math.round(progress)}% {language === 'en' ? 'Complete' : 'Selesai'}</span>
           </div>
-          <Progress value={progress} className="h-2" />
+          <Progress value={progress} className="h-2 bg-secondary/20" />
         </div>
 
         {step === 1 && (
           <Card className="border-none shadow-xl">
             <CardHeader className="text-center">
-              <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-accent/10 text-accent rounded-full flex items-center justify-center mx-auto mb-4">
                 <Brain size={32} />
               </div>
               <CardTitle className="text-2xl">{t("assessment.welcome")}</CardTitle>
@@ -140,10 +139,10 @@ export default function AssessmentPage() {
                   placeholder={t("assessment.namePlaceholder")}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="flex h-12 w-full rounded-md border border-input bg-background px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="flex h-12 w-full rounded-md border border-input bg-background px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-secondary/20"
                 />
               </div>
-              <Button onClick={() => setStep(2)} disabled={!name} className="w-full h-12 text-lg">
+              <Button onClick={() => setStep(2)} disabled={!name} className="w-full h-12 text-lg bg-primary hover:bg-primary/90">
                 {t("assessment.continue")} <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
@@ -153,14 +152,14 @@ export default function AssessmentPage() {
         {step === 2 && (
           <Card className="border-none shadow-xl">
             <CardHeader>
-              <CardTitle>{t("assessment.interestsTitle")}</CardTitle>
+              <CardTitle className="text-secondary">{t("assessment.interestsTitle")}</CardTitle>
               <CardDescription>{t("assessment.interestsDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {INTEREST_CATEGORIES.map((item) => (
-                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => toggleInterest(item[language])}>
-                    <Checkbox id={item.en} checked={selectedInterests.includes(item[language])} onCheckedChange={() => toggleInterest(item[language])} />
+                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border border-secondary/20 hover:bg-secondary/5 transition-colors cursor-pointer" onClick={() => toggleInterest(item[language])}>
+                    <Checkbox id={item.en} checked={selectedInterests.includes(item[language])} className="data-[state=checked]:bg-secondary border-secondary" onCheckedChange={() => toggleInterest(item[language])} />
                     <Label htmlFor={item.en} className="cursor-pointer font-medium leading-tight">{item[language]}</Label>
                   </div>
                 ))}
@@ -169,7 +168,7 @@ export default function AssessmentPage() {
                 <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
                   <ArrowLeft className="mr-2" /> {t("assessment.back")}
                 </Button>
-                <Button onClick={() => setStep(3)} disabled={selectedInterests.length === 0} className="flex-1">
+                <Button onClick={() => setStep(3)} disabled={selectedInterests.length === 0} className="flex-1 bg-primary">
                   {t("assessment.next")} <ArrowRight className="ml-2" />
                 </Button>
               </div>
@@ -180,14 +179,14 @@ export default function AssessmentPage() {
         {step === 3 && (
           <Card className="border-none shadow-xl">
             <CardHeader>
-              <CardTitle>{t("assessment.strengthsTitle")}</CardTitle>
+              <CardTitle className="text-accent">{t("assessment.strengthsTitle")}</CardTitle>
               <CardDescription>{t("assessment.strengthsDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <div className="grid grid-cols-2 gap-3">
                 {STRENGTHS_LIST.map((item) => (
-                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => toggleStrength(item[language])}>
-                    <Checkbox id={item.en} checked={selectedStrengths.includes(item[language])} onCheckedChange={() => toggleStrength(item[language])} />
+                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border border-accent/20 hover:bg-accent/5 transition-colors cursor-pointer" onClick={() => toggleStrength(item[language])}>
+                    <Checkbox id={item.en} checked={selectedStrengths.includes(item[language])} className="data-[state=checked]:bg-accent border-accent" onCheckedChange={() => toggleStrength(item[language])} />
                     <Label htmlFor={item.en} className="cursor-pointer font-medium">{item[language]}</Label>
                   </div>
                 ))}
@@ -196,7 +195,7 @@ export default function AssessmentPage() {
                 <Button variant="outline" onClick={() => setStep(2)} className="flex-1">
                   <ArrowLeft className="mr-2" /> {t("assessment.back")}
                 </Button>
-                <Button onClick={() => setStep(4)} disabled={selectedStrengths.length < 3} className="flex-1">
+                <Button onClick={() => setStep(4)} disabled={selectedStrengths.length < 3} className="flex-1 bg-primary">
                   {t("assessment.next")} <ArrowRight className="ml-2" />
                 </Button>
               </div>
@@ -211,17 +210,19 @@ export default function AssessmentPage() {
               <CardDescription>{t("assessment.readyDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 text-center">
-              <div className="p-6 bg-muted rounded-2xl">
-                <h4 className="font-bold mb-2">{t("assessment.summary")} {name}</h4>
-                <p className="text-sm text-muted-foreground">{selectedInterests.length} {t("assessment.interestsSelected")}</p>
-                <p className="text-sm text-muted-foreground">{selectedStrengths.length} {t("assessment.strengthsIdentified")}</p>
+              <div className="p-6 bg-secondary/5 border-2 border-dashed border-secondary/20 rounded-2xl">
+                <h4 className="font-bold mb-2 text-primary">{t("assessment.summary")} {name}</h4>
+                <div className="flex justify-center gap-4 text-sm font-semibold">
+                   <span className="text-secondary">{selectedInterests.length} {t("assessment.interestsSelected")}</span>
+                   <span className="text-accent">{selectedStrengths.length} {t("assessment.strengthsIdentified")}</span>
+                </div>
               </div>
               
               <div className="flex gap-4">
                 <Button variant="outline" onClick={() => setStep(3)} className="flex-1">
                   <ArrowLeft className="mr-2" /> {t("assessment.back")}
                 </Button>
-                <Button onClick={handleSubmit} className="flex-1 bg-secondary hover:bg-secondary/90" disabled={isSubmitting}>
+                <Button onClick={handleSubmit} className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <><Loader2 className="mr-2 animate-spin" /> {t("assessment.analyzing")}</>
                   ) : (
@@ -235,7 +236,7 @@ export default function AssessmentPage() {
 
         {step === 5 && result && (
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <Card className="border-none shadow-2xl bg-gradient-to-br from-primary to-secondary text-primary-foreground overflow-hidden">
+            <Card className="border-none shadow-2xl bg-gradient-to-br from-primary via-secondary to-accent text-white overflow-hidden">
               <CardHeader className="text-center pb-2 relative">
                 <Button 
                   variant="ghost" 
@@ -255,7 +256,7 @@ export default function AssessmentPage() {
                   {Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0)}%
                   <span className="text-xl font-normal opacity-80 ml-1">{t("assessment.match")}</span>
                 </div>
-                <p className="text-lg leading-relaxed opacity-90 max-w-xl mx-auto italic">
+                <p className="text-lg leading-relaxed opacity-90 max-w-xl mx-auto italic bg-black/10 p-4 rounded-xl">
                   "{result.keyInsights}"
                 </p>
               </CardContent>
@@ -270,13 +271,13 @@ export default function AssessmentPage() {
                   .filter(s => s.streamName !== result.mostSuitableStream)
                   .sort((a, b) => b.compatibilityPercentage - a.compatibilityPercentage)
                   .map((stream) => (
-                  <div key={stream.streamName} className="bg-background p-4 rounded-xl border shadow-sm flex items-center justify-between">
+                  <div key={stream.streamName} className="bg-background p-4 rounded-xl border-l-4 border-l-accent shadow-sm flex items-center justify-between">
                     <div>
                       <h4 className="font-bold">{stream.streamName}</h4>
                     </div>
                     <div className="flex items-center gap-4">
-                      <Progress value={stream.compatibilityPercentage} className="w-24 h-2" />
-                      <span className="font-bold text-muted-foreground">{Math.round(stream.compatibilityPercentage)}%</span>
+                      <Progress value={stream.compatibilityPercentage} className="w-24 h-2 bg-accent/20" />
+                      <span className="font-bold text-accent">{Math.round(stream.compatibilityPercentage)}%</span>
                     </div>
                   </div>
                 ))}
@@ -284,10 +285,10 @@ export default function AssessmentPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Button onClick={handleShareResults} variant="outline" size="lg" className="flex-1 rounded-full">
+              <Button onClick={handleShareResults} variant="outline" size="lg" className="flex-1 rounded-full border-secondary text-secondary hover:bg-secondary/5">
                 <Share2 className="mr-2" size={18} /> {language === 'en' ? 'Share Results' : 'Kongsi Keputusan'}
               </Button>
-              <Button asChild size="lg" className="flex-1 rounded-full">
+              <Button asChild size="lg" className="flex-1 rounded-full bg-primary hover:bg-primary/90">
                 <Link href="/dashboard">{t("assessment.viewDashboard")}</Link>
               </Button>
             </div>

@@ -21,7 +21,7 @@ export default function Home() {
         <section className="relative py-20 lg:py-32 overflow-hidden bg-background">
           <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2 flex flex-col gap-6 text-center lg:text-left z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold w-fit mx-auto lg:mx-0">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold w-fit mx-auto lg:mx-0">
                 <Target size={16} />
                 {t("hero.badge")}
               </div>
@@ -32,19 +32,19 @@ export default function Home() {
                 {t("hero.desc")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" asChild className="rounded-full px-8">
+                <Button size="lg" asChild className="rounded-full px-8 bg-primary hover:bg-primary/90 text-primary-foreground">
                   <Link href="/assessment">
                     {t("hero.cta")} <ArrowRight className="ml-2" size={18} />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild className="rounded-full px-8">
+                <Button size="lg" variant="outline" asChild className="rounded-full px-8 border-secondary text-secondary hover:bg-secondary/10">
                   <Link href="/streams">{t("hero.explore")}</Link>
                 </Button>
               </div>
             </div>
             
             <div className="lg:w-1/2 relative">
-              <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl transform rotate-3"></div>
+              <div className="absolute -inset-4 bg-secondary/10 rounded-3xl blur-2xl transform rotate-3"></div>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
                   src={heroImage?.imageUrl || "https://picsum.photos/seed/student-future/800/600"}
@@ -74,22 +74,22 @@ export default function Home() {
                   title: t("features.smart.title"),
                   desc: t("features.smart.desc"),
                   icon: Brain,
-                  color: "bg-primary/10 text-primary"
+                  color: "bg-secondary/10 text-secondary"
                 },
                 {
                   title: t("features.ai.title"),
                   desc: t("features.ai.desc"),
                   icon: Compass,
-                  color: "bg-secondary/10 text-secondary"
+                  color: "bg-accent/10 text-accent"
                 },
                 {
                   title: t("features.career.title"),
                   desc: t("features.career.desc"),
                   icon: GraduationCap,
-                  color: "bg-accent/20 text-accent-foreground"
+                  color: "bg-primary/10 text-primary"
                 }
               ].map((feature, i) => (
-                <div key={i} className="bg-background p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-4">
+                <div key={i} className="bg-background p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-4 border-b-4 border-transparent hover:border-secondary transition-all">
                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${feature.color}`}>
                     <feature.icon size={32} />
                   </div>
