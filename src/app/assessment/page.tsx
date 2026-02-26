@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { CAREER_TEST_QUESTIONS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle, Star } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -41,12 +41,13 @@ export default function AssessmentPage() {
   const questions = CAREER_TEST_QUESTIONS;
   const totalQuestions = questions.length;
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+  const currentQuestion = questions[currentQuestionIndex];
 
   const handleAnswerSelect = (optionId: string) => {
-    setAnswers(prev => ({ ...prev, [questions[currentQuestionIndex].id]: optionId }));
+    setAnswers(prev => ({ ...prev, [currentQuestion.id]: optionId }));
     
     if (currentQuestionIndex < totalQuestions - 1) {
-      setTimeout(() => setCurrentQuestionIndex(prev => prev + 1), 300);
+      setTimeout(() => setCurrentQuestionIndex(prev => prev + 1), 200);
     } else {
       setStep(2);
       handleSubmit();
@@ -62,8 +63,8 @@ export default function AssessmentPage() {
       const output = await recommendStream({
         studentName: name,
         language: language,
-        streamAnswers,
-        personalityAnswers
+        streamAnswers: streamAnswers.filter(Boolean),
+        personalityAnswers: personalityAnswers.filter(Boolean)
       });
 
       setResult(output);
@@ -76,14 +77,15 @@ export default function AssessmentPage() {
           mostSuitableStream: output.mostSuitableStream,
           personalityProfile: output.personalityProfile,
           timestamp: serverTimestamp(),
-          language: language
+          language: language,
+          fullOutput: output
         });
       }
     } catch (error) {
       console.error(error);
       toast({
-        title: language === 'en' ? "Oracle is Silent" : "Oracle Terpadam",
-        description: language === 'en' ? "Something went wrong. Please try again." : "Sesuatu telah berlaku. Sila cuba lagi.",
+        title: language === 'en' ? "Oracle Connection Lost" : "Sambungan Oracle Terputus",
+        description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
       setStep(0);
@@ -92,23 +94,11 @@ export default function AssessmentPage() {
     }
   };
 
-  const handleShare = () => {
-    if (result) {
-      const text = `🚀 My HalaTuju Oracle Result: ${result.mostSuitableStream} (${result.personalityProfile})! Find your future at ${window.location.origin}`;
-      if (navigator.share) {
-        navigator.share({ title: 'HalaTuju Oracle Result', text, url: window.location.origin });
-      } else {
-        navigator.clipboard.writeText(text);
-        toast({ title: "Copied!", description: "Share link copied to clipboard." });
-      }
-    }
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
       <Navbar />
       
-      <main className="flex-grow container mx-auto px-4 py-12 max-w-2xl">
+      <main className="flex-grow container mx-auto px-4 py-8 max-w-2xl">
         {step === 0 && (
           <Card className="border-none shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-500">
             <div className="h-2 bg-primary" />
@@ -118,10 +108,16 @@ export default function AssessmentPage() {
               </div>
               <CardTitle className="text-3xl font-bold mb-2">HalaTuju Oracle</CardTitle>
               <CardDescription className="text-lg">
-                Find your path with the Kitahack Career Test.
+                The full 60-question Kitahack Career Test for high-accuracy placement.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 px-10 pb-12">
+              <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3">
+                <Star className="text-amber-500 shrink-0 mt-1" size={18} />
+                <p className="text-sm text-amber-800 font-medium">
+                  This is a comprehensive assessment. It will take approximately 10-15 minutes to complete for the best results.
+                </p>
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-600">What should we call you?</label>
                 <input
@@ -133,44 +129,47 @@ export default function AssessmentPage() {
                 />
               </div>
               <Button onClick={() => setStep(1)} disabled={!name} className="w-full h-14 text-lg rounded-xl shadow-lg">
-                Begin Assessment <ArrowRight className="ml-2" />
+                Begin High-Accuracy Test <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
           </Card>
         )}
 
         {step === 1 && (
-          <div className="space-y-8 animate-in slide-in-from-right-4 duration-300">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm font-bold text-slate-500 uppercase">
-                <span>Question {currentQuestionIndex + 1} of {totalQuestions}</span>
-                <span>{Math.round(progress)}%</span>
+          <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
+            <div className="space-y-3">
+              <div className="flex justify-between items-end">
+                <div>
+                  <span className="text-xs font-bold text-primary uppercase tracking-widest">{currentQuestion.section}</span>
+                  <h3 className="text-sm font-bold text-slate-500">Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
+                </div>
+                <span className="text-sm font-black text-slate-900">{Math.round(progress)}%</span>
               </div>
               <Progress value={progress} className="h-3 bg-slate-200" />
             </div>
 
             <Card className="border-none shadow-xl">
               <CardHeader className="pb-4">
-                <CardTitle className="text-2xl font-bold leading-tight">
-                  {questions[currentQuestionIndex].question[language]}
+                <CardTitle className="text-xl md:text-2xl font-bold leading-tight">
+                  {currentQuestion.question[language]}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="grid gap-4">
-                {questions[currentQuestionIndex].options.map((opt) => (
+              <CardContent className="grid gap-3">
+                {currentQuestion.options.map((opt) => (
                   <button
                     key={opt.id}
                     onClick={() => handleAnswerSelect(opt.id)}
                     className={cn(
-                      "w-full text-left p-6 rounded-2xl border-2 transition-all group flex items-center justify-between",
-                      answers[questions[currentQuestionIndex].id] === opt.id
+                      "w-full text-left p-5 rounded-2xl border-2 transition-all group flex items-center justify-between",
+                      answers[currentQuestion.id] === opt.id
                         ? "border-primary bg-primary/5 shadow-md"
                         : "border-slate-100 hover:border-slate-200 hover:bg-slate-50"
                     )}
                   >
-                    <span className="text-lg font-medium group-hover:translate-x-1 transition-transform">
+                    <span className="text-base md:text-lg font-medium group-hover:translate-x-1 transition-transform">
                       {opt.text[language]}
                     </span>
-                    {answers[questions[currentQuestionIndex].id] === opt.id && <CheckCircle2 className="text-primary" />}
+                    {answers[currentQuestion.id] === opt.id && <CheckCircle2 className="text-primary shrink-0 ml-4" />}
                   </button>
                 ))}
               </CardContent>
@@ -179,10 +178,11 @@ export default function AssessmentPage() {
             <div className="flex justify-between items-center text-slate-400">
               <button 
                 onClick={() => currentQuestionIndex > 0 ? setCurrentQuestionIndex(prev => prev - 1) : setStep(0)}
-                className="flex items-center gap-2 hover:text-slate-600 transition-colors"
+                className="flex items-center gap-2 hover:text-slate-600 transition-colors text-sm font-bold"
               >
-                <ArrowLeft size={18} /> Back
+                <ArrowLeft size={16} /> Previous
               </button>
+              <span className="text-xs font-medium italic">Your progress is automatically saved.</span>
             </div>
           </div>
         )}
@@ -191,21 +191,16 @@ export default function AssessmentPage() {
           <div className="h-[60vh] flex flex-col items-center justify-center text-center gap-6">
             <Loader2 className="animate-spin text-primary" size={64} />
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold">Consulting the Oracle...</h2>
-              <p className="text-slate-500">Our AI is analyzing your unique Kitahack profile.</p>
+              <h2 className="text-3xl font-bold">Oracle is Processing...</h2>
+              <p className="text-slate-500">Analyzing 60 data points for your perfect stream match.</p>
             </div>
           </div>
         )}
 
         {step === 3 && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <Card className="border-none shadow-2xl bg-gradient-to-br from-indigo-600 to-primary text-white overflow-hidden">
+            <Card className="border-none shadow-2xl bg-gradient-to-br from-indigo-700 to-blue-600 text-white overflow-hidden">
               <CardHeader className="text-center relative pt-12 pb-6">
-                <div className="absolute top-4 right-4">
-                  <Button variant="ghost" size="icon" onClick={handleShare} className="text-white hover:bg-white/10 rounded-full">
-                    <Share2 size={24} />
-                  </Button>
-                </div>
                 <div className="inline-block px-4 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
                   Oracle Recommendation
                 </div>
@@ -221,12 +216,12 @@ export default function AssessmentPage() {
                   </p>
                   <div className="flex items-center justify-center gap-4">
                     <div className="h-[1px] bg-white/30 flex-grow" />
-                    <span className="text-sm font-bold uppercase tracking-widest text-white/60">Careers</span>
+                    <span className="text-sm font-bold uppercase tracking-widest text-white/60">Top Career Matches</span>
                     <div className="h-[1px] bg-white/30 flex-grow" />
                   </div>
                   <div className="flex flex-wrap justify-center gap-3 mt-6">
                     {result.suggestedCareers.map(career => (
-                      <div key={career} className="bg-white text-primary px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg">
+                      <div key={career} className="bg-white text-indigo-700 px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg">
                         <Briefcase size={16} /> {career}
                       </div>
                     ))}
@@ -237,26 +232,26 @@ export default function AssessmentPage() {
 
             <div className="grid gap-6">
               <h3 className="text-xl font-bold flex items-center gap-2 text-slate-800">
-                <CheckCircle2 className="text-green-500" /> Full Analysis
+                <CheckCircle2 className="text-green-500" /> Compatibility Breakdown
               </h3>
               <div className="grid gap-4">
                 {result.streamCompatibility.map((stream) => (
                   <div key={stream.streamName} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
-                    <div className="space-y-1">
-                      <h4 className="font-bold text-slate-800">{stream.streamName}</h4>
-                      <Progress value={stream.compatibilityPercentage} className="w-32 h-2" />
+                    <div className="space-y-2 flex-grow mr-8">
+                      <div className="flex justify-between items-center mb-1">
+                        <h4 className="font-bold text-slate-800">{stream.streamName}</h4>
+                        <span className="text-sm font-black text-primary">{Math.round(stream.compatibilityPercentage)}%</span>
+                      </div>
+                      <Progress value={stream.compatibilityPercentage} className="h-2" />
                     </div>
-                    <span className="text-2xl font-black text-primary">{Math.round(stream.compatibilityPercentage)}%</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="flex gap-4">
-               <Button asChild size="lg" className="flex-1 h-16 rounded-2xl text-lg shadow-xl hover:scale-[1.02] transition-transform">
-                 <Link href="/dashboard">Return to Dashboard</Link>
-               </Button>
-            </div>
+            <Button asChild size="lg" className="w-full h-16 rounded-2xl text-lg shadow-xl">
+              <Link href="/dashboard">Continue to Dashboard</Link>
+            </Button>
           </div>
         )}
       </main>
