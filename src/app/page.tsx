@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GraduationCap, Brain, Compass, Target, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/Navbar";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 

@@ -15,8 +15,12 @@ let app: FirebaseApp | undefined;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
 
-// Only initialize if we have the required config to avoid crashing
-if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "undefined") {
+// Only initialize if we have the required config and it's not the default "undefined" string
+const isValidConfig = firebaseConfig.apiKey && 
+                      firebaseConfig.apiKey !== "undefined" && 
+                      firebaseConfig.apiKey.length > 10;
+
+if (isValidConfig) {
   try {
     app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
     auth = getAuth(app);
@@ -25,7 +29,7 @@ if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "undefined") {
     console.error("Firebase initialization failed:", error);
   }
 } else {
-  console.warn("Firebase configuration is missing. Please check your .env file.");
+  console.warn("Firebase configuration is missing or invalid. Please check your .env file.");
 }
 
 export { app, auth, db };

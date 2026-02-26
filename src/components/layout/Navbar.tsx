@@ -1,24 +1,43 @@
-
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { GraduationCap, User, BookOpen, LayoutDashboard, Menu, Share2, Languages, Sun, Moon, LogIn, LogOut } from "lucide-react";
+import { 
+  GraduationCap, 
+  LayoutDashboard, 
+  BookOpen, 
+  User, 
+  Sun, 
+  Moon, 
+  Languages, 
+  Share2, 
+  LogOut, 
+  LogIn,
+  Menu 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useState, useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { useLanguage } from "@/components/providers/LanguageProvider";
-import { useTheme } from "@/components/providers/ThemeProvider";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { auth } from "@/lib/firebase";
-import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useTheme } from "@/components/providers/ThemeProvider";
 
-export function Navbar() {
+// Firebase Imports
+import { auth } from "@/lib/firebase";
+import { 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signOut, 
+  onAuthStateChanged, 
+  User as FirebaseUser 
+} from "firebase/auth";
+
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const { toast } = useToast();
@@ -33,34 +52,42 @@ export function Navbar() {
     return () => unsubscribe();
   }, []);
 
-  /**
-   * EDIT THIS FUNCTION to change how the login popup behaves
-   * or to add custom logic after a successful login.
-   */
   const handleLogin = async () => {
     if (!auth) {
       toast({
-        title: language === 'en' ? "Configuration Missing" : "Konfigurasi Hilang",
-        description: language === 'en' ? "Firebase is not configured yet. Please add your credentials." : "Firebase belum dikonfigurasi. Sila masukkan kelayakan anda.",
+        title: language === 'en' ? "Setup Required" : "Persediaan Diperlukan",
+        description: language === 'en' 
+          ? "Please add your Firebase API keys to the .env file to enable login." 
+          : "Sila tambah kunci API Firebase anda ke fail .env untuk membolehkan log masuk.",
         variant: "destructive",
       });
       return;
     }
+
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
     try {
-      // This triggers the standard Google Login Popup
       await signInWithPopup(auth, provider);
       toast({
         title: language === 'en' ? "Welcome!" : "Selamat Datang!",
-        description: language === 'en' ? "You have successfully logged in." : "Anda telah berjaya log masuk.",
+        description: language === 'en' ? "Successfully logged in." : "Berjaya log masuk.",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast({
-        title: language === 'en' ? "Login Failed" : "Log Masuk Gagal",
-        description: language === 'en' ? "Could not sign in with Google." : "Tidak dapat log masuk dengan Google.",
-        variant: "destructive",
-      });
+      if (error.code === 'auth/popup-blocked') {
+        toast({
+          title: language === 'en' ? "Popup Blocked" : "Popup Disekat",
+          description: language === 'en' ? "Please allow popups for this site." : "Sila benarkan popup untuk laman ini.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: language === 'en' ? "Login Failed" : "Log Masuk Gagal",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -107,11 +134,12 @@ export function Navbar() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
-            < GraduationCap size={24} />
+            <GraduationCap size={24} />
           </div>
           <span className="text-xl font-headline font-bold tracking-tight text-primary">HalaTuju</span>
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
             <Link
@@ -163,6 +191,7 @@ export function Navbar() {
           </div>
         </nav>
 
+        {/* Mobile Navigation */}
         <div className="md:hidden flex items-center gap-2">
           <Button
             variant="ghost"
@@ -171,18 +200,6 @@ export function Navbar() {
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Languages size={20} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage('ms')}>Bahasa Melayu</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
