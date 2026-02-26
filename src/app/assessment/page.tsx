@@ -57,7 +57,6 @@ export default function AssessmentPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Map IDs to original arrays for Genkit (30/30/30 split)
       const streamAnswers = questions.filter(q => q.id <= 30).map(q => answers[q.id]);
       const personalityAnswers = questions.filter(q => q.id >= 31 && q.id <= 60).map(q => answers[q.id]);
       const problemSolvingAnswers = questions.filter(q => q.id >= 61).map(q => answers[q.id]);
@@ -98,12 +97,12 @@ export default function AssessmentPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8 max-w-2xl">
         {step === 0 && (
-          <Card className="border-none shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-500">
+          <Card className="border shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-500 bg-card">
             <div className="h-2 bg-primary" />
             <CardHeader className="text-center pt-10">
               <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
@@ -115,20 +114,20 @@ export default function AssessmentPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 px-10 pb-12">
-              <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3">
+              <div className="bg-amber-500/10 border border-amber-500/20 p-4 rounded-xl flex items-start gap-3">
                 <Star className="text-amber-500 shrink-0 mt-1" size={18} />
-                <p className="text-sm text-amber-800 font-medium">
+                <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">
                   This test has 3 sections: Interest & Social, Personality, and Problem Solving.
                 </p>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-slate-600">What should we call you?</label>
+                <label className="text-sm font-semibold text-muted-foreground">What should we call you?</label>
                 <input
                   type="text"
                   placeholder="Enter your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full p-4 rounded-xl border-2 border-slate-100 focus:border-primary outline-none transition-all text-lg"
+                  className="w-full p-4 rounded-xl border bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-lg"
                 />
               </div>
               <Button onClick={() => setStep(1)} disabled={!name} className="w-full h-14 text-lg rounded-xl shadow-lg">
@@ -149,13 +148,13 @@ export default function AssessmentPage() {
                     {currentQuestion.id > 60 && <Puzzle size={14} className="text-amber-500" />}
                     {currentQuestion.section}
                   </span>
-                  <h3 className="text-sm font-bold text-slate-500">Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
+                  <h3 className="text-sm font-bold text-muted-foreground">Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
                 </div>
-                <span className="text-sm font-black text-slate-900">{Math.round(progress)}%</span>
+                <span className="text-sm font-black text-foreground">{Math.round(progress)}%</span>
               </div>
               <Progress 
                 value={progress} 
-                className="h-3 bg-slate-200" 
+                className="h-3 bg-muted" 
                 indicatorClassName="bg-gradient-to-r from-orange-500 via-indigo-500 to-emerald-500"
               />
             </div>
@@ -189,7 +188,7 @@ export default function AssessmentPage() {
               </div>
             )}
 
-            <Card className="border-none shadow-xl">
+            <Card className="border shadow-xl bg-card">
               <CardHeader className="pb-4">
                 <CardTitle className="text-xl md:text-2xl font-bold leading-tight">
                   {currentQuestion.question[language]}
@@ -201,10 +200,10 @@ export default function AssessmentPage() {
                     key={opt.id}
                     onClick={() => handleAnswerSelect(opt.id)}
                     className={cn(
-                      "w-full text-left p-5 rounded-2xl border-2 transition-all group flex items-center justify-between",
+                      "w-full text-left p-5 rounded-2xl border transition-all group flex items-center justify-between",
                       answers[currentQuestion.id] === opt.id
-                        ? "border-primary bg-primary/5 shadow-md"
-                        : "border-slate-100 hover:border-slate-200 hover:bg-slate-50"
+                        ? "border-primary bg-primary/10 shadow-md"
+                        : "border-border hover:border-primary/50 hover:bg-muted"
                     )}
                   >
                     <span className="text-base md:text-lg font-medium group-hover:translate-x-1 transition-transform">
@@ -216,10 +215,10 @@ export default function AssessmentPage() {
               </CardContent>
             </Card>
 
-            <div className="flex justify-between items-center text-slate-400">
+            <div className="flex justify-between items-center text-muted-foreground">
               <button 
                 onClick={() => currentQuestionIndex > 0 ? setCurrentQuestionIndex(prev => prev - 1) : setStep(0)}
-                className="flex items-center gap-2 hover:text-slate-600 transition-colors text-sm font-bold"
+                className="flex items-center gap-2 hover:text-foreground transition-colors text-sm font-bold"
               >
                 <ArrowLeft size={16} /> Previous
               </button>
@@ -233,7 +232,7 @@ export default function AssessmentPage() {
             <Loader2 className="animate-spin text-primary" size={64} />
             <div className="space-y-2">
               <h2 className="text-3xl font-bold">Oracle is Processing...</h2>
-              <p className="text-slate-500">Analyzing 90 points of interaction, personality, and aptitude.</p>
+              <p className="text-muted-foreground">Analyzing 90 points of interaction, personality, and aptitude.</p>
             </div>
           </div>
         )}
@@ -272,15 +271,15 @@ export default function AssessmentPage() {
             </Card>
 
             <div className="grid gap-6">
-              <h3 className="text-xl font-bold flex items-center gap-2 text-slate-800">
+              <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
                 <CheckCircle2 className="text-green-500" /> Compatibility Breakdown
               </h3>
               <div className="grid gap-4">
                 {result.streamCompatibility.map((stream) => (
-                  <div key={stream.streamName} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+                  <div key={stream.streamName} className="bg-card p-6 rounded-2xl border border-border shadow-sm flex items-center justify-between">
                     <div className="space-y-2 flex-grow mr-8">
                       <div className="flex justify-between items-center mb-1">
-                        <h4 className="font-bold text-slate-800">{stream.streamName}</h4>
+                        <h4 className="font-bold text-foreground">{stream.streamName}</h4>
                         <span className="text-sm font-black text-primary">{Math.round(stream.compatibilityPercentage)}%</span>
                       </div>
                       <Progress value={stream.compatibilityPercentage} className="h-2" />
