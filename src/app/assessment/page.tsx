@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { CAREER_TEST_QUESTIONS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle, Star, Puzzle, Zap, Users } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Briefcase, UserCircle, Star, Puzzle, Zap, Users } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -21,7 +21,7 @@ export default function AssessmentPage() {
   const { language, t } = useLanguage();
   const [step, setStep] = useState(0); // 0: Welcome, 1: Questions, 2: Analyzing, 3: Results
   const [name, setName] = useState("");
-  const [currentQuestionIndex, setCurrentQuestionIndex] => useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<RecommendStreamOutput | null>(null);
