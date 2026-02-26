@@ -1,29 +1,28 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
-import Navbar from "@/components/layout/Navbar";import { Button } from "@/components/ui/button";
+import Navbar from "@/components/layout/Navbar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { INTEREST_CATEGORIES, STRENGTHS_LIST, AVAILABLE_STREAMS } from "@/app/lib/constants";
+import { CAREER_TEST_QUESTIONS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2 } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { cn } from "@/lib/utils";
 
 export default function AssessmentPage() {
   const { toast } = useToast();
   const { language, t } = useLanguage();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0); // 0: Welcome, 1: Questions, 2: Analyzing, 3: Results
   const [name, setName] = useState("");
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<RecommendStreamOutput | null>(null);
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -39,288 +38,224 @@ export default function AssessmentPage() {
     return () => unsubscribe();
   }, [name]);
 
-  const totalSteps = 4;
-  const progress = (step / totalSteps) * 100;
+  const questions = CAREER_TEST_QUESTIONS;
+  const totalQuestions = questions.length;
+  const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
-  const toggleInterest = (interest: string) => {
-    setSelectedInterests(prev => 
-      prev.includes(interest) ? prev.filter(i => i !== interest) : [...prev, interest]
-    );
-  };
-
-  const toggleStrength = (strength: string) => {
-    setSelectedStrengths(prev => 
-      prev.includes(strength) ? prev.filter(s => s !== strength) : [...prev, strength]
-    );
-  };
-
-  const handleShareResults = () => {
-    if (result) {
-      const match = Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0);
-      const text = language === 'en' 
-        ? `🚀 I just found my future Form 4 stream using HalaTuju AI! It recommended the ${result.mostSuitableStream} stream for me with a ${match}% match! Try it out:`
-        : `🚀 Saya baru sahaja menemui aliran Tingkatan 4 masa depan saya menggunakan HalaTuju AI! Ia mengesyorkan aliran ${result.mostSuitableStream} untuk saya dengan padanan ${match}%! Cuba sekarang:`;
-      const url = window.location.origin;
-
-      if (navigator.share) {
-        navigator.share({
-          title: 'My HalaTuju Recommendation',
-          text: text,
-          url: url,
-        }).catch(console.error);
-      } else {
-        navigator.clipboard.writeText(`${text} ${url}`);
-        toast({
-          title: language === 'en' ? "Copied to Clipboard" : "Disalin ke Papan Klip",
-          description: language === 'en' ? "Your results and link have been copied!" : "Keputusan dan pautan anda telah disalin!",
-        });
-      }
+  const handleAnswerSelect = (optionId: string) => {
+    setAnswers(prev => ({ ...prev, [questions[currentQuestionIndex].id]: optionId }));
+    
+    if (currentQuestionIndex < totalQuestions - 1) {
+      setTimeout(() => setCurrentQuestionIndex(prev => prev + 1), 300);
+    } else {
+      setStep(2);
+      handleSubmit();
     }
   };
 
   const handleSubmit = async () => {
-    if (!name || selectedInterests.length === 0 || selectedStrengths.length === 0) {
-      toast({
-        title: t("assessment.readyTitle"),
-        description: language === 'en' ? "Please fill in all sections before submitting." : "Sila isi semua bahagian sebelum menghantar.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsSubmitting(true);
     try {
-      const localizedStreams = AVAILABLE_STREAMS.map(s => ({
-        streamName: s.streamName[language],
-        description: s.description[language],
-        subjects: s.subjects[language],
-        careerPaths: s.careerPaths[language]
-      }));
+      const streamAnswers = questions.filter(q => q.type === "stream").map(q => answers[q.id]);
+      const personalityAnswers = questions.filter(q => q.type === "personality").map(q => answers[q.id]);
 
       const output = await recommendStream({
         studentName: name,
         language: language,
-        interests: selectedInterests,
-        strengths: selectedStrengths,
-        availableStreams: localizedStreams,
-        assessmentResults: [
-          { assessmentName: "Interest Survey", qualitativeResult: "Self-reported interests in academic and creative fields." }
-        ]
+        streamAnswers,
+        personalityAnswers
       });
 
       setResult(output);
-      setStep(5);
+      setStep(3);
 
       if (user && db) {
         await addDoc(collection(db, "assessments"), {
           userId: user.uid,
           studentName: name,
           mostSuitableStream: output.mostSuitableStream,
-          compatibilityPercentage: output.streamCompatibility.find(s => s.streamName === output.mostSuitableStream)?.compatibilityPercentage || 0,
+          personalityProfile: output.personalityProfile,
           timestamp: serverTimestamp(),
           language: language
         });
       }
-
     } catch (error) {
       console.error(error);
       toast({
-        title: language === 'en' ? "Recommendation Failed" : "Syor Gagal",
-        description: language === 'en' ? "An error occurred while processing your results." : "Ralat berlaku semasa memproses keputusan anda.",
+        title: language === 'en' ? "Oracle is Silent" : "Oracle Terpadam",
+        description: language === 'en' ? "Something went wrong. Please try again." : "Sesuatu telah berlaku. Sila cuba lagi.",
         variant: "destructive"
       });
+      setStep(0);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleShare = () => {
+    if (result) {
+      const text = `🚀 My HalaTuju Oracle Result: ${result.mostSuitableStream} (${result.personalityProfile})! Find your future at ${window.location.origin}`;
+      if (navigator.share) {
+        navigator.share({ title: 'HalaTuju Oracle Result', text, url: window.location.origin });
+      } else {
+        navigator.clipboard.writeText(text);
+        toast({ title: "Copied!", description: "Share link copied to clipboard." });
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-slate-50">
       <Navbar />
       
-      <main className="flex-grow container mx-auto px-4 py-12 max-w-3xl">
-        <div className="mb-8 flex flex-col gap-2">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
-              {step <= totalSteps ? `${t("assessment.step")} ${step}` : t("assessment.complete")}
-            </span>
-            <span className="text-sm text-muted-foreground">
-              {step <= totalSteps ? Math.round(progress) : 100}% {language === 'en' ? 'Complete' : 'Selesai'}
-            </span>
-          </div>
-          <Progress value={progress} className="h-2 bg-secondary/20" />
-        </div>
-
-        {step === 1 && (
-          <Card className="border-none shadow-xl">
-            <CardHeader className="text-center">
-              <div className="w-16 h-16 bg-accent/10 text-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <Brain size={32} />
+      <main className="flex-grow container mx-auto px-4 py-12 max-w-2xl">
+        {step === 0 && (
+          <Card className="border-none shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-500">
+            <div className="h-2 bg-primary" />
+            <CardHeader className="text-center pt-10">
+              <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <Brain size={40} className="animate-pulse" />
               </div>
-              <CardTitle className="text-2xl">{t("assessment.welcome")}</CardTitle>
-              <CardDescription>{t("assessment.welcomeDesc")}</CardDescription>
+              <CardTitle className="text-3xl font-bold mb-2">HalaTuju Oracle</CardTitle>
+              <CardDescription className="text-lg">
+                Find your path with the Kitahack Career Test.
+              </CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col gap-6">
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name">{t("assessment.nameLabel")}</Label>
+            <CardContent className="flex flex-col gap-6 px-10 pb-12">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-600">What should we call you?</label>
                 <input
-                  id="name"
                   type="text"
-                  placeholder={t("assessment.namePlaceholder")}
+                  placeholder="Enter your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="flex h-12 w-full rounded-md border border-input bg-background px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-secondary/20"
+                  className="w-full p-4 rounded-xl border-2 border-slate-100 focus:border-primary outline-none transition-all text-lg"
                 />
               </div>
-              <Button onClick={() => setStep(2)} disabled={!name} className="w-full h-12 text-lg bg-primary hover:bg-primary/90">
-                {t("assessment.continue")} <ArrowRight className="ml-2" />
+              <Button onClick={() => setStep(1)} disabled={!name} className="w-full h-14 text-lg rounded-xl shadow-lg">
+                Begin Assessment <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
           </Card>
         )}
 
-        {step === 2 && (
-          <Card className="border-none shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-secondary">{t("assessment.interestsTitle")}</CardTitle>
-              <CardDescription>{t("assessment.interestsDesc")}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {INTEREST_CATEGORIES.map((item) => (
-                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border border-secondary/20 hover:bg-secondary/5 transition-colors cursor-pointer" onClick={() => toggleInterest(item[language])}>
-                    <Checkbox id={item.en} checked={selectedInterests.includes(item[language])} className="data-[state=checked]:bg-secondary border-secondary" onCheckedChange={() => toggleInterest(item[language])} />
-                    <Label htmlFor={item.en} className="cursor-pointer font-medium leading-tight">{item[language]}</Label>
-                  </div>
-                ))}
+        {step === 1 && (
+          <div className="space-y-8 animate-in slide-in-from-right-4 duration-300">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm font-bold text-slate-500 uppercase">
+                <span>Question {currentQuestionIndex + 1} of {totalQuestions}</span>
+                <span>{Math.round(progress)}%</span>
               </div>
-              <div className="flex gap-4 mt-6">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
-                  <ArrowLeft className="mr-2" /> {t("assessment.back")}
-                </Button>
-                <Button onClick={() => setStep(3)} disabled={selectedInterests.length === 0} className="flex-1 bg-primary">
-                  {t("assessment.next")} <ArrowRight className="ml-2" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+              <Progress value={progress} className="h-3 bg-slate-200" />
+            </div>
 
-        {step === 3 && (
-          <Card className="border-none shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-accent">{t("assessment.strengthsTitle")}</CardTitle>
-              <CardDescription>{t("assessment.strengthsDesc")}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              <div className="grid grid-cols-2 gap-3">
-                {STRENGTHS_LIST.map((item) => (
-                  <div key={item.en} className="flex items-center space-x-3 p-4 rounded-xl border border-accent/20 hover:bg-accent/5 transition-colors cursor-pointer" onClick={() => toggleStrength(item[language])}>
-                    <Checkbox id={item.en} checked={selectedStrengths.includes(item[language])} className="data-[state=checked]:bg-accent border-accent" onCheckedChange={() => toggleStrength(item[language])} />
-                    <Label htmlFor={item.en} className="cursor-pointer font-medium">{item[language]}</Label>
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-4 mt-6">
-                <Button variant="outline" onClick={() => setStep(2)} className="flex-1">
-                  <ArrowLeft className="mr-2" /> {t("assessment.back")}
-                </Button>
-                <Button onClick={() => setStep(4)} disabled={selectedStrengths.length < 3} className="flex-1 bg-primary">
-                  {t("assessment.next")} <ArrowRight className="ml-2" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {step === 4 && (
-          <Card className="border-none shadow-xl">
-            <CardHeader className="text-center">
-              <CardTitle>{t("assessment.readyTitle")}</CardTitle>
-              <CardDescription>{t("assessment.readyDesc")}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-6 text-center">
-              <div className="p-6 bg-secondary/5 border-2 border-dashed border-secondary/20 rounded-2xl">
-                <h4 className="font-bold mb-2 text-primary">{t("assessment.summary")} {name}</h4>
-                <div className="flex justify-center gap-4 text-sm font-semibold">
-                   <span className="text-secondary">{selectedInterests.length} {t("assessment.interestsSelected")}</span>
-                   <span className="text-accent">{selectedStrengths.length} {t("assessment.strengthsIdentified")}</span>
-                </div>
-              </div>
-              
-              <div className="flex gap-4">
-                <Button variant="outline" onClick={() => setStep(3)} className="flex-1">
-                  <ArrowLeft className="mr-2" /> {t("assessment.back")}
-                </Button>
-                <Button onClick={handleSubmit} className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <><Loader2 className="mr-2 animate-spin" /> {t("assessment.analyzing")}</>
-                  ) : (
-                    <><Sparkles className="mr-2" /> {t("assessment.generate")}</>
-                  )}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {step === 5 && result && (
-          <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <Card className="border-none shadow-2xl bg-gradient-to-br from-primary via-secondary to-accent text-white overflow-hidden">
-              <CardHeader className="text-center pb-2 relative">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="absolute right-4 top-4 rounded-full bg-white/10 hover:bg-white/20 text-white"
-                  onClick={handleShareResults}
-                >
-                  <Share2 size={20} />
-                </Button>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider mx-auto mb-2">
-                  {t("assessment.topRecommendation")}
-                </div>
-                <CardTitle className="text-3xl md:text-4xl">{result.mostSuitableStream}</CardTitle>
+            <Card className="border-none shadow-xl">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl font-bold leading-tight">
+                  {questions[currentQuestionIndex].question[language]}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="text-center pt-0">
-                <div className="text-5xl font-bold mb-6">
-                  {Math.round(result.streamCompatibility.find(s => s.streamName === result.mostSuitableStream)?.compatibilityPercentage || 0)}%
-                  <span className="text-xl font-normal opacity-80 ml-1">{t("assessment.match")}</span>
+              <CardContent className="grid gap-4">
+                {questions[currentQuestionIndex].options.map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => handleAnswerSelect(opt.id)}
+                    className={cn(
+                      "w-full text-left p-6 rounded-2xl border-2 transition-all group flex items-center justify-between",
+                      answers[questions[currentQuestionIndex].id] === opt.id
+                        ? "border-primary bg-primary/5 shadow-md"
+                        : "border-slate-100 hover:border-slate-200 hover:bg-slate-50"
+                    )}
+                  >
+                    <span className="text-lg font-medium group-hover:translate-x-1 transition-transform">
+                      {opt.text[language]}
+                    </span>
+                    {answers[questions[currentQuestionIndex].id] === opt.id && <CheckCircle2 className="text-primary" />}
+                  </button>
+                ))}
+              </CardContent>
+            </Card>
+
+            <div className="flex justify-between items-center text-slate-400">
+              <button 
+                onClick={() => currentQuestionIndex > 0 ? setCurrentQuestionIndex(prev => prev - 1) : setStep(0)}
+                className="flex items-center gap-2 hover:text-slate-600 transition-colors"
+              >
+                <ArrowLeft size={18} /> Back
+              </button>
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div className="h-[60vh] flex flex-col items-center justify-center text-center gap-6">
+            <Loader2 className="animate-spin text-primary" size={64} />
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold">Consulting the Oracle...</h2>
+              <p className="text-slate-500">Our AI is analyzing your unique Kitahack profile.</p>
+            </div>
+          </div>
+        )}
+
+        {step === 3 && result && (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <Card className="border-none shadow-2xl bg-gradient-to-br from-indigo-600 to-primary text-white overflow-hidden">
+              <CardHeader className="text-center relative pt-12 pb-6">
+                <div className="absolute top-4 right-4">
+                  <Button variant="ghost" size="icon" onClick={handleShare} className="text-white hover:bg-white/10 rounded-full">
+                    <Share2 size={24} />
+                  </Button>
                 </div>
-                <p className="text-lg leading-relaxed opacity-90 max-w-xl mx-auto italic bg-black/10 p-4 rounded-xl">
-                  "{result.keyInsights}"
-                </p>
+                <div className="inline-block px-4 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+                  Oracle Recommendation
+                </div>
+                <CardTitle className="text-4xl md:text-5xl font-black mb-2">{result.mostSuitableStream}</CardTitle>
+                <CardDescription className="text-white/80 text-xl font-medium italic">
+                  "{result.personalityProfile}"
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center pb-12">
+                <div className="bg-black/20 p-8 rounded-3xl backdrop-blur-sm max-w-lg mx-auto">
+                  <p className="text-lg leading-relaxed mb-8">
+                    {result.keyInsights}
+                  </p>
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="h-[1px] bg-white/30 flex-grow" />
+                    <span className="text-sm font-bold uppercase tracking-widest text-white/60">Careers</span>
+                    <div className="h-[1px] bg-white/30 flex-grow" />
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-3 mt-6">
+                    {result.suggestedCareers.map(career => (
+                      <div key={career} className="bg-white text-primary px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg">
+                        <Briefcase size={16} /> {career}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
             <div className="grid gap-6">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <CheckCircle2 className="text-secondary" /> {t("assessment.otherStreams")}
+              <h3 className="text-xl font-bold flex items-center gap-2 text-slate-800">
+                <CheckCircle2 className="text-green-500" /> Full Analysis
               </h3>
               <div className="grid gap-4">
-                {result.streamCompatibility
-                  .filter(s => s.streamName !== result.mostSuitableStream)
-                  .sort((a, b) => b.compatibilityPercentage - a.compatibilityPercentage)
-                  .map((stream) => (
-                  <div key={stream.streamName} className="bg-background p-4 rounded-xl border-l-4 border-l-accent shadow-sm flex items-center justify-between">
-                    <div>
-                      <h4 className="font-bold">{stream.streamName}</h4>
+                {result.streamCompatibility.map((stream) => (
+                  <div key={stream.streamName} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+                    <div className="space-y-1">
+                      <h4 className="font-bold text-slate-800">{stream.streamName}</h4>
+                      <Progress value={stream.compatibilityPercentage} className="w-32 h-2" />
                     </div>
-                    <div className="flex items-center gap-4">
-                      <Progress value={stream.compatibilityPercentage} className="w-24 h-2 bg-accent/20" />
-                      <span className="font-bold text-accent">{Math.round(stream.compatibilityPercentage)}%</span>
-                    </div>
+                    <span className="text-2xl font-black text-primary">{Math.round(stream.compatibilityPercentage)}%</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Button onClick={handleShareResults} variant="outline" size="lg" className="flex-1 rounded-full border-secondary text-secondary hover:bg-secondary/5">
-                <Share2 className="mr-2" size={18} /> {language === 'en' ? 'Share Results' : 'Kongsi Keputusan'}
-              </Button>
-              <Button asChild size="lg" className="flex-1 rounded-full bg-primary hover:bg-primary/90">
-                <Link href="/dashboard">{t("assessment.viewDashboard")}</Link>
-              </Button>
+            <div className="flex gap-4">
+               <Button asChild size="lg" className="flex-1 h-16 rounded-2xl text-lg shadow-xl hover:scale-[1.02] transition-transform">
+                 <Link href="/dashboard">Return to Dashboard</Link>
+               </Button>
             </div>
           </div>
         )}

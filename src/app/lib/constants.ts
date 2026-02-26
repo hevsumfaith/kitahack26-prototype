@@ -1,110 +1,91 @@
-export const AVAILABLE_STREAMS = [
+export const CAREER_TEST_QUESTIONS = [
   {
-    id: "pure-science",
-    streamName: { en: "Pure Science", ms: "Sains Tulen" },
-    description: { 
-      en: "Focuses on fundamental sciences and mathematics, ideal for those aiming for medicine, engineering, or pure research careers.",
-      ms: "Memberi tumpuan kepada sains asas dan matematik, sesuai bagi mereka yang mensasarkan kerjaya perubatan, kejuruteraan, atau penyelidikan tulen."
+    id: 1,
+    type: "stream",
+    question: {
+      en: "What kind of projects do you enjoy most?",
+      ms: "Apakah jenis projek yang paling anda gemari?"
     },
-    subjects: {
-      en: ["Biology", "Chemistry", "Physics", "Additional Mathematics"],
-      ms: ["Biologi", "Kimia", "Fizik", "Matematik Tambahan"]
-    },
-    careerPaths: {
-      en: ["Doctor", "Engineer", "Scientist", "Pharmacist", "Data Scientist"],
-      ms: ["Doktor", "Jurutera", "Saintis", "Ahli Farmasi", "Saintis Data"]
-    }
+    options: [
+      { id: "A", text: { en: "Solving complex math or science puzzles", ms: "Menyelesaikan teka-teki matematik atau sains yang kompleks" } },
+      { id: "B", text: { en: "Writing stories or creating artwork", ms: "Menulis cerita atau mencipta karya seni" } },
+      { id: "C", text: { en: "Building models or fixing machines", ms: "Membina model atau membaiki mesin" } },
+      { id: "D", text: { en: "Planning a small business or managing funds", ms: "Merancang perniagaan kecil atau mengurus dana" } }
+    ]
   },
   {
-    id: "stem",
-    streamName: { en: "Science & Technology (STEM)", ms: "Sains & Teknologi (STEM)" },
-    description: {
-      en: "Integrates science with technical skills like computing or design, preparing students for the digital and technical economy.",
-      ms: "Mengintegrasikan sains dengan kemahiran teknikal seperti perkomputeran atau reka bentuk, menyediakan pelajar untuk ekonomi digital dan teknikal."
+    id: 2,
+    type: "stream",
+    question: {
+      en: "Which subject attracts you the most?",
+      ms: "Subjek manakah yang paling menarik minat anda?"
     },
-    subjects: {
-      en: ["Physics", "Chemistry", "Computer Science", "Additional Mathematics", "Engineering Drawing"],
-      ms: ["Fizik", "Kimia", "Sains Komputer", "Matematik Tambahan", "Lukisan Kejuruteraan"]
+    options: [
+      { id: "A", text: { en: "Biology, Chemistry, or Physics", ms: "Biologi, Kimia, atau Fizik" } },
+      { id: "B", text: { en: "Literature, Languages, or History", ms: "Sastera, Bahasa, atau Sejarah" } },
+      { id: "C", text: { en: "Design Technology or Computer Science", ms: "Reka Cipta atau Sains Komputer" } },
+      { id: "D", text: { en: "Economics or Accounting", ms: "Ekonomi atau Perakaunan" } }
+    ]
+  },
+  {
+    id: 3,
+    type: "stream",
+    question: {
+      en: "How do you prefer to spend your free time?",
+      ms: "Bagaimanakah anda lebih suka menghabiskan masa lapang anda?"
     },
-    careerPaths: {
-      en: ["Software Engineer", "Architect", "UX Designer", "Robotics Specialist"],
-      ms: ["Jurutera Perisian", "Arkitek", "Pereka UX", "Pakar Robotik"]
-    }
+    options: [
+      { id: "A", text: { en: "Reading about new discoveries", ms: "Membaca tentang penemuan baru" } },
+      { id: "B", text: { en: "Drawing, playing music, or writing", ms: "Melukis, bermain muzik, atau menulis" } },
+      { id: "C", text: { en: "DIY projects or gaming", ms: "Projek DIY atau bermain permainan video" } },
+      { id: "D", text: { en: "Following market trends or organizing events", ms: "Mengikuti trend pasaran atau menganjurkan acara" } }
+    ]
+  },
+  {
+    id: 4,
+    type: "personality",
+    question: {
+      en: "How do you feel after a long day of socializing?",
+      ms: "Bagaimanakah perasaan anda selepas seharian bersosialisasi?"
+    },
+    options: [
+      { id: "E", text: { en: "Energized and excited", ms: "Bertenaga dan teruja" } },
+      { id: "I", text: { en: "Tired and needing quiet time", ms: "Penat dan memerlukan masa bersendirian" } }
+    ]
+  },
+  {
+    id: 5,
+    type: "personality",
+    question: {
+      en: "In a group project, do you prefer to:",
+      ms: "Dalam projek berkumpulan, adakah anda lebih suka untuk:"
+    },
+    options: [
+      { id: "E", text: { en: "Lead the presentation and discussion", ms: "Mengetuai pembentangan dan perbincangan" } },
+      { id: "I", text: { en: "Work on the research and details behind the scenes", ms: "Melakukan penyelidikan dan perincian di sebalik tabir" } }
+    ]
+  }
+];
+
+export const AVAILABLE_STREAMS = [
+  {
+    id: "science",
+    streamName: { en: "Science Stream", ms: "Aliran Sains" },
+    description: { en: "The Logic Seekers", ms: "Pencari Logik" }
   },
   {
     id: "arts",
     streamName: { en: "Arts & Humanities", ms: "Sastera & Kemanusiaan" },
-    description: {
-      en: "Focuses on human culture, languages, and literature. Great for students with strong communication and creative skills.",
-      ms: "Memberi tumpuan kepada budaya manusia, bahasa, dan sastera. Hebat untuk pelajar yang mempunyai kemahiran komunikasi dan kreatif yang kuat."
-    },
-    subjects: {
-      en: ["Literature in English", "Visual Arts", "History", "Geography", "Music"],
-      ms: ["Kesusasteraan Inggeris", "Seni Visual", "Sejarah", "Geografi", "Muzik"]
-    },
-    careerPaths: {
-      en: ["Journalist", "Lawyer", "Designer", "Educator", "Diplomat"],
-      ms: ["Wartawan", "Peguam", "Pereka", "Pendidik", "Diplomat"]
-    }
+    description: { en: "The Storytellers", ms: "Pencerita" }
   },
   {
-    id: "commerce",
-    streamName: { en: "Commerce & Business", ms: "Perdagangan & Perniagaan" },
-    description: {
-      en: "Teaches the principles of business, finance, and economics. Ideal for future entrepreneurs and corporate leaders.",
-      ms: "Mengajar prinsip perniagaan, kewangan, dan ekonomi. Sesuai untuk usahawan masa depan dan pemimpin korporat."
-    },
-    subjects: {
-      en: ["Principles of Accounting", "Economics", "Business Studies", "Basic Mathematics"],
-      ms: ["Prinsip Perakaunan", "Ekonomi", "Pengajian Perniagaan", "Matematik Asas"]
-    },
-    careerPaths: {
-      en: ["Accountant", "Entrepreneur", "Marketing Manager", "Banker", "Economist"],
-      ms: ["Akauntan", "Usahawan", "Pengurus Pemasaran", "Banker", "Ahli Ekonomi"]
-    }
+    id: "tvet",
+    streamName: { en: "TVET / Vocational", ms: "TVET / Vokasional" },
+    description: { en: "The Makers", ms: "Pembuat" }
   },
   {
-    id: "technical",
-    streamName: { en: "Technical & Vocational", ms: "Teknikal & Vokasional" },
-    description: {
-      en: "Hands-on learning focusing on practical skills and specific trades.",
-      ms: "Pembelajaran praktikal yang memberi tumpuan kepada kemahiran praktikal dan bidang kemahiran khusus."
-    },
-    subjects: {
-      en: ["Invention", "Household Science", "Sports Science", "Technical Skills"],
-      ms: ["Reka Cipta", "Sains Rumah Tangga", "Sains Sukan", "Kemahiran Teknikal"]
-    },
-    careerPaths: {
-      en: ["Athletic Trainer", "Professional Chef", "Product Designer", "Technician"],
-      ms: ["Jurulatih Olahraga", "Cef Profesional", "Pereka Produk", "Juruteknik"]
-    }
+    id: "business",
+    streamName: { en: "Business & Accountancy", ms: "Perniagaan & Perakaunan" },
+    description: { en: "The Strategists", ms: "Ahli Strategi" }
   }
-];
-
-export const INTEREST_CATEGORIES = [
-  { en: "Solving complex mathematical puzzles", ms: "Menyelesaikan teka-teki matematik yang kompleks" },
-  { en: "Conducting laboratory experiments", ms: "Menjalankan eksperimen makmal" },
-  { en: "Exploring literature and creative writing", ms: "Meneroka sastera dan penulisan kreatif" },
-  { en: "Digital art and graphic design", ms: "Seni digital dan reka bentuk grafik" },
-  { en: "Coding and software development", ms: "Pengekodan dan pembangunan perisian" },
-  { en: "Volunteering and social work", ms: "Kerja sukarela dan kerja sosial" },
-  { en: "Mechanical repairs and DIY projects", ms: "Pembaikan mekanikal dan projek DIY" },
-  { en: "Public speaking and debating", ms: "Pengucapan awam dan perdebatan" },
-  { en: "Financial markets and entrepreneurship", ms: "Pasaran kewangan dan keusahawanan" },
-  { en: "Learning about global history and politics", ms: "Belajar tentang sejarah global dan politik" },
-  { en: "Environmental conservation and nature", ms: "Pemuliharaan alam sekitar dan alam semula jadi" },
-  { en: "Psychology and understanding human behavior", ms: "Psikologi dan memahami tingkah laku manusia" }
-];
-
-export const STRENGTHS_LIST = [
-  { en: "Analytical Thinking", ms: "Pemikiran Analitikal" },
-  { en: "Creative Problem Solving", ms: "Penyelesaian Masalah Kreatif" },
-  { en: "Effective Communication", ms: "Komunikasi Berkesan" },
-  { en: "Mathematical Aptitude", ms: "Bakat Matematik" },
-  { en: "Scientific Curiosity", ms: "Sifat Ingin Tahu Saintifik" },
-  { en: "Team Leadership", ms: "Kepimpinan Pasukan" },
-  { en: "Meticulous Attention to Detail", ms: "Ketelitian Terhadap Perincian" },
-  { en: "Technical Troubleshooting", ms: "Penyelesaian Masalah Teknikal" },
-  { en: "Empathetic Reasoning", ms: "Penaakulan Empati" },
-  { en: "Strategic Planning", ms: "Perancangan Strategik" }
 ];

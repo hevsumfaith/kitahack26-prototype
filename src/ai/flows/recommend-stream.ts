@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview This file implements a Genkit flow for recommending a suitable Form 4 stream to students.
+ * @fileOverview This file implements the HalaTuju Career Oracle Genkit flow.
  *
- * - recommendStream - A function that handles the stream recommendation process.
+ * - recommendStream - A function that handles the Kitahack Career Test logic.
  * - RecommendStreamInput - The input type for the recommendStream function.
  * - RecommendStreamOutput - The return type for the recommendStream function.
  */
@@ -12,41 +12,9 @@ import {z} from 'genkit';
 
 const RecommendStreamInputSchema = z.object({
   studentName: z.string().describe('The name of the student.'),
-  language: z.enum(['en', 'ms']).default('en').describe('The output language for insights.'),
-  assessmentResults: z
-    .array(
-      z.object({
-        assessmentName: z.string().describe('Name of the assessment (e.g., Aptitude Test, Personality Quiz).'),
-        score: z
-          .number()
-          .optional()
-          .describe('Numerical score from the assessment, if applicable.'),
-        qualitativeResult: z
-          .string()
-          .optional()
-          .describe('Qualitative description or summary of the assessment result, if applicable.'),
-      })
-    )
-    .describe('Results from various aptitude and interest assessments.'),
-  strengths: z
-    .array(z.string())
-    .describe('List of student strengths identified through assessments or self-reflection.'),
-  interests: z
-    .array(z.string())
-    .describe('List of student interests identified through assessments or self-reflection.'),
-  availableStreams: z
-    .array(
-      z.object({
-        streamName: z.string().describe('The name of the Form 4 stream (e.g., Science, Arts, Technical).'),
-        description: z.string().describe('A brief description of the stream.'),
-        subjects: z.array(z.string()).describe('Key subjects offered in this stream.'),
-        careerPaths: z
-          .array(z.string())
-          .optional()
-          .describe('Potential career paths associated with this stream.'),
-      })
-    )
-    .describe('A list of all available Form 4 streams with their details.'),
+  language: z.enum(['en', 'ms']).default('en').describe('The output language.'),
+  streamAnswers: z.array(z.string()).describe('Array of answers (A, B, C, or D) from the stream preference section.'),
+  personalityAnswers: z.array(z.string()).describe('Array of answers (I or E) from the personality section.'),
 });
 export type RecommendStreamInput = z.infer<typeof RecommendStreamInputSchema>;
 
@@ -55,22 +23,14 @@ const RecommendStreamOutputSchema = z.object({
     .array(
       z.object({
         streamName: z.string().describe('The name of the Form 4 stream.'),
-        compatibilityPercentage: z
-          .number()
-          .min(0)
-          .max(100)
-          .describe('The calculated compatibility percentage (0-100) for this stream.'),
+        compatibilityPercentage: z.number().min(0).max(100),
       })
     )
-    .describe('A list of available streams with their calculated compatibility percentages.'),
-  mostSuitableStream: z
-    .string()
-    .describe('The name of the Form 4 stream identified as most suitable.'),
-  keyInsights: z
-    .string()
-    .describe(
-      'A detailed explanation of why the recommended stream is suitable, referencing student strengths, interests, and assessment results.'
-    ),
+    .describe('Compatibility percentages for all 4 streams.'),
+  mostSuitableStream: z.string().describe('The name of the recommended stream.'),
+  personalityProfile: z.string().describe('A catchy personality title (e.g., The Technical Thinker).'),
+  keyInsights: z.string().describe('A 2-sentence encouraging explanation of WHY they fit this stream.'),
+  suggestedCareers: z.array(z.string()).describe('List of 2 specific jobs from the career matrix.'),
 });
 export type RecommendStreamOutput = z.infer<typeof RecommendStreamOutputSchema>;
 
@@ -78,39 +38,41 @@ export async function recommendStream(input: RecommendStreamInput): Promise<Reco
   return recommendStreamFlow(input);
 }
 
-const streamRecommendationPrompt = ai.definePrompt({
-  name: 'streamRecommendationPrompt',
+const oraclePrompt = ai.definePrompt({
+  name: 'oraclePrompt',
   input: {schema: RecommendStreamInputSchema},
   output: {schema: RecommendStreamOutputSchema},
-  prompt: `You are an expert educational counselor in Malaysia. Your goal is to logicially calculate the compatibility of a student with various academic streams.
+  prompt: `You are the "HalaTuju Career Oracle," a specialized AI advisor for Malaysian secondary school students. Your mission is to analyze student assessment data and provide a highly accurate Form 4 stream recommendation based on the "Kitahack Career Test" logic.
 
-Language Output Instruction: Provide the 'keyInsights' in the requested language: {{{language}}}. (en = English, ms = Bahasa Melayu).
+### SCORING LOGIC:
+1. PRIMARY STREAM:
+   - MOSTLY A: Science Stream (The Logic Seekers)
+   - MOSTLY B: Arts & Humanities Stream (The Storytellers)
+   - MOSTLY C: TVET / Vocational Stream (The Makers)
+   - MOSTLY D: Business & Accountancy Stream (The Strategists)
 
-Logic Guidelines:
-1. Weight Interests at 60%: A student's passion is the primary driver for long-term success.
-2. Weight Strengths at 40%: Natural aptitudes indicate the student's ease of learning specific subjects.
-3. Penalty: If a student's interests are purely creative but the stream is purely technical, compatibility should not exceed 50% unless they possess overlapping strengths like "Attention to Detail".
+2. PERSONALITY (MBTI-Light):
+   - Determine if the user is "Extrovert" (E) or "Introvert" (I) based on the majority of personalityAnswers.
 
-Student Profile:
-Name: {{{studentName}}}
+### CAREER MAPPING MATRIX:
+Recommend careers based on the Stream + Personality combination:
+- Science + E: Medical Doctor, Project Engineer.
+- Science + I: Data Scientist, Research Lab Chemist.
+- Arts + E: Public Relations Specialist, Lawyer.
+- Arts + I: Content Writer, Digital Illustrator.
+- TVET + E: Aviation Cabin Crew, Chef de Cuisine.
+- TVET + I: Software Developer, Automotive Specialist.
+- Business + E: Entrepreneur, Marketing Manager.
+- Business + I: Investment Analyst, Accountant.
 
-Interests:
-{{#each interests}} - {{{this}}} {{/each}}
+### TONE:
+Encouraging, professional, and clear. Use "HalaTuju" branding. Output language: {{{language}}}.
 
-Strengths:
-{{#each strengths}} - {{{this}}} {{/each}}
+Student: {{{studentName}}}
+Stream Answers: {{#each streamAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+Personality Answers: {{#each personalityAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
 
-Available Streams:
-{{#each availableStreams}}
-- Stream: {{{streamName}}}
-  Focus: {{{description}}}
-  Subjects: {{#each subjects}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
-{{/each}}
-
-Calculate a compatibility percentage for EVERY stream. Identify the 'mostSuitableStream'.
-In 'keyInsights', explain the LOGIC used: point out exactly which interests matched which subjects, and how their strengths will help them excel in this specific stream. Use the language {{{language}}}.
-
-Ensure output is valid JSON according to the schema.`,
+Calculate results and return strictly valid JSON.`,
 });
 
 const recommendStreamFlow = ai.defineFlow(
@@ -120,7 +82,7 @@ const recommendStreamFlow = ai.defineFlow(
     outputSchema: RecommendStreamOutputSchema,
   },
   async input => {
-    const {output} = await streamRecommendationPrompt(input);
+    const {output} = await oraclePrompt(input);
     return output!;
   }
 );
