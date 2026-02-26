@@ -11,6 +11,7 @@ const RecommendStreamInputSchema = z.object({
   language: z.enum(['en', 'ms']).default('en').describe('The output language.'),
   streamAnswers: z.array(z.string()).describe('Array of 40 answers (A, B, C, or D) from the stream preference section.'),
   personalityAnswers: z.array(z.string()).describe('Array of 20 answers (I or E) from the personality section.'),
+  problemSolvingAnswers: z.array(z.string()).describe('Array of 30 answers (A, B, C, or D) from the problem solving section.'),
 });
 export type RecommendStreamInput = z.infer<typeof RecommendStreamInputSchema>;
 
@@ -22,7 +23,7 @@ const RecommendStreamOutputSchema = z.object({
         compatibilityPercentage: z.number().min(0).max(100),
       })
     )
-    .describe('Compatibility percentages for all 4 streams based on the 40 stream answers.'),
+    .describe('Compatibility percentages for all 4 streams based on the combined raw data.'),
   mostSuitableStream: z.string().describe('The name of the recommended stream.'),
   personalityProfile: z.string().describe('A catchy personality title based on I vs E majority.'),
   keyInsights: z.string().describe('A 2-sentence explanation of WHY they fit this stream.'),
@@ -38,23 +39,25 @@ const oraclePrompt = ai.definePrompt({
   name: 'oraclePrompt',
   input: {schema: RecommendStreamInputSchema},
   output: {schema: RecommendStreamOutputSchema},
-  prompt: `You are the "HalaTuju Career Oracle," a specialized AI advisor for Malaysian secondary school students. Your mission is to analyze a comprehensive set of 60 answers to provide a high-accuracy Form 4 stream recommendation.
+  prompt: `You are the "HalaTuju Career Oracle," a specialized AI advisor for Malaysian secondary school students. Your mission is to analyze 90 assessment answers to provide a high-accuracy Form 4 stream recommendation.
 
 ### DATA:
 Student: {{{studentName}}}
-Stream Preference Raw Data (40 answers): {{#each streamAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
-Personality Raw Data (20 answers): {{#each personalityAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+1. Stream Preference (40 answers): {{#each streamAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+2. Personality Profile (20 answers): {{#each personalityAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+3. Problem Solving Aptitude (30 answers): {{#each problemSolvingAnswers}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
 
 ### SCORING LOGIC:
-1. PRIMARY STREAM (40 points max):
+1. TOTAL DOMAIN SCORE (70 points total):
+   - Combine Stream Preference (40) and Problem Solving (30).
    - Count A (Science), B (Arts), C (TVET), D (Business).
-   - Set compatibility percentages relative to these counts.
    - MOSTLY A: Science Stream
    - MOSTLY B: Arts & Humanities Stream
    - MOSTLY C: TVET / Vocational Stream
    - MOSTLY D: Business & Accountancy Stream
+   - Calculate compatibility percentages for all four streams relative to these 70 data points.
 
-2. PERSONALITY (20 points max):
+2. PERSONALITY (20 points total):
    - Majority I = Introvert, Majority E = Extrovert.
 
 ### CAREER MAPPING MATRIX:

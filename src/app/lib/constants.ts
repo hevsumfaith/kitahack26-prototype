@@ -240,7 +240,6 @@ export const CAREER_TEST_QUESTIONS = [
       { id: "D", text: { en: "Profitability and scale", ms: "Keuntungan dan skala" } }
     ]
   },
-  // Adding questions 21-40 with similar logic
   {
     id: 21,
     type: "stream",
@@ -486,7 +485,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 41,
     type: "personality",
-    section: "Social Preference",
+    section: "Personality & Style",
     question: { en: "How do you feel after a long day of socializing?", ms: "Bagaimanakah perasaan anda selepas seharian bersosialisasi?" },
     options: [
       { id: "E", text: { en: "Energized and excited", ms: "Bertenaga dan teruja" } },
@@ -496,7 +495,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 42,
     type: "personality",
-    section: "Social Preference",
+    section: "Personality & Style",
     question: { en: "In a group project, do you prefer to:", ms: "Dalam projek berkumpulan, adakah anda lebih suka untuk:" },
     options: [
       { id: "E", text: { en: "Lead the presentation and discussion", ms: "Mengetuai pembentangan dan perbincangan" } },
@@ -506,7 +505,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 43,
     type: "personality",
-    section: "Decision Making",
+    section: "Personality & Style",
     question: { en: "When meeting new people, you:", ms: "Apabila bertemu orang baru, anda:" },
     options: [
       { id: "E", text: { en: "Start the conversation easily", ms: "Mulakan perbualan dengan mudah" } },
@@ -516,7 +515,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 44,
     type: "personality",
-    section: "Work Style",
+    section: "Personality & Style",
     question: { en: "Do you prefer to work in:", ms: "Adakah anda lebih suka bekerja di:" },
     options: [
       { id: "E", text: { en: "A busy office with many people", ms: "Pejabat yang sibuk dengan ramai orang" } },
@@ -526,7 +525,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 45,
     type: "personality",
-    section: "Public Speaking",
+    section: "Personality & Style",
     question: { en: "Giving a speech to 100 people sounds:", ms: "Memberi ucapan kepada 100 orang kedengaran:" },
     options: [
       { id: "E", text: { en: "Exciting and fun", ms: "Mengujakan dan menyeronokkan" } },
@@ -536,7 +535,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 46,
     type: "personality",
-    section: "Thought Process",
+    section: "Personality & Style",
     question: { en: "Do you usually think out loud?", ms: "Adakah anda biasanya berfikir secara lantang?" },
     options: [
       { id: "E", text: { en: "Yes, I process thoughts by talking", ms: "Ya, saya memproses pemikiran dengan bercakap" } },
@@ -546,7 +545,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 47,
     type: "personality",
-    section: "Attention",
+    section: "Personality & Style",
     question: { en: "Being the center of attention makes you:", ms: "Menjadi pusat perhatian membuatkan anda:" },
     options: [
       { id: "E", text: { en: "Feel comfortable and noticed", ms: "Berasa selesa dan diperhatikan" } },
@@ -556,7 +555,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 48,
     type: "personality",
-    section: "Friendship",
+    section: "Personality & Style",
     question: { en: "Do you have:", ms: "Adakah anda mempunyai:" },
     options: [
       { id: "E", text: { en: "A large circle of many friends", ms: "Lingkaran rakan yang luas" } },
@@ -566,7 +565,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 49,
     type: "personality",
-    section: "Social Interaction",
+    section: "Personality & Style",
     question: { en: "On a Friday night, you'd rather:", ms: "Pada malam Jumaat, anda lebih suka:" },
     options: [
       { id: "E", text: { en: "Go to a party or gathering", ms: "Pergi ke parti atau perjumpaan" } },
@@ -576,7 +575,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 50,
     type: "personality",
-    section: "Meetings",
+    section: "Personality & Style",
     question: { en: "In school assemblies, you usually:", ms: "Dalam perhimpunan sekolah, anda biasanya:" },
     options: [
       { id: "E", text: { en: "Sit with a big group and chat", ms: "Duduk dengan kumpulan besar dan bersembang" } },
@@ -586,7 +585,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 51,
     type: "personality",
-    section: "Feedback",
+    section: "Personality & Style",
     question: { en: "You prefer feedback delivered:", ms: "Anda lebih suka maklum balas disampaikan:" },
     options: [
       { id: "E", text: { en: "In an open team discussion", ms: "Dalam perbincangan pasukan terbuka" } },
@@ -596,7 +595,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 52,
     type: "personality",
-    section: "Conflict",
+    section: "Personality & Style",
     question: { en: "When there is a conflict, you:", ms: "Apabila ada konflik, anda:" },
     options: [
       { id: "E", text: { en: "Talk it out immediately", ms: "Bincangkannya dengan segera" } },
@@ -606,7 +605,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 53,
     type: "personality",
-    section: "Energy",
+    section: "Personality & Style",
     question: { en: "Your energy levels are highest when:", ms: "Tahap tenaga anda paling tinggi apabila:" },
     options: [
       { id: "E", text: { en: "Collaborating with others", ms: "Bekerjasama dengan orang lain" } },
@@ -616,7 +615,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 54,
     type: "personality",
-    section: "Idea Generation",
+    section: "Personality & Style",
     question: { en: "When brainstorming, you:", ms: "Apabila menjana idea, anda:" },
     options: [
       { id: "E", text: { en: "Shout out ideas as they come", ms: "Menyuarakan idea sebaik sahaja ia muncul" } },
@@ -626,7 +625,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 55,
     type: "personality",
-    section: "Style",
+    section: "Personality & Style",
     question: { en: "People describe you as:", ms: "Orang menggambarkan anda sebagai:" },
     options: [
       { id: "E", text: { en: "Outgoing and friendly", ms: "Peramah dan mesra" } },
@@ -636,7 +635,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 56,
     type: "personality",
-    section: "Weekends",
+    section: "Personality & Style",
     question: { en: "A perfect weekend involves:", ms: "Hujung minggu yang sempurna melibatkan:" },
     options: [
       { id: "E", text: { en: "Meeting new people at an event", ms: "Bertemu orang baru di sebuah majlis" } },
@@ -646,7 +645,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 57,
     type: "personality",
-    section: "Phone Habits",
+    section: "Personality & Style",
     question: { en: "You prefer to:", ms: "Anda lebih suka untuk:" },
     options: [
       { id: "E", text: { en: "Call someone for a quick chat", ms: "Menelefon seseorang untuk sembang ringkas" } },
@@ -656,7 +655,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 58,
     type: "personality",
-    section: "New Environments",
+    section: "Personality & Style",
     question: { en: "In a new class, you:", ms: "Dalam kelas baru, anda:" },
     options: [
       { id: "E", text: { en: "Introduce yourself to neighbors", ms: "Perkenalkan diri kepada rakan sebelah" } },
@@ -666,7 +665,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 59,
     type: "personality",
-    section: "Networking",
+    section: "Personality & Style",
     question: { en: "The word 'Networking' sounds:", ms: "Perkataan 'Networking' kedengaran:" },
     options: [
       { id: "E", text: { en: "Like a great opportunity", ms: "Seperti peluang yang hebat" } },
@@ -676,11 +675,373 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 60,
     type: "personality",
-    section: "Final Thought",
+    section: "Personality & Style",
     question: { en: "Do you prefer to be the lead actor or director?", ms: "Adakah anda lebih suka menjadi pelakon utama atau pengarah?" },
     options: [
       { id: "E", text: { en: "Lead Actor (in the spotlight)", ms: "Pelakon Utama (menjadi tumpuan)" } },
       { id: "I", text: { en: "Director (behind the scenes)", ms: "Pengarah (di sebalik tabir)" } }
+    ]
+  },
+
+  // SECTION 3: PROBLEM SOLVING (30 Questions) - Aptitude Domain Testing
+  {
+    id: 61,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Science: Which force keeps planets in orbit?", ms: "Sains: Daya manakah yang mengekalkan planet dalam orbit?" },
+    options: [
+      { id: "A", text: { en: "Gravitational Force", ms: "Daya Graviti" } },
+      { id: "B", text: { en: "Frictional Force", ms: "Daya Geseran" } },
+      { id: "C", text: { en: "Magnetic Force", ms: "Daya Magnet" } },
+      { id: "D", text: { en: "Nuclear Force", ms: "Daya Nuklear" } }
+    ]
+  },
+  {
+    id: 62,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Computer Science: What is the primary purpose of an algorithm?", ms: "Sains Komputer: Apakah tujuan utama algoritma?" },
+    options: [
+      { id: "C", text: { en: "Solving a specific problem efficiently", ms: "Menyelesaikan masalah khusus dengan cekap" } },
+      { id: "A", text: { en: "Storing large amounts of data", ms: "Menyimpan jumlah data yang besar" } },
+      { id: "B", text: { en: "Creating visual graphics", ms: "Mencipta grafik visual" } },
+      { id: "D", text: { en: "Calculating business profits", ms: "Mengira keuntungan perniagaan" } }
+    ]
+  },
+  {
+    id: 63,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Arts: Which color combination creates purple?", ms: "Seni: Gabungan warna manakah yang menghasilkan ungu?" },
+    options: [
+      { id: "B", text: { en: "Red and Blue", ms: "Merah dan Biru" } },
+      { id: "A", text: { en: "Yellow and Blue", ms: "Kuning dan Biru" } },
+      { id: "C", text: { en: "Red and Yellow", ms: "Merah dan Kuning" } },
+      { id: "D", text: { en: "Black and White", ms: "Hitam dan Putih" } }
+    ]
+  },
+  {
+    id: 64,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Business: What happens to price when supply is low but demand is high?", ms: "Perniagaan: Apakah yang berlaku kepada harga apabila bekalan rendah tetapi permintaan tinggi?" },
+    options: [
+      { id: "D", text: { en: "The price typically increases", ms: "Harga biasanya meningkat" } },
+      { id: "B", text: { en: "The price typically decreases", ms: "Harga biasanya menurun" } },
+      { id: "A", text: { en: "The price remains the same", ms: "Harga kekal sama" } },
+      { id: "C", text: { en: "Production stops immediately", ms: "Pengeluaran berhenti serta-merta" } }
+    ]
+  },
+  {
+    id: 65,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Chemistry: Which gas is essential for human respiration?", ms: "Kimia: Gas manakah yang penting untuk pernafasan manusia?" },
+    options: [
+      { id: "A", text: { en: "Oxygen", ms: "Oksigen" } },
+      { id: "C", text: { en: "Carbon Dioxide", ms: "Karbon Dioksida" } },
+      { id: "B", text: { en: "Nitrogen", ms: "Nitrogen" } },
+      { id: "D", text: { en: "Helium", ms: "Helium" } }
+    ]
+  },
+  {
+    id: 66,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Engineering: What is the main function of a lever?", ms: "Kejuruteraan: Apakah fungsi utama tuas?" },
+    options: [
+      { id: "C", text: { en: "To reduce the effort needed to move a load", ms: "Mengurangkan usaha yang diperlukan untuk menggerakkan beban" } },
+      { id: "A", text: { en: "To measure precise distances", ms: "Mengukur jarak yang tepat" } },
+      { id: "B", text: { en: "To store electrical energy", ms: "Menyimpan tenaga elektrik" } },
+      { id: "D", text: { en: "To increase chemical reactions", ms: "Meningkatkan tindak balas kimia" } }
+    ]
+  },
+  {
+    id: 67,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Linguistics: In a sentence, what part of speech describes an action?", ms: "Linguistik: Dalam ayat, bahagian ucapan manakah yang menerangkan tindakan?" },
+    options: [
+      { id: "B", text: { en: "Verb", ms: "Kata Kerja" } },
+      { id: "A", text: { en: "Noun", ms: "Kata Nama" } },
+      { id: "C", text: { en: "Adjective", ms: "Kata Sifat" } },
+      { id: "D", text: { en: "Preposition", ms: "Kata Depan" } }
+    ]
+  },
+  {
+    id: 68,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Maths: If a triangle has angles of 60° and 60°, what is the third angle?", ms: "Matematik: Jika sebuah segitiga mempunyai sudut 60° dan 60°, apakah sudut ketiga?" },
+    options: [
+      { id: "A", text: { en: "60°", ms: "60°" } },
+      { id: "C", text: { en: "90°", ms: "90°" } },
+      { id: "B", text: { en: "180°", ms: "180°" } },
+      { id: "D", text: { en: "45°", ms: "45°" } }
+    ]
+  },
+  {
+    id: 69,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Business: What is the main goal of a 'Budget'?", ms: "Perniagaan: Apakah matlamat utama 'Bajet'?" },
+    options: [
+      { id: "D", text: { en: "To manage income and expenses", ms: "Mengurus pendapatan dan perbelanjaan" } },
+      { id: "A", text: { en: "To hire more employees", ms: "Mengambil lebih ramai pekerja" } },
+      { id: "B", text: { en: "To create advertising campaigns", ms: "Mencipta kempen pengiklanan" } },
+      { id: "C", text: { en: "To repair office machinery", ms: "Membaiki mesin pejabat" } }
+    ]
+  },
+  {
+    id: 70,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Biology: Which part of the cell is known as the 'Powerhouse'?", ms: "Biologi: Bahagian sel manakah yang dikenali sebagai 'Powerhouse'?" },
+    options: [
+      { id: "A", text: { en: "Mitochondria", ms: "Mitokondria" } },
+      { id: "C", text: { en: "Nucleus", ms: "Nukleus" } },
+      { id: "B", text: { en: "Cell Membrane", ms: "Membran Sel" } },
+      { id: "D", text: { en: "Cytoplasm", ms: "Sitoplasma" } }
+    ]
+  },
+  {
+    id: 71,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Computer Science: Which of these is a programming language?", ms: "Sains Komputer: Antara berikut, yang manakah bahasa pengaturcaraan?" },
+    options: [
+      { id: "C", text: { en: "Python", ms: "Python" } },
+      { id: "A", text: { en: "Microscope", ms: "Mikroskop" } },
+      { id: "B", text: { en: "Canvas", ms: "Kanvas" } },
+      { id: "D", text: { en: "Ledger", ms: "Lejar" } }
+    ]
+  },
+  {
+    id: 72,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "History: What is the main source of information for historians?", ms: "Sejarah: Apakah sumber maklumat utama bagi ahli sejarah?" },
+    options: [
+      { id: "B", text: { en: "Primary sources like letters and diaries", ms: "Sumber primer seperti surat dan diari" } },
+      { id: "A", text: { en: "Scientific experiments", ms: "Eksperimen saintifik" } },
+      { id: "C", text: { en: "Mathematical equations", ms: "Persamaan matematik" } },
+      { id: "D", text: { en: "Stock market data", ms: "Data pasaran saham" } }
+    ]
+  },
+  {
+    id: 73,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Economics: What is 'Scarcity'?", ms: "Ekonomi: Apakah itu 'Kekurangan' (Scarcity)?" },
+    options: [
+      { id: "D", text: { en: "Unlimited wants but limited resources", ms: "Keinginan tanpa had tetapi sumber terhad" } },
+      { id: "B", text: { en: "Too many products in a store", ms: "Terlalu banyak produk dalam kedai" } },
+      { id: "A", text: { en: "A high scientific result", ms: "Keputusan saintifik yang tinggi" } },
+      { id: "C", text: { en: "A broken machine part", ms: "Bahagian mesin yang rosak" } }
+    ]
+  },
+  {
+    id: 74,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Physics: What is the speed of light approximately?", ms: "Fizik: Berapakah anggaran kelajuan cahaya?" },
+    options: [
+      { id: "A", text: { en: "300,000 km/s", ms: "300,000 km/s" } },
+      { id: "C", text: { en: "1,000 km/h", ms: "1,000 km/h" } },
+      { id: "B", text: { en: "Sounds travel faster than light", ms: "Bunyi bergerak lebih laju daripada cahaya" } },
+      { id: "D", text: { en: "50,000 m/s", ms: "50,000 m/s" } }
+    ]
+  },
+  {
+    id: 75,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Technical: In a simple circuit, what component provides energy?", ms: "Teknikal: Dalam litar mudah, komponen manakah yang membekalkan tenaga?" },
+    options: [
+      { id: "C", text: { en: "Battery", ms: "Bateri" } },
+      { id: "A", text: { en: "Bulb", ms: "Mentol" } },
+      { id: "B", text: { en: "Switch", ms: "Suis" } },
+      { id: "D", text: { en: "Wire", ms: "Wayar" } }
+    ]
+  },
+  {
+    id: 76,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Arts: What are the three primary colors?", ms: "Seni: Apakah tiga warna asas?" },
+    options: [
+      { id: "B", text: { en: "Red, Yellow, Blue", ms: "Merah, Kuning, Biru" } },
+      { id: "A", text: { en: "Green, Orange, Purple", ms: "Hijau, Jingga, Ungu" } },
+      { id: "C", text: { en: "Black, White, Grey", ms: "Hitam, Putih, Kelabu" } },
+      { id: "D", text: { en: "Pink, Cyan, Magenta", ms: "Merah Jambu, Sian, Magenta" } }
+    ]
+  },
+  {
+    id: 77,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Finance: What is compound interest?", ms: "Kewangan: Apakah itu faedah kompaun?" },
+    options: [
+      { id: "D", text: { en: "Interest calculated on the principal and accumulated interest", ms: "Faedah dikira ke atas prinsipal dan faedah terkumpul" } },
+      { id: "A", text: { en: "A flat fee for a loan", ms: "Yuran tetap untuk pinjaman" } },
+      { id: "B", text: { en: "A type of insurance", ms: "Sejenis insurans" } },
+      { id: "C", text: { en: "The cost of building a factory", ms: "Kos membina kilang" } }
+    ]
+  },
+  {
+    id: 78,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Chemistry: What is the pH level of pure water?", ms: "Kimia: Berapakah tahap pH air tulen?" },
+    options: [
+      { id: "A", text: { en: "7 (Neutral)", ms: "7 (Neutral)" } },
+      { id: "B", text: { en: "1 (Acidic)", ms: "1 (Asid)" } },
+      { id: "C", text: { en: "14 (Alkaline)", ms: "14 (Alkali)" } },
+      { id: "D", text: { en: "0", ms: "0" } }
+    ]
+  },
+  {
+    id: 79,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Robotics: What does a 'Sensor' do?", ms: "Robotik: Apakah yang dilakukan oleh 'Sensor'?" },
+    options: [
+      { id: "C", text: { en: "Detects environmental changes and sends signals", ms: "Mengesan perubahan persekitaran dan menghantar isyarat" } },
+      { id: "A", text: { en: "Powers the robot's engine", ms: "Membekalkan kuasa kepada enjin robot" } },
+      { id: "B", text: { en: "Decorates the robot's exterior", ms: "Menghias bahagian luar robot" } },
+      { id: "D", text: { en: "Calculates monthly tax", ms: "Mengira cukai bulanan" } }
+    ]
+  },
+  {
+    id: 80,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Sociology: What is the study of society called?", ms: "Sosiologi: Apakah panggilan bagi kajian tentang masyarakat?" },
+    options: [
+      { id: "B", text: { en: "Sociology", ms: "Sosiologi" } },
+      { id: "A", text: { en: "Biology", ms: "Biologi" } },
+      { id: "C", text: { en: "Mechanics", ms: "Mekanik" } },
+      { id: "D", text: { en: "Accounting", ms: "Perakaunan" } }
+    ]
+  },
+  {
+    id: 81,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Marketing: What is a 'Brand'?", ms: "Pemasaran: Apakah itu 'Jenama'?" },
+    options: [
+      { id: "D", text: { en: "A unique identity for a product", ms: "Identiti unik bagi sesebuah produk" } },
+      { id: "A", text: { en: "A type of scientific formula", ms: "Sejenis formula saintifik" } },
+      { id: "B", text: { en: "The color of a painting", ms: "Warna bagi sebuah lukisan" } },
+      { id: "C", text: { en: "The weight of a machine", ms: "Berat bagi sebuah mesin" } }
+    ]
+  },
+  {
+    id: 82,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Maths: What is the probability of flipping a coin and getting heads?", ms: "Matematik: Apakah kebarangkalian melambung syiling dan mendapat 'heads'?" },
+    options: [
+      { id: "A", text: { en: "50%", ms: "50%" } },
+      { id: "C", text: { en: "100%", ms: "100%" } },
+      { id: "B", text: { en: "25%", ms: "25%" } },
+      { id: "D", text: { en: "0%", ms: "0%" } }
+    ]
+  },
+  {
+    id: 83,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Automotive: What is the main role of an engine?", ms: "Automotif: Apakah peranan utama enjin?" },
+    options: [
+      { id: "C", text: { en: "To convert fuel into mechanical movement", ms: "Menukar bahan api kepada pergerakan mekanikal" } },
+      { id: "A", text: { en: "To cool down the car interior", ms: "Menyejukkan bahagian dalam kereta" } },
+      { id: "B", text: { en: "To play radio music", ms: "Memainkan muzik radio" } },
+      { id: "D", text: { en: "To predict weather patterns", ms: "Meramal corak cuaca" } }
+    ]
+  },
+  {
+    id: 84,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Literature: What is the 'Theme' of a story?", ms: "Sastera: Apakah 'Tema' bagi sebuah cerita?" },
+    options: [
+      { id: "B", text: { en: "The underlying message or main idea", ms: "Mesej tersirat atau idea utama" } },
+      { id: "A", text: { en: "The list of characters", ms: "Senarai watak" } },
+      { id: "C", text: { en: "The number of pages", ms: "Bilangan muka surat" } },
+      { id: "D", text: { en: "The price of the book", ms: "Harga buku tersebut" } }
+    ]
+  },
+  {
+    id: 85,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Accounting: What is an 'Asset'?", ms: "Perakaunan: Apakah itu 'Aset'?" },
+    options: [
+      { id: "D", text: { en: "Something of value owned by a business", ms: "Sesuatu yang bernilai yang dimiliki oleh perniagaan" } },
+      { id: "A", text: { en: "A scientific hypothesis", ms: "Hipotesis saintifik" } },
+      { id: "B", text: { en: "A creative inspiration", ms: "Inspirasi kreatif" } },
+      { id: "C", text: { en: "A tool used in construction", ms: "Alatan yang digunakan dalam pembinaan" } }
+    ]
+  },
+  {
+    id: 86,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Biology: What molecule carries genetic information?", ms: "Biologi: Molekul manakah yang membawa maklumat genetik?" },
+    options: [
+      { id: "A", text: { en: "DNA", ms: "DNA" } },
+      { id: "C", text: { en: "Protein", ms: "Protein" } },
+      { id: "B", text: { en: "Vitamin", ms: "Vitamin" } },
+      { id: "D", text: { en: "Glucose", ms: "Glukosa" } }
+    ]
+  },
+  {
+    id: 87,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Programming: What is 'Debugging'?", ms: "Pengaturcaraan: Apakah itu 'Debugging'?" },
+    options: [
+      { id: "C", text: { en: "Identifying and fixing errors in code", ms: "Mengenal pasti dan membaiki ralat dalam kod" } },
+      { id: "A", text: { en: "Designing a new app logo", ms: "Mereka bentuk logo aplikasi baru" } },
+      { id: "B", text: { en: "Writing a user manual", ms: "Menulis manual pengguna" } },
+      { id: "D", text: { en: "Selling the software", ms: "Menjual perisian tersebut" } }
+    ]
+  },
+  {
+    id: 88,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Philosophy: What is 'Logic'?", ms: "Falsafah: Apakah itu 'Logik'?" },
+    options: [
+      { id: "B", text: { en: "Reasoning conducted according to strict principles", ms: "Penaakulan yang dijalankan mengikut prinsip yang ketat" } },
+      { id: "A", text: { en: "The study of rocks", ms: "Kajian tentang batuan" } },
+      { id: "C", text: { en: "The design of cars", ms: "Reka bentuk kereta" } },
+      { id: "D", text: { en: "The process of selling goods", ms: "Proses menjual barangan" } }
+    ]
+  },
+  {
+    id: 89,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Entrepreneurship: What is 'Risk'?", ms: "Keusahawanan: Apakah itu 'Risiko'?" },
+    options: [
+      { id: "D", text: { en: "The possibility of loss or failure", ms: "Kemungkinan kerugian atau kegagalan" } },
+      { id: "A", text: { en: "The certainty of success", ms: "Kepastian kejayaan" } },
+      { id: "B", text: { en: "A type of bank account", ms: "Sejenis akaun bank" } },
+      { id: "C", text: { en: "The weight of a machine part", ms: "Berat bahagian mesin" } }
+    ]
+  },
+  {
+    id: 90,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Ecology: What is a 'Food Web'?", ms: "Ekologi: Apakah itu 'Siratan Makanan'?" },
+    options: [
+      { id: "A", text: { en: "The interlocking food chains in an ecosystem", ms: "Rangkaian makanan yang saling berkaitan dalam ekosistem" } },
+      { id: "C", text: { en: "A website about food", ms: "Laman web tentang makanan" } },
+      { id: "B", text: { en: "The recipe for a meal", ms: "Resipi bagi sesuatu hidangan" } },
+      { id: "D", text: { en: "The cost of grocery items", ms: "Kos barangan runcit" } }
     ]
   }
 ];

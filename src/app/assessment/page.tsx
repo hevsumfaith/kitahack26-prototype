@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { CAREER_TEST_QUESTIONS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle, Star } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle, Star, Puzzle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -57,14 +57,17 @@ export default function AssessmentPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const streamAnswers = questions.filter(q => q.type === "stream").map(q => answers[q.id]);
-      const personalityAnswers = questions.filter(q => q.type === "personality").map(q => answers[q.id]);
+      // Map IDs to original arrays for Genkit
+      const streamAnswers = questions.filter(q => q.id <= 40).map(q => answers[q.id]);
+      const personalityAnswers = questions.filter(q => q.id >= 41 && q.id <= 60).map(q => answers[q.id]);
+      const problemSolvingAnswers = questions.filter(q => q.id >= 61).map(q => answers[q.id]);
 
       const output = await recommendStream({
         studentName: name,
         language: language,
         streamAnswers: streamAnswers.filter(Boolean),
-        personalityAnswers: personalityAnswers.filter(Boolean)
+        personalityAnswers: personalityAnswers.filter(Boolean),
+        problemSolvingAnswers: problemSolvingAnswers.filter(Boolean)
       });
 
       setResult(output);
@@ -108,14 +111,14 @@ export default function AssessmentPage() {
               </div>
               <CardTitle className="text-3xl font-bold mb-2">HalaTuju Oracle</CardTitle>
               <CardDescription className="text-lg">
-                The full 60-question Kitahack Career Test for high-accuracy placement.
+                The full 90-question Kitahack Career Test for high-accuracy placement.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 px-10 pb-12">
               <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3">
                 <Star className="text-amber-500 shrink-0 mt-1" size={18} />
                 <p className="text-sm text-amber-800 font-medium">
-                  This is a comprehensive assessment. It will take approximately 10-15 minutes to complete for the best results.
+                  This is a comprehensive assessment. It will take approximately 15-20 minutes to complete for the best results.
                 </p>
               </div>
               <div className="space-y-2">
@@ -140,13 +143,23 @@ export default function AssessmentPage() {
             <div className="space-y-3">
               <div className="flex justify-between items-end">
                 <div>
-                  <span className="text-xs font-bold text-primary uppercase tracking-widest">{currentQuestion.section}</span>
+                  <span className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
+                    {currentQuestion.section === "Problem Solving" && <Puzzle size={14} />}
+                    {currentQuestion.section}
+                  </span>
                   <h3 className="text-sm font-bold text-slate-500">Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
                 </div>
                 <span className="text-sm font-black text-slate-900">{Math.round(progress)}%</span>
               </div>
               <Progress value={progress} className="h-3 bg-slate-200" />
             </div>
+
+            {currentQuestion.section === "Problem Solving" && currentQuestionIndex === 60 && (
+              <div className="bg-primary p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <h4 className="text-xl font-bold mb-1">Final Section: Problem Solving</h4>
+                <p className="text-white/80 text-sm">Let's test your natural aptitude across different academic domains!</p>
+              </div>
+            )}
 
             <Card className="border-none shadow-xl">
               <CardHeader className="pb-4">
@@ -192,7 +205,7 @@ export default function AssessmentPage() {
             <Loader2 className="animate-spin text-primary" size={64} />
             <div className="space-y-2">
               <h2 className="text-3xl font-bold">Oracle is Processing...</h2>
-              <p className="text-slate-500">Analyzing 60 data points for your perfect stream match.</p>
+              <p className="text-slate-500">Analyzing 90 data points for your perfect stream match.</p>
             </div>
           </div>
         )}
