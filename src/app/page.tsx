@@ -106,7 +106,7 @@ export default function Home() {
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground">
-              <GraduationCap size={16} />
+              < GraduationCap size={16} />
             </div>
             <span className="font-headline font-bold text-primary">HalaTuju</span>
           </div>
