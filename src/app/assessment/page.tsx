@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { CAREER_TEST_QUESTIONS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle, Star, Puzzle } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Share2, Briefcase, UserCircle, Star, Puzzle, Zap, Users } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -57,9 +57,9 @@ export default function AssessmentPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Map IDs to original arrays for Genkit
-      const streamAnswers = questions.filter(q => q.id <= 40).map(q => answers[q.id]);
-      const personalityAnswers = questions.filter(q => q.id >= 41 && q.id <= 60).map(q => answers[q.id]);
+      // Map IDs to original arrays for Genkit (30/30/30 split)
+      const streamAnswers = questions.filter(q => q.id <= 30).map(q => answers[q.id]);
+      const personalityAnswers = questions.filter(q => q.id >= 31 && q.id <= 60).map(q => answers[q.id]);
       const problemSolvingAnswers = questions.filter(q => q.id >= 61).map(q => answers[q.id]);
 
       const output = await recommendStream({
@@ -111,14 +111,14 @@ export default function AssessmentPage() {
               </div>
               <CardTitle className="text-3xl font-bold mb-2">HalaTuju Oracle</CardTitle>
               <CardDescription className="text-lg">
-                The full 90-question Kitahack Career Test for high-accuracy placement.
+                The 90-question assessment to see if your passion aligns with People, Data, or Things.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 px-10 pb-12">
               <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3">
                 <Star className="text-amber-500 shrink-0 mt-1" size={18} />
                 <p className="text-sm text-amber-800 font-medium">
-                  This is a comprehensive assessment. It will take approximately 15-20 minutes to complete for the best results.
+                  This test has 3 sections: Interests & Social Battery, Personality, and Problem Solving.
                 </p>
               </div>
               <div className="space-y-2">
@@ -144,7 +144,9 @@ export default function AssessmentPage() {
               <div className="flex justify-between items-end">
                 <div>
                   <span className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
-                    {currentQuestion.section === "Problem Solving" && <Puzzle size={14} />}
+                    {currentQuestion.id <= 30 && <Zap size={14} />}
+                    {currentQuestion.id > 30 && currentQuestion.id <= 60 && <Users size={14} />}
+                    {currentQuestion.id > 60 && <Puzzle size={14} />}
                     {currentQuestion.section}
                   </span>
                   <h3 className="text-sm font-bold text-slate-500">Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
@@ -154,9 +156,22 @@ export default function AssessmentPage() {
               <Progress value={progress} className="h-3 bg-slate-200" />
             </div>
 
-            {currentQuestion.section === "Problem Solving" && currentQuestionIndex === 60 && (
-              <div className="bg-primary p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <h4 className="text-xl font-bold mb-1">Final Section: Problem Solving</h4>
+            {/* Section Introductions */}
+            {currentQuestionIndex === 0 && (
+              <div className="bg-indigo-600 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <h4 className="text-xl font-bold mb-1">Section 1: Interest & Social Battery</h4>
+                <p className="text-white/80 text-sm">Let's see where your passion lies: People, Data, or Things.</p>
+              </div>
+            )}
+            {currentQuestionIndex === 30 && (
+              <div className="bg-emerald-600 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <h4 className="text-xl font-bold mb-1">Section 2: Personality & Work Style</h4>
+                <p className="text-white/80 text-sm">Understanding how you recharge and interact with the world.</p>
+              </div>
+            )}
+            {currentQuestionIndex === 60 && (
+              <div className="bg-amber-500 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <h4 className="text-xl font-bold mb-1">Section 3: Problem Solving</h4>
                 <p className="text-white/80 text-sm">Let's test your natural aptitude across different academic domains!</p>
               </div>
             )}
@@ -205,7 +220,7 @@ export default function AssessmentPage() {
             <Loader2 className="animate-spin text-primary" size={64} />
             <div className="space-y-2">
               <h2 className="text-3xl font-bold">Oracle is Processing...</h2>
-              <p className="text-slate-500">Analyzing 90 data points for your perfect stream match.</p>
+              <p className="text-slate-500">Analyzing 90 points of interaction, personality, and aptitude.</p>
             </div>
           </div>
         )}
