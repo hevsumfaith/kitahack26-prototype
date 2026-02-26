@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
@@ -19,7 +18,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.assessment": "Assessment",
     "nav.streams": "Streams",
     "nav.profile": "Profile",
-    "nav.share": "Share Prototype",
     "nav.getStarted": "Get Started",
     "nav.login": "Log In",
     "nav.logout": "Log Out",
@@ -102,13 +100,12 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.assessment": "Penilaian",
     "nav.streams": "Aliran",
     "nav.profile": "Profil",
-    "nav.share": "Kongsi Prototaip",
     "nav.getStarted": "Bermula",
     "nav.login": "Log Masuk",
     "nav.logout": "Log Keluar",
     "hero.title": "Buka Potensi Anda dengan",
     "hero.subtitle": "Hala Tuju yang Tepat",
-    "hero.desc": "HalaTuju menggunakan AI untuk membantu anda memilih aliran akademik Tingkatan 4 berdasarkan minat dan kekuatan unik anda, bukan sekadar keputusan peperiksaan.",
+    "hero.desc": "HalaTuju menggunakan AI to help you choose your Form 4 academic stream based on your unique interests and strengths, not just your exam results.",
     "hero.cta": "Ambil Penilaian",
     "hero.explore": "Teroka Aliran",
     "hero.badge": "Memperkasa Pelajar Malaysia",

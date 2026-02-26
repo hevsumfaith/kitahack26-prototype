@@ -10,7 +10,6 @@ import {
   Sun, 
   Moon, 
   Languages, 
-  Share2, 
   LogOut, 
   LogIn,
   Menu 
@@ -111,24 +110,6 @@ export default function Navbar() {
     { label: t("nav.profile"), href: "/profile", icon: User },
   ];
 
-  const handleSharePrototype = () => {
-    const shareData = {
-      title: 'HalaTuju Prototype',
-      text: t("nav.share") + ': Check out this AI-powered academic stream guidance prototype!',
-      url: typeof window !== 'undefined' ? window.location.origin : '',
-    };
-
-    if (navigator.share) {
-      navigator.share(shareData).catch((err) => console.log('Error sharing', err));
-    } else {
-      navigator.clipboard.writeText(shareData.url);
-      toast({
-        title: language === 'en' ? "Link Copied" : "Pautan Disalin",
-        description: language === 'en' ? "The prototype URL has been copied to your clipboard." : "URL prototaip telah disalin ke papan klip anda.",
-      });
-    }
-  };
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -174,10 +155,6 @@ export default function Navbar() {
                 <DropdownMenuItem onClick={() => setLanguage('ms')}>Bahasa Melayu</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            <Button variant="ghost" size="sm" onClick={handleSharePrototype} className="rounded-full text-muted-foreground hover:text-primary">
-              <Share2 size={16} className="mr-2" /> {t("nav.share")}
-            </Button>
             
             {user ? (
               <Button variant="outline" size="sm" onClick={handleLogout} className="rounded-full">
@@ -221,9 +198,6 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <div className="pt-6 border-t flex flex-col gap-4">
-                  <Button variant="outline" className="w-full" onClick={handleSharePrototype}>
-                    <Share2 size={18} className="mr-2" /> {t("nav.share")}
-                  </Button>
                   {user ? (
                     <Button variant="outline" className="w-full" onClick={handleLogout}>
                       <LogOut size={18} className="mr-2" /> {t("nav.logout")}
