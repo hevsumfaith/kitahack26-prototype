@@ -1,19 +1,85 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { LayoutDashboard, History, Sparkles, TrendingUp, Info } from "lucide-react";
+import { LayoutDashboard, History, Sparkles, TrendingUp, Info, LogIn, Loader2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged, User as FirebaseUser, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { collection, query, where, getDocs, orderBy, limit } from "firebase/firestore";
+
+interface AssessmentHistory {
+  id: string;
+  mostSuitableStream: string;
+  compatibilityPercentage: number;
+  timestamp: any;
+}
 
 export default function DashboardPage() {
   const { t, language } = useLanguage();
-  // Mock data for a "previous session"
-  const history = [
-    { date: "Oct 24, 2024", stream: language === 'en' ? "Pure Science" : "Sains Tulen", compatibility: 88 },
-  ];
+  const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [history, setHistory] = useState<AssessmentHistory[]>([]);
+
+  useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+      if (currentUser && db) {
+        await fetchHistory(currentUser.uid);
+      } else {
+        setHistory([]);
+      }
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const fetchHistory = async (uid: string) => {
+    if (!db) return;
+    try {
+      const q = query(
+        collection(db, "assessments"),
+        where("userId", "==", uid),
+        orderBy("timestamp", "desc"),
+        limit(5)
+      );
+      const querySnapshot = await getDocs(q);
+      const results: AssessmentHistory[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        results.push({ 
+          id: doc.id, 
+          mostSuitableStream: data.mostSuitableStream,
+          compatibilityPercentage: data.fullOutput?.streamCompatibility?.find((s: any) => s.streamName === data.mostSuitableStream)?.compatibilityPercentage || 0,
+          timestamp: data.timestamp 
+        } as AssessmentHistory);
+      });
+      setHistory(results);
+    } catch (error) {
+      console.error("Error fetching history:", error);
+    }
+  };
+
+  const handleLogin = async () => {
+    if (!auth) return;
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  const profileProgress = user ? (history.length > 0 ? 100 : 50) : 0;
+  const latestResult = history.length > 0 ? history[0] : null;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -23,11 +89,12 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
           <div>
             <h1 className="text-3xl font-headline font-bold flex items-center gap-2">
-              <LayoutDashboard className="text-primary" /> {t("dashboard.welcome")}, Student!
+              <LayoutDashboard className="text-primary" /> 
+              {user ? `${t("dashboard.welcome")}, ${user.displayName?.split(' ')[0]}!` : t("nav.login")}
             </h1>
             <p className="text-muted-foreground mt-1">{t("dashboard.desc")}</p>
           </div>
-          <Button asChild size="lg" className="rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+          <Button asChild size="lg" className="rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg">
             <Link href="/assessment">
               <Sparkles className="mr-2" size={18} /> {t("dashboard.newAssessment")}
             </Link>
@@ -35,25 +102,31 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Stats */}
           <div className="lg:col-span-2 flex flex-col gap-8">
             <div className="grid sm:grid-cols-2 gap-6">
-              <Card className="border-none shadow-md bg-gradient-to-br from-primary/10 to-transparent border-t-4 border-primary">
+              <Card className="border-none shadow-md bg-gradient-to-br from-primary/10 to-transparent border-t-4 border-primary overflow-hidden">
                 <CardHeader className="pb-2">
                   <CardDescription className="text-primary font-bold uppercase text-xs tracking-widest">{t("dashboard.activeGoals")}</CardDescription>
-                  <CardTitle className="text-2xl">{language === 'en' ? 'Form 4 Stream' : 'Aliran Tingkatan 4'}</CardTitle>
+                  <CardTitle className="text-2xl">
+                    {latestResult ? latestResult.mostSuitableStream : (language === 'en' ? 'Target Stream' : 'Aliran Sasaran')}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-primary/20 rounded-xl text-primary">
                       <TrendingUp />
                     </div>
-                    <p className="text-sm font-medium">{t("dashboard.goalDesc")}</p>
+                    <p className="text-sm font-medium">
+                      {latestResult 
+                        ? (language === 'en' ? `Matched with ${latestResult.compatibilityPercentage}% accuracy.` : `Padanan dengan ketepatan ${latestResult.compatibilityPercentage}%.`)
+                        : t("dashboard.goalDesc")
+                      }
+                    </p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="border-none shadow-md bg-gradient-to-br from-secondary/10 to-transparent border-t-4 border-secondary">
+              <Card className="border-none shadow-md bg-gradient-to-br from-secondary/10 to-transparent border-t-4 border-secondary overflow-hidden">
                 <CardHeader className="pb-2">
                   <CardDescription className="text-secondary font-bold uppercase text-xs tracking-widest">{language === 'en' ? 'Completion' : 'Kesempurnaan'}</CardDescription>
                   <CardTitle className="text-2xl text-secondary">{t("dashboard.profileProgress")}</CardTitle>
@@ -62,15 +135,14 @@ export default function DashboardPage() {
                   <div className="flex flex-col gap-2">
                     <div className="flex justify-between text-sm">
                       <span>{language === 'en' ? 'Progress' : 'Kemajuan'}</span>
-                      <span className="font-bold">60%</span>
+                      <span className="font-bold">{profileProgress}%</span>
                     </div>
-                    <Progress value={60} className="h-2 bg-secondary/20" />
+                    <Progress value={profileProgress} className="h-2 bg-secondary/20" />
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Assessment History */}
             <Card className="border-none shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-accent">
@@ -81,21 +153,43 @@ export default function DashboardPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {history.length > 0 ? (
+                {loading ? (
+                  <div className="py-12 flex justify-center">
+                    <Loader2 className="animate-spin text-muted-foreground" />
+                  </div>
+                ) : !user ? (
+                  <div className="py-12 text-center space-y-4">
+                    <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto text-muted-foreground">
+                      <LogIn size={32} />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="font-medium text-muted-foreground">
+                        {language === 'en' ? "Please log in to view your assessment history." : "Sila log masuk untuk melihat sejarah penilaian anda."}
+                      </p>
+                      <Button onClick={handleLogin} variant="outline" className="rounded-full">
+                        {t("nav.login")}
+                      </Button>
+                    </div>
+                  </div>
+                ) : history.length > 0 ? (
                   <div className="divide-y">
-                    {history.map((item, i) => (
-                      <div key={i} className="py-4 flex items-center justify-between">
+                    {history.map((item) => (
+                      <div key={item.id} className="py-4 flex items-center justify-between group">
                         <div className="flex flex-col">
-                          <span className="font-bold">{item.stream}</span>
-                          <span className="text-xs text-muted-foreground">{item.date}</span>
+                          <span className="font-bold text-foreground group-hover:text-primary transition-colors">{item.mostSuitableStream}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleDateString(undefined, { dateStyle: 'medium' }) : "Just now"}
+                          </span>
                         </div>
                         <div className="flex items-center gap-4">
-                          <div className="text-right">
-                            <span className="text-sm font-bold block text-primary">{item.compatibility}% {t("assessment.match")}</span>
+                          <div className="text-right hidden sm:block">
+                            <span className="text-sm font-bold block text-primary">{Math.round(item.compatibilityPercentage)}% {t("assessment.match")}</span>
                             <span className="text-[10px] uppercase text-green-500 font-bold tracking-wider">{t("dashboard.high")}</span>
                           </div>
-                          <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary hover:bg-secondary/10">
-                            <Link href="/assessment">{t("dashboard.viewReport")}</Link>
+                          <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary hover:bg-secondary/10 rounded-full">
+                            <Link href="/profile">
+                              {t("dashboard.viewReport")} <ChevronRight size={14} className="ml-1" />
+                            </Link>
                           </Button>
                         </div>
                       </div>
@@ -104,34 +198,47 @@ export default function DashboardPage() {
                 ) : (
                   <div className="py-12 text-center text-muted-foreground">
                     <p>{t("dashboard.noHistory")}</p>
+                    <Button asChild variant="link" className="mt-2">
+                      <Link href="/assessment">{t("dashboard.newAssessment")}</Link>
+                    </Button>
                   </div>
                 )}
               </CardContent>
             </Card>
           </div>
 
-          {/* Sidebar / Quick Info */}
           <div className="flex flex-col gap-6">
-            <Card className="border-none shadow-md bg-accent text-accent-foreground">
+            <Card className="border-none shadow-md bg-accent text-accent-foreground overflow-hidden">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Info size={18} /> {t("dashboard.quickTips")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm space-y-4">
-                <p><strong>1.</strong> {t("dashboard.tip1")}</p>
-                <p><strong>2.</strong> {t("dashboard.tip2")}</p>
-                <p><strong>3.</strong> {t("dashboard.tip3")}</p>
+                <div className="flex gap-3">
+                  <span className="font-bold text-accent-foreground/50">01</span>
+                  <p>{t("dashboard.tip1")}</p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="font-bold text-accent-foreground/50">02</span>
+                  <p>{t("dashboard.tip2")}</p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="font-bold text-accent-foreground/50">03</span>
+                  <p>{t("dashboard.tip3")}</p>
+                </div>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-md">
+            <Card className="border-none shadow-md overflow-hidden">
               <CardHeader>
                 <CardTitle className="text-lg text-primary">{t("dashboard.needHelp")}</CardTitle>
               </CardHeader>
               <CardContent className="text-sm">
                 <p className="text-muted-foreground mb-4">{t("dashboard.contactCounselor")}</p>
-                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">{t("dashboard.schedule")}</Button>
+                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 rounded-xl">
+                  {t("dashboard.schedule")}
+                </Button>
               </CardContent>
             </Card>
           </div>
