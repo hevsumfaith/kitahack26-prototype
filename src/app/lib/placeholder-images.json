@@ -3,27 +3,39 @@
   "placeholderImages": [
     {
       "id": "hero-student",
-      "description": "A happy student looking at a laptop, thinking about their future career.",
+      "description": "A Malaysian student exploring career paths with AI guidance.",
       "imageUrl": "https://picsum.photos/seed/student-future/1200/800",
       "imageHint": "student education"
     },
     {
-      "id": "science-stream",
-      "description": "Students in a science lab performing experiments.",
+      "id": "pure",
+      "description": "A science laboratory with students conducting experiments.",
       "imageUrl": "https://picsum.photos/seed/science-lab/800/600",
       "imageHint": "science laboratory"
     },
     {
-      "id": "arts-stream",
-      "description": "Creative arts studio with paintings and sculptures.",
+      "id": "arts",
+      "description": "A creative arts and humanities studio.",
       "imageUrl": "https://picsum.photos/seed/arts-studio/800/600",
       "imageHint": "arts painting"
     },
     {
-      "id": "tech-stream",
+      "id": "stem",
       "description": "Modern technology and engineering workshop.",
       "imageUrl": "https://picsum.photos/seed/tech-workshop/800/600",
       "imageHint": "technology engineering"
+    },
+    {
+      "id": "commerce",
+      "description": "A modern business and commerce setting.",
+      "imageUrl": "https://picsum.photos/seed/business/800/600",
+      "imageHint": "business finance"
+    },
+    {
+      "id": "technical",
+      "description": "Vocational and technical skills training.",
+      "imageUrl": "https://picsum.photos/seed/technical/800/600",
+      "imageHint": "technical skills"
     }
   ]
 }
