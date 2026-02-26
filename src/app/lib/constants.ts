@@ -1,5 +1,5 @@
 export const CAREER_TEST_QUESTIONS = [
-  // SECTION 1: STREAM PREFERENCES (40 Questions)
+  // SECTION 1: STREAM PREFERENCES (40 Questions) - A: Science, B: Arts, C: TVET, D: Business
   {
     id: 1,
     type: "stream",
@@ -120,29 +120,373 @@ export const CAREER_TEST_QUESTIONS = [
       { id: "D", text: { en: "Class treasury/maths", ms: "Bendahari kelas/matematik" } }
     ]
   },
-  // Adding more stream questions (11-40) to reach 60 total...
-  // (Simplified for brevity but maintaining structure)
-  ...Array.from({ length: 30 }, (_, i) => ({
-    id: 11 + i,
+  {
+    id: 11,
+    type: "stream",
+    section: "Work Style",
+    question: { en: "What is your ideal work environment?", ms: "Apakah persekitaran kerja ideal anda?" },
+    options: [
+      { id: "A", text: { en: "A quiet laboratory or research center", ms: "Makmal atau pusat penyelidikan yang tenang" } },
+      { id: "B", text: { en: "A creative studio or theater", ms: "Studio kreatif atau teater" } },
+      { id: "C", text: { en: "A busy workshop or flight deck", ms: "Bengkel yang sibuk atau dek penerbangan" } },
+      { id: "D", text: { en: "A corporate office or stock exchange", ms: "Pejabat korporat atau bursa saham" } }
+    ]
+  },
+  {
+    id: 12,
+    type: "stream",
+    section: "Work Style",
+    question: { en: "Which of these tasks feels most satisfying?", ms: "Tugasan manakah yang terasa paling memuaskan?" },
+    options: [
+      { id: "A", text: { en: "Proving a mathematical theorem", ms: "Membuktikan teorem matematik" } },
+      { id: "B", text: { en: "Finishing a poem or painting", ms: "Menyiapkan puisi atau lukisan" } },
+      { id: "C", text: { en: "Restoring a vintage motorcycle", ms: "Memulihkan motosikal vintaj" } },
+      { id: "D", text: { en: "Closing a profitable sales deal", ms: "Menutup perjanjian jualan yang menguntungkan" } }
+    ]
+  },
+  {
+    id: 13,
+    type: "stream",
+    section: "Work Style",
+    question: { en: "How do you organize your tasks?", ms: "Bagaimanakah anda menyusun tugasan anda?" },
+    options: [
+      { id: "A", text: { en: "Flowcharts and data sets", ms: "Carta aliran dan set data" } },
+      { id: "B", text: { en: "Mood boards and sketches", ms: "Papan mood dan lakaran" } },
+      { id: "C", text: { en: "Practical checklists and tools", ms: "Senarai semak praktikal dan alatan" } },
+      { id: "D", text: { en: "Budget sheets and calendars", ms: "Helaian bajet dan kalendar" } }
+    ]
+  },
+  {
+    id: 14,
+    type: "stream",
+    section: "Social Context",
+    question: { en: "In a team, what role do you naturally take?", ms: "Dalam kumpulan, peranan apakah yang anda ambil secara semulajadi?" },
+    options: [
+      { id: "A", text: { en: "The logical analyst", ms: "Penganalisis logik" } },
+      { id: "B", text: { en: "The creative visionary", ms: "Wawasan kreatif" } },
+      { id: "C", text: { en: "The practical builder", ms: "Pembina praktikal" } },
+      { id: "D", text: { en: "The strategic negotiator", ms: "Perunding strategik" } }
+    ]
+  },
+  {
+    id: 15,
+    type: "stream",
+    section: "Social Context",
+    question: { en: "If you won the lottery, you would:", ms: "Jika anda memenangi loteri, anda akan:" },
+    options: [
+      { id: "A", text: { en: "Fund a research project", ms: "Membiayai projek penyelidikan" } },
+      { id: "B", text: { en: "Travel for cultural inspiration", ms: "Melancong untuk inspirasi budaya" } },
+      { id: "C", text: { en: "Build your own custom lab/garage", ms: "Membina makmal/garaj tersuai anda sendiri" } },
+      { id: "D", text: { en: "Invest in a startup business", ms: "Melabur dalam perniagaan permulaan" } }
+    ]
+  },
+  {
+    id: 16,
+    type: "stream",
+    section: "Technology",
+    question: { en: "Which tech advancement excites you most?", ms: "Kemajuan teknologi manakah yang paling mengujakan anda?" },
+    options: [
+      { id: "A", text: { en: "Gene editing (CRISPR)", ms: "Penyuntingan gen (CRISPR)" } },
+      { id: "B", text: { en: "Virtual Reality storytelling", ms: "Penceritaan Realiti Maya" } },
+      { id: "C", text: { en: "Electric vehicle engineering", ms: "Kejuruteraan kenderaan elektrik" } },
+      { id: "D", text: { en: "Cryptocurrency and Fintech", ms: "Mata wang kripto dan Fintech" } }
+    ]
+  },
+  {
+    id: 17,
+    type: "stream",
+    section: "Technology",
+    question: { en: "If you were a YouTuber, what content would you make?", ms: "Jika anda seorang YouTuber, kandungan apakah yang akan anda buat?" },
+    options: [
+      { id: "A", text: { en: "Science experiments and explainers", ms: "Eksperimen sains dan penjelasan" } },
+      { id: "B", text: { en: "Short films and animation", ms: "Filem pendek dan animasi" } },
+      { id: "C", text: { en: "Hardware tearing and tech repair", ms: "Pembaikan perkakasan dan teknologi" } },
+      { id: "D", text: { en: "Business tips and financial news", ms: "Tip perniagaan dan berita kewangan" } }
+    ]
+  },
+  {
+    id: 18,
+    type: "stream",
+    section: "Ambition",
+    question: { en: "Your dream legacy is to be known as:", ms: "Warisan impian anda adalah untuk dikenali sebagai:" },
+    options: [
+      { id: "A", text: { en: "A discoverer of truth", ms: "Seorang penemu kebenaran" } },
+      { id: "B", text: { en: "An influential artist/writer", ms: "Artis/penulis yang berpengaruh" } },
+      { id: "C", text: { en: "A master of a craft", ms: "Seorang pakar pertukangan" } },
+      { id: "D", text: { en: "A successful business leader", ms: "Seorang pemimpin perniagaan yang berjaya" } }
+    ]
+  },
+  {
+    id: 19,
+    type: "stream",
+    section: "Ambition",
+    question: { en: "Which magazine cover would you rather be on?", ms: "Kulit majalah manakah yang anda lebih suka sertai?" },
+    options: [
+      { id: "A", text: { en: "Scientific American", ms: "Scientific American" } },
+      { id: "B", text: { en: "Vogue or National Geographic", ms: "Vogue atau National Geographic" } },
+      { id: "C", text: { en: "Popular Mechanics", ms: "Popular Mechanics" } },
+      { id: "D", text: { en: "Forbes or Fortune", ms: "Forbes atau Fortune" } }
+    ]
+  },
+  {
+    id: 20,
+    type: "stream",
+    section: "Values",
+    question: { en: "What do you value most in a project?", ms: "Apakah yang paling anda hargai dalam sebuah projek?" },
+    options: [
+      { id: "A", text: { en: "Accuracy and validity", ms: "Ketepatan dan kesahihan" } },
+      { id: "B", text: { en: "Meaning and impact", ms: "Makna dan impak" } },
+      { id: "C", text: { en: "Efficiency and functionality", ms: "Kecekapan dan kefungsian" } },
+      { id: "D", text: { en: "Profitability and scale", ms: "Keuntungan dan skala" } }
+    ]
+  },
+  // Adding questions 21-40 with similar logic
+  {
+    id: 21,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "When a gadget stops working, you:", ms: "Apabila gajet berhenti berfungsi, anda:" },
+    options: [
+      { id: "A", text: { en: "Check the manual for the theory", ms: "Semak manual untuk teorinya" } },
+      { id: "B", text: { en: "Imagine how it should ideally work", ms: "Bayangkan bagaimana ia sepatutnya berfungsi" } },
+      { id: "C", text: { en: "Start taking it apart immediately", ms: "Mula membukanya dengan segera" } },
+      { id: "D", text: { en: "Check if it's still under warranty", ms: "Semak jika ia masih dalam jaminan" } }
+    ]
+  },
+  {
+    id: 22,
+    type: "stream",
+    section: "Problem Solving",
+    question: { en: "Which game sounds most fun?", ms: "Permainan manakah yang kedengaran paling menyeronokkan?" },
+    options: [
+      { id: "A", text: { en: "Sudoku or Chess", ms: "Sudoku atau Catur" } },
+      { id: "B", text: { en: "Pictionary or Storytelling", ms: "Pictionary atau Penceritaan" } },
+      { id: "C", text: { en: "Minecraft or LEGO building", ms: "Minecraft atau binaan LEGO" } },
+      { id: "D", text: { en: "Monopoly or SimCity", ms: "Monopoly atau SimCity" } }
+    ]
+  },
+  {
+    id: 23,
+    type: "stream",
+    section: "Environment",
+    question: { en: "You enjoy working with:", ms: "Anda suka bekerja dengan:" },
+    options: [
+      { id: "A", text: { en: "Microscopes and test tubes", ms: "Mikroskop dan tabung uji" } },
+      { id: "B", text: { en: "Paintbrushes and manuscripts", ms: "Berus cat dan manuskrip" } },
+      { id: "C", text: { en: "Soldering irons and wrenches", ms: "Besi pematerian dan sepana" } },
+      { id: "D", text: { en: "Spreadsheets and contracts", ms: "Hamparan data dan kontrak" } }
+    ]
+  },
+  {
+    id: 24,
+    type: "stream",
+    section: "Environment",
+    question: { en: "A perfect day at school includes:", ms: "Hari yang sempurna di sekolah termasuk:" },
+    options: [
+      { id: "A", text: { en: "A successful lab result", ms: "Keputusan makmal yang berjaya" } },
+      { id: "B", text: { en: "Performing on stage", ms: "Membuat persembahan di pentas" } },
+      { id: "C", text: { en: "Finishing a woodwork project", ms: "Menyiapkan projek pertukangan kayu" } },
+      { id: "D", text: { en: "Winning a debate about economics", ms: "Memenangi debat tentang ekonomi" } }
+    ]
+  },
+  {
+    id: 25,
     type: "stream",
     section: "Scenarios",
-    question: { 
-      en: `Preference Check ${i + 1}: Which activity sounds best?`, 
-      ms: `Semakan Pilihan ${i + 1}: Aktiviti manakah yang terbaik?` 
-    },
+    question: { en: "You are tasked to improve a park. You:", ms: "Anda ditugaskan untuk menambah baik taman. Anda:" },
     options: [
-      { id: "A", text: { en: "Researching data", ms: "Menyelidik data" } },
-      { id: "B", text: { en: "Creating designs", ms: "Mencipta reka bentuk" } },
-      { id: "C", text: { en: "Repairing gadgets", ms: "Membaiki gajet" } },
-      { id: "D", text: { en: "Managing business", ms: "Mengurus perniagaan" } }
+      { id: "A", text: { en: "Study the soil and plant species", ms: "Kaji spesies tanah dan tumbuhan" } },
+      { id: "B", text: { en: "Design beautiful sculptures", ms: "Reka bentuk arca yang indah" } },
+      { id: "C", text: { en: "Build better benches and paths", ms: "Bina bangku dan laluan yang lebih baik" } },
+      { id: "D", text: { en: "Plan a cafe to generate income", ms: "Rancang kafe untuk menjana pendapatan" } }
     ]
-  })),
+  },
+  {
+    id: 26,
+    type: "stream",
+    section: "Scenarios",
+    question: { en: "Which extra class would you join?", ms: "Kelas tambahan manakah yang akan anda sertai?" },
+    options: [
+      { id: "A", text: { en: "Advanced Calculus", ms: "Kalkulus Lanjutan" } },
+      { id: "B", text: { en: "Modern Dance or Theater", ms: "Tarian Moden atau Teater" } },
+      { id: "C", text: { en: "Robotics and Arduino", ms: "Robotik dan Arduino" } },
+      { id: "D", text: { en: "Digital Marketing", ms: "Pemasaran Digital" } }
+    ]
+  },
+  {
+    id: 27,
+    type: "stream",
+    section: "Interests",
+    question: { en: "Which book title appeals to you most?", ms: "Tajuk buku manakah yang paling menarik bagi anda?" },
+    options: [
+      { id: "A", text: { en: "The Logic of Everything", ms: "Logik Segala-galanya" } },
+      { id: "B", text: { en: "The Art of Storytelling", ms: "Seni Penceritaan" } },
+      { id: "C", text: { en: "Mastering the Engine", ms: "Menguasai Enjin" } },
+      { id: "D", text: { en: "The Wealth of Nations", ms: "The Wealth of Nations" } }
+    ]
+  },
+  {
+    id: 28,
+    type: "stream",
+    section: "Interests",
+    question: { en: "Which career path sounds most prestigious?", ms: "Laluan kerjaya manakah yang kedengaran paling berprestij?" },
+    options: [
+      { id: "A", text: { en: "Neurosurgeon", ms: "Pakar Bedah Saraf" } },
+      { id: "B", text: { en: "International Human Rights Lawyer", ms: "Peguam Hak Asasi Manusia Antarabangsa" } },
+      { id: "C", text: { en: "Aerospace Engineer", ms: "Jurutera Aeroangkasa" } },
+      { id: "D", text: { en: "CEO of a Tech Giant", ms: "CEO Gergasi Teknologi" } }
+    ]
+  },
+  {
+    id: 29,
+    type: "stream",
+    section: "Skills",
+    question: { en: "Your natural way of explaining things is through:", ms: "Cara semulajadi anda menerangkan sesuatu adalah melalui:" },
+    options: [
+      { id: "A", text: { en: "Equations and formulas", ms: "Persamaan dan formula" } },
+      { id: "B", text: { en: "Metaphors and analogies", ms: "Metafora dan analogi" } },
+      { id: "C", text: { en: "Showing how to do it", ms: "Menunjukkan cara melakukannya" } },
+      { id: "D", text: { en: "Cost-benefit charts", ms: "Carta kos-faedah" } }
+    ]
+  },
+  {
+    id: 30,
+    type: "stream",
+    section: "Skills",
+    question: { en: "You find a complex map. You:", ms: "Anda menjumpai peta yang kompleks. Anda:" },
+    options: [
+      { id: "A", text: { en: "Calculate the most efficient route", ms: "Kira laluan paling cekap" } },
+      { id: "B", text: { en: "Imagine the stories of the places", ms: "Bayangkan cerita tentang tempat-tempat itu" } },
+      { id: "C", text: { en: "Notice the technical symbols", ms: "Perhatikan simbol teknikal" } },
+      { id: "D", text: { en: "Think about the land value", ms: "Berfikir tentang nilai tanah" } }
+    ]
+  },
+  {
+    id: 31,
+    type: "stream",
+    section: "Daily Habits",
+    question: { en: "How do you prefer to learn something new?", ms: "Bagaimanakah anda lebih suka belajar sesuatu yang baru?" },
+    options: [
+      { id: "A", text: { en: "Reading a dense textbook", ms: "Membaca buku teks yang padat" } },
+      { id: "B", text: { en: "Watching a film or performance", ms: "Menonton filem atau persembahan" } },
+      { id: "C", text: { en: "Trying it out hands-on", ms: "Mencubanya secara praktikal" } },
+      { id: "D", text: { en: "Attending a workshop/seminar", ms: "Menghadiri bengkel/seminar" } }
+    ]
+  },
+  {
+    id: 32,
+    type: "stream",
+    section: "Daily Habits",
+    question: { en: "Your room is most likely filled with:", ms: "Bilik anda kemungkinan besar dipenuhi dengan:" },
+    options: [
+      { id: "A", text: { en: "Science gear or star charts", ms: "Alatan sains atau carta bintang" } },
+      { id: "B", text: { en: "Books, posters, and instruments", ms: "Buku, poster, dan alat muzik" } },
+      { id: "C", text: { en: "Gadgets and disassembled parts", ms: "Gajet dan bahagian yang dibuka" } },
+      { id: "D", text: { en: "Business books and neat planners", ms: "Buku perniagaan dan perancang yang kemas" } }
+    ]
+  },
+  {
+    id: 33,
+    type: "stream",
+    section: "Future Goal",
+    question: { en: "What's your ultimate goal for a job?", ms: "Apakah matlamat utama anda untuk sesuatu pekerjaan?" },
+    options: [
+      { id: "A", text: { en: "Advancing human knowledge", ms: "Memajukan pengetahuan manusia" } },
+      { id: "B", text: { en: "Influencing culture and society", ms: "Mempengaruhi budaya dan masyarakat" } },
+      { id: "C", text: { en: "Creating physical or digital products", ms: "Mencipta produk fizikal atau digital" } },
+      { id: "D", text: { en: "Building a financial empire", ms: "Membina empayar kewangan" } }
+    ]
+  },
+  {
+    id: 34,
+    type: "stream",
+    section: "Future Goal",
+    question: { en: "Which historical figure do you admire most?", ms: "Tokoh sejarah manakah yang paling anda kagumi?" },
+    options: [
+      { id: "A", text: { en: "Albert Einstein", ms: "Albert Einstein" } },
+      { id: "B", text: { en: "William Shakespeare", ms: "William Shakespeare" } },
+      { id: "C", text: { en: "Nikola Tesla", ms: "Nikola Tesla" } },
+      { id: "D", text: { en: "Steve Jobs or Warren Buffett", ms: "Steve Jobs atau Warren Buffett" } }
+    ]
+  },
+  {
+    id: 35,
+    type: "stream",
+    section: "Communication",
+    question: { en: "How do you win an argument?", ms: "Bagaimanakah anda memenangi hujah?" },
+    options: [
+      { id: "A", text: { en: "With undeniable facts and data", ms: "Dengan fakta dan data yang tidak dapat dinafikan" } },
+      { id: "B", text: { en: "With emotional appeal and stories", ms: "Dengan rayuan emosi dan cerita" } },
+      { id: "C", text: { en: "By demonstrating how it works", ms: "Dengan menunjukkan cara ia berfungsi" } },
+      { id: "D", text: { en: "By finding a compromise that profits both", ms: "Dengan mencari kompromi yang menguntungkan kedua-duanya" } }
+    ]
+  },
+  {
+    id: 36,
+    type: "stream",
+    section: "Work Preferences",
+    question: { en: "Do you prefer a job that is:", ms: "Adakah anda lebih suka pekerjaan yang:" },
+    options: [
+      { id: "A", text: { en: "Intellectually challenging", ms: "Mencabar secara intelektual" } },
+      { id: "B", text: { en: "Creatively fulfilling", ms: "Memuaskan secara kreatif" } },
+      { id: "C", text: { en: "Technically demanding", ms: "Menuntut secara teknikal" } },
+      { id: "D", text: { en: "Commercially competitive", ms: "Kompetitif secara komersial" } }
+    ]
+  },
+  {
+    id: 37,
+    type: "stream",
+    section: "Work Preferences",
+    question: { en: "If you had to write a blog, it would be about:", ms: "Jika anda terpaksa menulis blog, ia adalah tentang:" },
+    options: [
+      { id: "A", text: { en: "Space and Physics discoveries", ms: "Penemuan Ruang Angkasa dan Fizik" } },
+      { id: "B", text: { en: "Travel, art, and food reviews", ms: "Ulasan pelancongan, seni, dan makanan" } },
+      { id: "C", text: { en: "Coding and DIY hardware", ms: "Pengekodan dan perkakasan DIY" } },
+      { id: "D", text: { en: "Investment and passive income", ms: "Pelaburan dan pendapatan pasif" } }
+    ]
+  },
+  {
+    id: 38,
+    type: "stream",
+    section: "Values",
+    question: { en: "Which value is most important in society?", ms: "Nilai manakah yang paling penting dalam masyarakat?" },
+    options: [
+      { id: "A", text: { en: "Science and Enlightenment", ms: "Sains dan Pencerahan" } },
+      { id: "B", text: { en: "Freedom and Art", ms: "Kebebasan dan Seni" } },
+      { id: "C", text: { en: "Skill and Innovation", ms: "Kemahiran dan Inovasi" } },
+      { id: "D", text: { en: "Commerce and Stability", ms: "Perdagangan dan Kestabilan" } }
+    ]
+  },
+  {
+    id: 39,
+    type: "stream",
+    section: "Interest Check",
+    question: { en: "Which place sounds best for an internship?", ms: "Tempat manakah yang kedengaran terbaik untuk latihan industri?" },
+    options: [
+      { id: "A", text: { en: "A pharmaceutical lab", ms: "Makmal farmaseutikal" } },
+      { id: "B", text: { en: "A marketing and design agency", ms: "Agensi pemasaran dan reka bentuk" } },
+      { id: "C", text: { en: "A car manufacturing plant", ms: "Kilang pembuatan kereta" } },
+      { id: "D", text: { en: "A bank or stock exchange", ms: "Bank atau bursa saham" } }
+    ]
+  },
+  {
+    id: 40,
+    type: "stream",
+    section: "Final Interest",
+    question: { en: "If you could change the world, you would:", ms: "Jika anda boleh mengubah dunia, anda akan:" },
+    options: [
+      { id: "A", text: { en: "Cure a disease", ms: "Mengubati penyakit" } },
+      { id: "B", text: { en: "Write a world-changing book", ms: "Menulis buku yang mengubah dunia" } },
+      { id: "C", text: { en: "Invent a sustainable energy source", ms: "Mencipta sumber tenaga lestari" } },
+      { id: "D", text: { en: "Create a global business that helps millions", ms: "Mencipta perniagaan global yang membantu berjuta-juta orang" } }
+    ]
+  },
 
-  // SECTION 2: PERSONALITY (20 Questions)
+  // SECTION 2: PERSONALITY (20 Questions) - E: Extrovert, I: Introvert
   {
     id: 41,
     type: "personality",
-    section: "Personality",
+    section: "Social Preference",
     question: { en: "How do you feel after a long day of socializing?", ms: "Bagaimanakah perasaan anda selepas seharian bersosialisasi?" },
     options: [
       { id: "E", text: { en: "Energized and excited", ms: "Bertenaga dan teruja" } },
@@ -152,26 +496,193 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 42,
     type: "personality",
-    section: "Personality",
+    section: "Social Preference",
     question: { en: "In a group project, do you prefer to:", ms: "Dalam projek berkumpulan, adakah anda lebih suka untuk:" },
     options: [
       { id: "E", text: { en: "Lead the presentation and discussion", ms: "Mengetuai pembentangan dan perbincangan" } },
       { id: "I", text: { en: "Work on the research behind the scenes", ms: "Melakukan penyelidikan di sebalik tabir" } }
     ]
   },
-  ...Array.from({ length: 18 }, (_, i) => ({
-    id: 43 + i,
+  {
+    id: 43,
     type: "personality",
-    section: "Social Style",
-    question: { 
-      en: `Personality Scenario ${i + 1}: How do you react?`, 
-      ms: `Senario Personaliti ${i + 1}: Bagaimana anda bertindak?` 
-    },
+    section: "Decision Making",
+    question: { en: "When meeting new people, you:", ms: "Apabila bertemu orang baru, anda:" },
     options: [
-      { id: "E", text: { en: "I speak out my thoughts", ms: "Saya menyuarakan fikiran saya" } },
-      { id: "I", text: { en: "I reflect quietly first", ms: "Saya berfikir secara mendalam dahulu" } }
+      { id: "E", text: { en: "Start the conversation easily", ms: "Mulakan perbualan dengan mudah" } },
+      { id: "I", text: { en: "Wait for them to approach you", ms: "Tunggu mereka mendekati anda" } }
     ]
-  }))
+  },
+  {
+    id: 44,
+    type: "personality",
+    section: "Work Style",
+    question: { en: "Do you prefer to work in:", ms: "Adakah anda lebih suka bekerja di:" },
+    options: [
+      { id: "E", text: { en: "A busy office with many people", ms: "Pejabat yang sibuk dengan ramai orang" } },
+      { id: "I", text: { en: "A private office or at home", ms: "Pejabat peribadi atau di rumah" } }
+    ]
+  },
+  {
+    id: 45,
+    type: "personality",
+    section: "Public Speaking",
+    question: { en: "Giving a speech to 100 people sounds:", ms: "Memberi ucapan kepada 100 orang kedengaran:" },
+    options: [
+      { id: "E", text: { en: "Exciting and fun", ms: "Mengujakan dan menyeronokkan" } },
+      { id: "I", text: { en: "Nerve-wracking and scary", ms: "Menakutkan dan meresahkan" } }
+    ]
+  },
+  {
+    id: 46,
+    type: "personality",
+    section: "Thought Process",
+    question: { en: "Do you usually think out loud?", ms: "Adakah anda biasanya berfikir secara lantang?" },
+    options: [
+      { id: "E", text: { en: "Yes, I process thoughts by talking", ms: "Ya, saya memproses pemikiran dengan bercakap" } },
+      { id: "I", text: { en: "No, I reflect internally first", ms: "Tidak, saya berfikir secara mendalam dahulu" } }
+    ]
+  },
+  {
+    id: 47,
+    type: "personality",
+    section: "Attention",
+    question: { en: "Being the center of attention makes you:", ms: "Menjadi pusat perhatian membuatkan anda:" },
+    options: [
+      { id: "E", text: { en: "Feel comfortable and noticed", ms: "Berasa selesa dan diperhatikan" } },
+      { id: "I", text: { en: "Feel awkward and shy", ms: "Berasa kekok dan malu" } }
+    ]
+  },
+  {
+    id: 48,
+    type: "personality",
+    section: "Friendship",
+    question: { en: "Do you have:", ms: "Adakah anda mempunyai:" },
+    options: [
+      { id: "E", text: { en: "A large circle of many friends", ms: "Lingkaran rakan yang luas" } },
+      { id: "I", text: { en: "A small circle of close friends", ms: "Beberapa orang rakan rapat sahaja" } }
+    ]
+  },
+  {
+    id: 49,
+    type: "personality",
+    section: "Social Interaction",
+    question: { en: "On a Friday night, you'd rather:", ms: "Pada malam Jumaat, anda lebih suka:" },
+    options: [
+      { id: "E", text: { en: "Go to a party or gathering", ms: "Pergi ke parti atau perjumpaan" } },
+      { id: "I", text: { en: "Stay in with a book or movie", ms: "Duduk di rumah dengan buku atau filem" } }
+    ]
+  },
+  {
+    id: 50,
+    type: "personality",
+    section: "Meetings",
+    question: { en: "In school assemblies, you usually:", ms: "Dalam perhimpunan sekolah, anda biasanya:" },
+    options: [
+      { id: "E", text: { en: "Sit with a big group and chat", ms: "Duduk dengan kumpulan besar dan bersembang" } },
+      { id: "I", text: { en: "Sit quietly and observe", ms: "Duduk diam dan memerhati" } }
+    ]
+  },
+  {
+    id: 51,
+    type: "personality",
+    section: "Feedback",
+    question: { en: "You prefer feedback delivered:", ms: "Anda lebih suka maklum balas disampaikan:" },
+    options: [
+      { id: "E", text: { en: "In an open team discussion", ms: "Dalam perbincangan pasukan terbuka" } },
+      { id: "I", text: { en: "In a private 1-on-1 meeting", ms: "Dalam mesyuarat peribadi 1-ke-1" } }
+    ]
+  },
+  {
+    id: 52,
+    type: "personality",
+    section: "Conflict",
+    question: { en: "When there is a conflict, you:", ms: "Apabila ada konflik, anda:" },
+    options: [
+      { id: "E", text: { en: "Talk it out immediately", ms: "Bincangkannya dengan segera" } },
+      { id: "I", text: { en: "Withdraw and process it alone", ms: "Berundur dan memprosesnya sendiri" } }
+    ]
+  },
+  {
+    id: 53,
+    type: "personality",
+    section: "Energy",
+    question: { en: "Your energy levels are highest when:", ms: "Tahap tenaga anda paling tinggi apabila:" },
+    options: [
+      { id: "E", text: { en: "Collaborating with others", ms: "Bekerjasama dengan orang lain" } },
+      { id: "I", text: { en: "Focusing on a task alone", ms: "Fokus pada tugasan seorang diri" } }
+    ]
+  },
+  {
+    id: 54,
+    type: "personality",
+    section: "Idea Generation",
+    question: { en: "When brainstorming, you:", ms: "Apabila menjana idea, anda:" },
+    options: [
+      { id: "E", text: { en: "Shout out ideas as they come", ms: "Menyuarakan idea sebaik sahaja ia muncul" } },
+      { id: "I", text: { en: "Write down ideas before sharing", ms: "Tulis idea sebelum berkongsi" } }
+    ]
+  },
+  {
+    id: 55,
+    type: "personality",
+    section: "Style",
+    question: { en: "People describe you as:", ms: "Orang menggambarkan anda sebagai:" },
+    options: [
+      { id: "E", text: { en: "Outgoing and friendly", ms: "Peramah dan mesra" } },
+      { id: "I", text: { en: "Quiet and thoughtful", ms: "Diam dan penuh pemikiran" } }
+    ]
+  },
+  {
+    id: 56,
+    type: "personality",
+    section: "Weekends",
+    question: { en: "A perfect weekend involves:", ms: "Hujung minggu yang sempurna melibatkan:" },
+    options: [
+      { id: "E", text: { en: "Meeting new people at an event", ms: "Bertemu orang baru di sebuah majlis" } },
+      { id: "I", text: { en: "Recharging alone in nature", ms: "Berehat seorang diri di alam semulajadi" } }
+    ]
+  },
+  {
+    id: 57,
+    type: "personality",
+    section: "Phone Habits",
+    question: { en: "You prefer to:", ms: "Anda lebih suka untuk:" },
+    options: [
+      { id: "E", text: { en: "Call someone for a quick chat", ms: "Menelefon seseorang untuk sembang ringkas" } },
+      { id: "I", text: { en: "Send a text message instead", ms: "Menghantar mesej teks sahaja" } }
+    ]
+  },
+  {
+    id: 58,
+    type: "personality",
+    section: "New Environments",
+    question: { en: "In a new class, you:", ms: "Dalam kelas baru, anda:" },
+    options: [
+      { id: "E", text: { en: "Introduce yourself to neighbors", ms: "Perkenalkan diri kepada rakan sebelah" } },
+      { id: "I", text: { en: "Find a seat and wait for the lesson", ms: "Cari tempat duduk dan tunggu pelajaran bermula" } }
+    ]
+  },
+  {
+    id: 59,
+    type: "personality",
+    section: "Networking",
+    question: { en: "The word 'Networking' sounds:", ms: "Perkataan 'Networking' kedengaran:" },
+    options: [
+      { id: "E", text: { en: "Like a great opportunity", ms: "Seperti peluang yang hebat" } },
+      { id: "I", text: { en: "Exhausting but necessary", ms: "Meletihkan tetapi perlu" } }
+    ]
+  },
+  {
+    id: 60,
+    type: "personality",
+    section: "Final Thought",
+    question: { en: "Do you prefer to be the lead actor or director?", ms: "Adakah anda lebih suka menjadi pelakon utama atau pengarah?" },
+    options: [
+      { id: "E", text: { en: "Lead Actor (in the spotlight)", ms: "Pelakon Utama (menjadi tumpuan)" } },
+      { id: "I", text: { en: "Director (behind the scenes)", ms: "Pengarah (di sebalik tabir)" } }
+    ]
+  }
 ];
 
 export const AVAILABLE_STREAMS = [
