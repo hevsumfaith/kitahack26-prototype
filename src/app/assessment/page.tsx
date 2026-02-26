@@ -111,14 +111,14 @@ export default function AssessmentPage() {
               </div>
               <CardTitle className="text-3xl font-bold mb-2">HalaTuju Oracle</CardTitle>
               <CardDescription className="text-lg">
-                The 90-question assessment to see if your passion aligns with People, Data, or Things.
+                The 90-question high-accuracy assessment to align your passion with People, Data, or Things.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 px-10 pb-12">
               <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3">
                 <Star className="text-amber-500 shrink-0 mt-1" size={18} />
                 <p className="text-sm text-amber-800 font-medium">
-                  This test has 3 sections: Interests & Social Battery, Personality, and Problem Solving.
+                  This test has 3 sections: Interest & Social Battery, Personality, and Problem Solving.
                 </p>
               </div>
               <div className="space-y-2">
@@ -144,9 +144,9 @@ export default function AssessmentPage() {
               <div className="flex justify-between items-end">
                 <div>
                   <span className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
-                    {currentQuestion.id <= 30 && <Zap size={14} />}
-                    {currentQuestion.id > 30 && currentQuestion.id <= 60 && <Users size={14} />}
-                    {currentQuestion.id > 60 && <Puzzle size={14} />}
+                    {currentQuestion.id <= 30 && <Zap size={14} className="text-indigo-500" />}
+                    {currentQuestion.id > 30 && currentQuestion.id <= 60 && <Users size={14} className="text-emerald-500" />}
+                    {currentQuestion.id > 60 && <Puzzle size={14} className="text-amber-500" />}
                     {currentQuestion.section}
                   </span>
                   <h3 className="text-sm font-bold text-slate-500">Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
@@ -158,21 +158,30 @@ export default function AssessmentPage() {
 
             {/* Section Introductions */}
             {currentQuestionIndex === 0 && (
-              <div className="bg-indigo-600 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <h4 className="text-xl font-bold mb-1">Section 1: Interest & Social Battery</h4>
-                <p className="text-white/80 text-sm">Let's see where your passion lies: People, Data, or Things.</p>
+              <div className="bg-gradient-to-r from-indigo-600 to-blue-700 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <Zap className="bg-white/20 p-1.5 rounded-lg" size={32} />
+                  <h4 className="text-xl font-bold">Section 1: Interest & Social Battery</h4>
+                </div>
+                <p className="text-white/80 text-sm">Let's discover if your primary driver is People, Data, or Things.</p>
               </div>
             )}
             {currentQuestionIndex === 30 && (
-              <div className="bg-emerald-600 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <h4 className="text-xl font-bold mb-1">Section 2: Personality & Work Style</h4>
-                <p className="text-white/80 text-sm">Understanding how you recharge and interact with the world.</p>
+              <div className="bg-gradient-to-r from-emerald-600 to-teal-700 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <Users className="bg-white/20 p-1.5 rounded-lg" size={32} />
+                  <h4 className="text-xl font-bold">Section 2: Personality & Work Style</h4>
+                </div>
+                <p className="text-white/80 text-sm">Understanding how you recharge and how you prefer to handle tasks.</p>
               </div>
             )}
             {currentQuestionIndex === 60 && (
-              <div className="bg-amber-500 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <h4 className="text-xl font-bold mb-1">Section 3: Problem Solving</h4>
-                <p className="text-white/80 text-sm">Let's test your natural aptitude across different academic domains!</p>
+              <div className="bg-gradient-to-r from-amber-500 to-orange-600 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <Puzzle className="bg-white/20 p-1.5 rounded-lg" size={32} />
+                  <h4 className="text-xl font-bold">Section 3: Problem Solving</h4>
+                </div>
+                <p className="text-white/80 text-sm">Testing your natural aptitude across key academic and professional domains.</p>
               </div>
             )}
 
