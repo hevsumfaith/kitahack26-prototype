@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -58,11 +57,12 @@ export default function ProfilePage() {
   };
 
   /**
-   * EDIT THIS FUNCTION to change the login popup on the profile page.
+   * handleLogin for the profile page view.
    */
   const handleLogin = async () => {
     if (!auth) return;
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     try {
       await signInWithPopup(auth, provider);
     } catch (error) {
@@ -86,7 +86,6 @@ export default function ProfilePage() {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow container mx-auto px-4 py-20 text-center">
-          {/* Custom Popup/Dialog for non-logged in users */}
           <Card className="max-w-md mx-auto border-none shadow-xl p-8">
             <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
               <LogIn size={40} />
