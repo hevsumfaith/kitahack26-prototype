@@ -3,9 +3,9 @@
   "placeholderImages": [
     {
       "id": "hero-student",
-      "description": "A Malaysian student exploring career paths with AI guidance.",
-      "imageUrl": "https://picsum.photos/seed/student-future/1200/800",
-      "imageHint": "student education"
+      "description": "Malaysian students exploring career paths together with AI guidance.",
+      "imageUrl": "https://storage.googleapis.com/fetch-token-b060d.appspot.com/image_1740469601366.png",
+      "imageHint": "malaysian students"
     },
     {
       "id": "pure",
