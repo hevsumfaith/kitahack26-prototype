@@ -1,3 +1,9 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-student",
+      "imageUrl": "/hero-student.jpeg",
+      "alt": "HalaTuju Hero Image"
+    }
+  ]
 }

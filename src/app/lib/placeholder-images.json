@@ -1,9 +1,10 @@
+
 {
   "placeholderImages": [
     {
       "id": "hero-student",
       "description": "Malaysian students exploring career paths together with AI guidance.",
-      "imageUrl": "https://storage.googleapis.com/fetch-token-b060d.appspot.com/image_1740474643034.png",
+      "imageUrl": "/hero-student.jpeg",
       "imageHint": "malaysian students"
     },
     {
