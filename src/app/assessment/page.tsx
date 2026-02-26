@@ -156,7 +156,7 @@ export default function AssessmentPage() {
               <Progress 
                 value={progress} 
                 className="h-3 bg-slate-200" 
-                indicatorClassName="bg-gradient-to-r from-indigo-500 via-emerald-500 to-orange-500"
+                indicatorClassName="bg-gradient-to-r from-orange-500 via-indigo-500 to-emerald-500"
               />
             </div>
 
