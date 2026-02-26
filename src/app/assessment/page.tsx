@@ -21,7 +21,7 @@ export default function AssessmentPage() {
   const { language, t } = useLanguage();
   const [step, setStep] = useState(0); // 0: Welcome, 1: Questions, 2: Analyzing, 3: Results
   const [name, setName] = useState("");
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] => useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<RecommendStreamOutput | null>(null);
@@ -118,7 +118,7 @@ export default function AssessmentPage() {
               <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3">
                 <Star className="text-amber-500 shrink-0 mt-1" size={18} />
                 <p className="text-sm text-amber-800 font-medium">
-                  This test has 3 sections: Interest & Social Battery, Personality, and Problem Solving.
+                  This test has 3 sections: Interest & Social, Personality, and Problem Solving.
                 </p>
               </div>
               <div className="space-y-2">
@@ -153,7 +153,11 @@ export default function AssessmentPage() {
                 </div>
                 <span className="text-sm font-black text-slate-900">{Math.round(progress)}%</span>
               </div>
-              <Progress value={progress} className="h-3 bg-slate-200" />
+              <Progress 
+                value={progress} 
+                className="h-3 bg-slate-200" 
+                indicatorClassName="bg-gradient-to-r from-indigo-500 via-emerald-500 to-orange-500"
+              />
             </div>
 
             {/* Section Introductions */}
@@ -161,7 +165,7 @@ export default function AssessmentPage() {
               <div className="bg-gradient-to-r from-indigo-600 to-blue-700 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
                 <div className="flex items-center gap-3 mb-2">
                   <Zap className="bg-white/20 p-1.5 rounded-lg" size={32} />
-                  <h4 className="text-xl font-bold">Section 1: Interest & Social Battery</h4>
+                  <h4 className="text-xl font-bold">Section 1: Interest & Social</h4>
                 </div>
                 <p className="text-white/80 text-sm">Let's discover if your primary driver is People, Data, or Things.</p>
               </div>

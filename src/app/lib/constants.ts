@@ -1,9 +1,9 @@
 export const CAREER_TEST_QUESTIONS = [
-  // SECTION 1: INTEREST & SOCIAL BATTERY (1-30) - A: Science (Data), B: Arts (People), C: TVET (Things), D: Business (People/Strategy)
+  // SECTION 1: INTEREST & SOCIAL (1-30) - A: Science (Data), B: Arts (People), C: TVET (Things), D: Business (People/Strategy)
   {
     id: 1,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "When working in a team, I find myself most energized by:", ms: "Apabila bekerja dalam pasukan, saya berasa paling bertenaga apabila:" },
     options: [
       { id: "A", text: { en: "Analyzing the facts and data on my own", ms: "Menganalisis fakta dan data secara sendirian" } },
@@ -15,7 +15,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 2,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "If I was at a career fair, I would spend the most time at:", ms: "Jika saya berada di karnival kerjaya, saya akan menghabiskan paling banyak masa di:" },
     options: [
       { id: "A", text: { en: "The research and medical innovation booth", ms: "Gerai penyelidikan dan inovasi perubatan" } },
@@ -27,7 +27,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 3,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "My favorite kind of weekend involves:", ms: "Hujung minggu kegemaran saya melibatkan:" },
     options: [
       { id: "A", text: { en: "Solving complex puzzles or reading science", ms: "Menyelesaikan teka-teki kompleks atau membaca sains" } },
@@ -39,7 +39,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 4,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I feel most useful when I am:", ms: "Saya rasa paling berguna apabila saya:" },
     options: [
       { id: "A", text: { en: "Discovering how things work logically", ms: "Menemui bagaimana sesuatu berfungsi secara logik" } },
@@ -51,7 +51,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 5,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "When I encounter a new gadget, my first instinct is to:", ms: "Apabila saya menemui gajet baru, naluri pertama saya adalah untuk:" },
     options: [
       { id: "A", text: { en: "Read the specifications and technical data", ms: "Membaca spesifikasi dan data teknikal" } },
@@ -63,7 +63,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 6,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "In a group project about history, I would rather:", ms: "Dalam projek berkumpulan tentang sejarah, saya lebih suka:" },
     options: [
       { id: "A", text: { en: "Research the exact dates and historical facts", ms: "Menyelidik tarikh tepat dan fakta sejarah" } },
@@ -75,7 +75,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 7,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I prefer environments that are:", ms: "Saya lebih suka persekitaran yang:" },
     options: [
       { id: "A", text: { en: "Quiet, structured, and observation-focused", ms: "Tenang, teratur, dan fokus kepada pemerhatian" } },
@@ -87,7 +87,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 8,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "My favorite subject in school usually involves:", ms: "Subjek kegemaran saya di sekolah biasanya melibatkan:" },
     options: [
       { id: "A", text: { en: "Patterns, logic, and scientific theories", ms: "Corak, logik, dan teori saintifik" } },
@@ -99,7 +99,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 9,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "If I could write a book, it would be about:", ms: "Jika saya boleh menulis buku, ia adalah tentang:" },
     options: [
       { id: "A", text: { en: "A breakthrough discovery in the universe", ms: "Penemuan terobosan dalam alam semesta" } },
@@ -111,7 +111,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 10,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "When someone is upset, my approach is to:", ms: "Apabila seseorang sedang sedih, pendekatan saya adalah untuk:" },
     options: [
       { id: "A", text: { en: "Analyze the facts to find a logical solution", ms: "Menganalisis fakta untuk mencari penyelesaian logik" } },
@@ -123,7 +123,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 11,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I enjoy tasks that require me to:", ms: "Saya suka tugasan yang memerlukan saya untuk:" },
     options: [
       { id: "A", text: { en: "Think deeply and solve complex theorems", ms: "Berfikir mendalam dan menyelesaikan teorem kompleks" } },
@@ -135,7 +135,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 12,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "In a museum, I spend the most time at:", ms: "Di muzium, saya menghabiskan paling banyak masa di:" },
     options: [
       { id: "A", text: { en: "The evolution and biology section", ms: "Bahagian evolusi dan biologi" } },
@@ -147,7 +147,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 13,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I prefer a career that focuses on:", ms: "Saya lebih suka kerjaya yang memberi tumpuan kepada:" },
     options: [
       { id: "A", text: { en: "Discovering new data or cures", ms: "Menemui data atau penawar baru" } },
@@ -159,7 +159,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 14,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "When I am in a large crowd, I usually:", ms: "Apabila saya berada dalam khalayak ramai, saya biasanya:" },
     options: [
       { id: "A", text: { en: "Observe the patterns of the crowd silently", ms: "Memerhati corak orang ramai secara senyap" } },
@@ -171,7 +171,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 15,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "My favorite way to explain a point is to:", ms: "Cara kegemaran saya untuk menerangkan sesuatu adalah dengan:" },
     options: [
       { id: "A", text: { en: "Show the mathematical or logical proof", ms: "Menunjukkan bukti matematik atau logik" } },
@@ -183,7 +183,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 16,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "If I won a prize, I would rather it be for:", ms: "Jika saya memenangi hadiah, saya lebih suka ia untuk:" },
     options: [
       { id: "A", text: { en: "The most accurate scientific study", ms: "Kajian saintifik yang paling tepat" } },
@@ -195,7 +195,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 17,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I like working with people who are:", ms: "Saya suka bekerja dengan orang yang:" },
     options: [
       { id: "A", text: { en: "Intellectually rigorous and logical", ms: "Tegas secara intelektual dan logik" } },
@@ -207,7 +207,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 18,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "In my bedroom, you are most likely to find:", ms: "Di bilik tidur saya, anda kemungkinan besar akan menemui:" },
     options: [
       { id: "A", text: { en: "Science equipment or data charts", ms: "Alatan sains atau carta data" } },
@@ -219,7 +219,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 19,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I believe the world's biggest problems are solved by:", ms: "Saya percaya masalah terbesar dunia diselesaikan oleh:" },
     options: [
       { id: "A", text: { en: "Better research and logical discoveries", ms: "Penyelidikan yang lebih baik dan penemuan logik" } },
@@ -231,7 +231,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 20,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I find it easy to:", ms: "Saya rasa mudah untuk:" },
     options: [
       { id: "A", text: { en: "Focus on a single complex task alone", ms: "Fokus pada satu tugasan kompleks secara sendirian" } },
@@ -243,7 +243,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 21,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "Which career title sounds most like 'Me'?", ms: "Tajuk kerjaya manakah yang paling kedengaran seperti 'Saya'?" },
     options: [
       { id: "A", text: { en: "The Analyst", ms: "Penganalisis" } },
@@ -255,7 +255,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 22,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I enjoy spending my energy on:", ms: "Saya suka menghabiskan tenaga saya pada:" },
     options: [
       { id: "A", text: { en: "Exploring theoretical concepts", ms: "Meneroka konsep teori" } },
@@ -267,7 +267,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 23,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "A perfect project is one that is:", ms: "Projek yang sempurna adalah yang:" },
     options: [
       { id: "A", text: { en: "Highly accurate and verified by data", ms: "Sangat tepat dan disahkan oleh data" } },
@@ -279,7 +279,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 24,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "If I had to teach a class, I would teach:", ms: "Jika saya terpaksa mengajar kelas, saya akan mengajar:" },
     options: [
       { id: "A", text: { en: "Advanced Physics or Biology", ms: "Fizik atau Biologi Lanjutan" } },
@@ -291,7 +291,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 25,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "When watching the news, I am most interested in:", ms: "Apabila menonton berita, saya paling berminat dengan:" },
     options: [
       { id: "A", text: { en: "Scientific discoveries and health breakthroughs", ms: "Penemuan saintifik dan terobosan kesihatan" } },
@@ -303,7 +303,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 26,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I find joy in:", ms: "Saya merasa seronok dalam:" },
     options: [
       { id: "A", text: { en: "Connecting dots between complex facts", ms: "Menyambungkan titik antara fakta kompleks" } },
@@ -315,7 +315,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 27,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "My natural reaction to a challenge is to:", ms: "Reaksi semulajadi saya terhadap cabaran adalah untuk:" },
     options: [
       { id: "A", text: { en: "Calculate the odds and logic", ms: "Mengira peluang dan logik" } },
@@ -327,7 +327,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 28,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I would rather be known as:", ms: "Saya lebih suka dikenali sebagai:" },
     options: [
       { id: "A", text: { en: "The Discoverer of truth", ms: "Penemu kebenaran" } },
@@ -339,7 +339,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 29,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I prefer working in a:", ms: "Saya lebih suka bekerja dalam:" },
     options: [
       { id: "A", text: { en: "Lab or quiet research office", ms: "Makmal atau pejabat penyelidikan yang tenang" } },
@@ -351,7 +351,7 @@ export const CAREER_TEST_QUESTIONS = [
   {
     id: 30,
     type: "stream",
-    section: "Interest & Social Battery",
+    section: "Interest & Social",
     question: { en: "I am most motivated by:", ms: "Saya paling bermotivasi oleh:" },
     options: [
       { id: "A", text: { en: "Accuracy and truth", ms: "Ketepatan dan kebenaran" } },
