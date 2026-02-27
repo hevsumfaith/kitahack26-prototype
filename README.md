@@ -14,7 +14,7 @@ HalaTuju is a decision-support platform designed for Malaysian secondary student
 * **Framework:** Next.js 14+ (App Router)
 * **Intelligence:** Google Gemini API
 * **Backend:** Firebase (Authentication & Realtime Database)
-* 
+  
 
 ## ⚙️ Local Setup Instructions
 To run the **HalaTuju** locally:
