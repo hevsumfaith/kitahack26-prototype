@@ -2,33 +2,33 @@
   "placeholderImages": [
     {
       "id": "hero-student",
-      "description": "Malaysian students exploring career paths together with AI guidance.",
-      "imageUrl": "https://images.unsplash.com/photo-1728404059704-d4232080b338?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFsYXlzaWFuJTIwc3R1ZGVudHN8ZW58MHx8fHwxNzcyMTc2MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "malaysian students"
+      "description": "Your custom hero image from the public folder.",
+      "imageUrl": "/hero-student.jpeg",
+      "imageHint": "custom hero"
     },
     {
-      "id": "science",
-      "description": "A science laboratory with a microscope and lab flasks.",
-      "imageUrl": "https://images.unsplash.com/photo-1614308456595-a59d48697ea8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtaWNyb3Njb3BlJTIwbGFib3JhdG9yeXxlbnwwfHx8fDE3NzIxNzYwMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "microscope laboratory"
+      "id": "student-1",
+      "description": "Students collaborating in a modern classroom setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdHVkZW50cyUyMHN0dWR5aW5nfGVufDB8fHx8MTc3MjEyNDk3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "students studying"
     },
     {
-      "id": "arts",
-      "description": "A creative arts studio with paint palettes and books.",
-      "imageUrl": "https://images.unsplash.com/photo-1629480795367-a183d8633e4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwYWludGluZyUyMHBhbGV0dGV8ZW58MHx8fHwxNzcyMTc2MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "painting palette"
+      "id": "student-2",
+      "description": "A student focused on their laptop in a bright library.",
+      "imageUrl": "https://images.unsplash.com/photo-1610500796385-3ffc1ae2f046?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdHVkZW50JTIwbGVhcm5pbmd8ZW58MHx8fHwxNzcyMTc3NDQ2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student learning"
     },
     {
-      "id": "business",
-      "description": "A professional business setting with bar charts and calculators.",
-      "imageUrl": "https://images.unsplash.com/photo-1551459533-781bb4648897?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnVzaW5lc3MlMjBmaW5hbmNlfGVufDB8fHx8MTc3MjE3NjAzNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "business finance"
+      "id": "student-3",
+      "description": "A group of young people discussing their future goals.",
+      "imageUrl": "https://images.unsplash.com/photo-1529070538774-1843cb3265df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxncm91cCUyMGRpc2N1c3Npb258ZW58MHx8fHwxNzcyMTc3NDQ3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "group discussion"
     },
     {
-      "id": "tvet",
-      "description": "A technical workshop with gears and electronic circuits.",
-      "imageUrl": "https://images.unsplash.com/photo-1645258044234-f4ba2655baf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbmdpbmVlcmluZyUyMGdlYXJ8ZW58MHx8fHwxNzcyMTc2MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "engineering gear"
+      "id": "student-4",
+      "description": "Students participating in a hands-on learning activity.",
+      "imageUrl": "https://images.unsplash.com/photo-1596496181848-3091d4878b24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhY3RpdmUlMjBsZWFybmluZ3xlbnwwfHx8fDE3NzIxNzc0NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "active learning"
     }
   ]
 }

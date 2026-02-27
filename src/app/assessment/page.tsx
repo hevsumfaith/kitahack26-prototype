@@ -5,9 +5,10 @@ import Navbar from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CAREER_TEST_QUESTIONS } from "@/app/lib/constants";
 import { recommendStream, type RecommendStreamOutput } from "@/ai/flows/recommend-stream";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Sparkles, Briefcase, UserCircle, Star, Puzzle, Zap, Users } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Star, Zap, Users, Puzzle, Briefcase, GraduationCap, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -16,11 +17,17 @@ import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { cn } from "@/lib/utils";
 
+const GRADE_OPTIONS = ["A", "B", "C", "D", "E", "G"];
+
 export default function AssessmentPage() {
   const { toast } = useToast();
   const { language, t } = useLanguage();
-  const [step, setStep] = useState(0); // 0: Welcome, 1: Questions, 2: Analyzing, 3: Results
+  const [step, setStep] = useState(0); // 0: Welcome, 1: Grades, 2: Questions, 3: Analyzing, 4: Results
   const [name, setName] = useState("");
+  const [grades, setGrades] = useState<Record<string, string>>({
+    BM: "", BI: "", Math: "", Science: "", History: "", Geography: "",
+    RBT: "", ASK: "", Islam: "", Moral: ""
+  });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,13 +50,33 @@ export default function AssessmentPage() {
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
   const currentQuestion = questions[currentQuestionIndex];
 
+  const handleGradeChange = (subject: string, grade: string) => {
+    setGrades(prev => {
+      const newGrades = { ...prev, [subject]: grade };
+      // Mutual exclusion logic
+      if (subject === "RBT" && grade) newGrades.ASK = "";
+      if (subject === "ASK" && grade) newGrades.RBT = "";
+      if (subject === "Islam" && grade) newGrades.Moral = "";
+      if (subject === "Moral" && grade) newGrades.Islam = "";
+      return newGrades;
+    });
+  };
+
+  const isGradesStepValid = () => {
+    const required = ["BM", "BI", "Math", "Science", "History", "Geography"];
+    const hasRequired = required.every(s => grades[s]);
+    const hasTechnical = grades.RBT || grades.ASK;
+    const hasEthics = grades.Islam || grades.Moral;
+    return hasRequired && hasTechnical && hasEthics;
+  };
+
   const handleAnswerSelect = (optionId: string) => {
     setAnswers(prev => ({ ...prev, [currentQuestion.id]: optionId }));
     
     if (currentQuestionIndex < totalQuestions - 1) {
       setTimeout(() => setCurrentQuestionIndex(prev => prev + 1), 200);
     } else {
-      setStep(2);
+      setStep(3);
       handleSubmit();
     }
   };
@@ -61,21 +88,26 @@ export default function AssessmentPage() {
       const personalityAnswers = questions.filter(q => q.id >= 31 && q.id <= 60).map(q => answers[q.id]);
       const problemSolvingAnswers = questions.filter(q => q.id >= 61).map(q => answers[q.id]);
 
+      // Filter out empty grades for the AI
+      const cleanedGrades = Object.fromEntries(Object.entries(grades).filter(([_, v]) => v));
+
       const output = await recommendStream({
         studentName: name,
         language: language,
+        grades: cleanedGrades,
         streamAnswers: streamAnswers.filter(Boolean),
         personalityAnswers: personalityAnswers.filter(Boolean),
         problemSolvingAnswers: problemSolvingAnswers.filter(Boolean)
       });
 
       setResult(output);
-      setStep(3);
+      setStep(4);
 
       if (user && db) {
         addDoc(collection(db, "assessments"), {
           userId: user.uid,
           studentName: name,
+          grades: cleanedGrades,
           mostSuitableStream: output.mostSuitableStream,
           personalityProfile: output.personalityProfile,
           timestamp: serverTimestamp(),
@@ -110,14 +142,14 @@ export default function AssessmentPage() {
               </div>
               <CardTitle className="text-3xl font-bold mb-2">HalaTuju Oracle</CardTitle>
               <CardDescription className="text-lg">
-                The 90-question high-accuracy assessment to align your passion with People, Data, or Things.
+                The high-accuracy assessment factoring in your academic grades and interests.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 px-10 pb-12">
               <div className="bg-amber-500/10 border border-amber-500/20 p-4 rounded-xl flex items-start gap-3">
                 <Star className="text-amber-500 shrink-0 mt-1" size={18} />
                 <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">
-                  This test has 3 sections: Interest & Social, Personality, and Problem Solving.
+                  We'll start with your academic results, followed by the 90-question profile test.
                 </p>
               </div>
               <div className="space-y-2">
@@ -131,13 +163,117 @@ export default function AssessmentPage() {
                 />
               </div>
               <Button onClick={() => setStep(1)} disabled={!name} className="w-full h-14 text-lg rounded-xl shadow-lg">
-                Begin High-Accuracy Test <ArrowRight className="ml-2" />
+                Begin Assessment <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
           </Card>
         )}
 
         {step === 1 && (
+          <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-2">Academic Grades</h2>
+              <p className="text-muted-foreground">Please enter your Form 3 trial or predicted results.</p>
+            </div>
+
+            <Card className="border shadow-xl bg-card overflow-hidden">
+              <div className="h-2 bg-indigo-500" />
+              <CardContent className="p-8 space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { key: "BM", label: t("subject.bm") },
+                    { key: "BI", label: t("subject.bi") },
+                    { key: "Math", label: t("subject.math") },
+                    { key: "Science", label: t("subject.science") },
+                    { key: "History", label: t("subject.history") },
+                    { key: "Geography", label: t("subject.geography") },
+                  ].map((sub) => (
+                    <div key={sub.key} className="space-y-2">
+                      <label className="text-sm font-bold">{sub.label}</label>
+                      <Select value={grades[sub.key]} onValueChange={(v) => handleGradeChange(sub.key, v)}>
+                        <SelectTrigger className="w-full rounded-xl">
+                          <SelectValue placeholder="Grade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {GRADE_OPTIONS.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-dashed">
+                  <div className="space-y-3">
+                    <p className="text-xs font-black uppercase text-indigo-500 tracking-widest">Technical Elective</p>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold">{t("subject.rbt")}</label>
+                      <Select value={grades.RBT} onValueChange={(v) => handleGradeChange("RBT", v)} disabled={!!grades.ASK}>
+                        <SelectTrigger className="w-full rounded-xl">
+                          <SelectValue placeholder="Grade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {GRADE_OPTIONS.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold">{t("subject.ask")}</label>
+                      <Select value={grades.ASK} onValueChange={(v) => handleGradeChange("ASK", v)} disabled={!!grades.RBT}>
+                        <SelectTrigger className="w-full rounded-xl">
+                          <SelectValue placeholder="Grade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {GRADE_OPTIONS.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="text-xs font-black uppercase text-emerald-500 tracking-widest">Core Values</p>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold">{t("subject.islam")}</label>
+                      <Select value={grades.Islam} onValueChange={(v) => handleGradeChange("Islam", v)} disabled={!!grades.Moral}>
+                        <SelectTrigger className="w-full rounded-xl">
+                          <SelectValue placeholder="Grade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {GRADE_OPTIONS.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold">{t("subject.moral")}</label>
+                      <Select value={grades.Moral} onValueChange={(v) => handleGradeChange("Moral", v)} disabled={!!grades.Islam}>
+                        <SelectTrigger className="w-full rounded-xl">
+                          <SelectValue placeholder="Grade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {GRADE_OPTIONS.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex gap-4">
+              <Button variant="outline" onClick={() => setStep(0)} className="rounded-xl h-14 px-8">
+                <ArrowLeft className="mr-2" size={18} /> Back
+              </Button>
+              <Button 
+                onClick={() => setStep(2)} 
+                disabled={!isGradesStepValid()} 
+                className="flex-grow h-14 text-lg rounded-xl shadow-lg"
+              >
+                Continue to Questions <ArrowRight className="ml-2" />
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
           <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
             <div className="space-y-3">
               <div className="flex justify-between items-end">
@@ -158,35 +294,6 @@ export default function AssessmentPage() {
                 indicatorClassName="bg-gradient-to-r from-orange-500 via-indigo-500 to-emerald-500"
               />
             </div>
-
-            {/* Section Introductions */}
-            {currentQuestionIndex === 0 && (
-              <div className="bg-gradient-to-r from-indigo-600 to-blue-700 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <Zap className="bg-white/20 p-1.5 rounded-lg" size={32} />
-                  <h4 className="text-xl font-bold">Section 1: Interest & Social</h4>
-                </div>
-                <p className="text-white/80 text-sm">Let's discover if your primary driver is People, Data, or Things.</p>
-              </div>
-            )}
-            {currentQuestionIndex === 30 && (
-              <div className="bg-gradient-to-r from-emerald-600 to-teal-700 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <Users className="bg-white/20 p-1.5 rounded-lg" size={32} />
-                  <h4 className="text-xl font-bold">Section 2: Personality & Work Style</h4>
-                </div>
-                <p className="text-white/80 text-sm">Understanding how you recharge and how you prefer to handle tasks.</p>
-              </div>
-            )}
-            {currentQuestionIndex === 60 && (
-              <div className="bg-gradient-to-r from-amber-500 to-orange-600 p-6 rounded-2xl text-white shadow-lg animate-in fade-in slide-in-from-bottom-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <Puzzle className="bg-white/20 p-1.5 rounded-lg" size={32} />
-                  <h4 className="text-xl font-bold">Section 3: Problem Solving</h4>
-                </div>
-                <p className="text-white/80 text-sm">Testing your natural aptitude across key academic and professional domains.</p>
-              </div>
-            )}
 
             <Card className="border shadow-xl bg-card">
               <CardHeader className="pb-4">
@@ -217,7 +324,7 @@ export default function AssessmentPage() {
 
             <div className="flex justify-between items-center text-muted-foreground">
               <button 
-                onClick={() => currentQuestionIndex > 0 ? setCurrentQuestionIndex(prev => prev - 1) : setStep(0)}
+                onClick={() => currentQuestionIndex > 0 ? setCurrentQuestionIndex(prev => prev - 1) : setStep(1)}
                 className="flex items-center gap-2 hover:text-foreground transition-colors text-sm font-bold"
               >
                 <ArrowLeft size={16} /> Previous
@@ -227,17 +334,17 @@ export default function AssessmentPage() {
           </div>
         )}
 
-        {step === 2 && (
+        {step === 3 && (
           <div className="h-[60vh] flex flex-col items-center justify-center text-center gap-6">
             <Loader2 className="animate-spin text-primary" size={64} />
             <div className="space-y-2">
               <h2 className="text-3xl font-bold">Oracle is Processing...</h2>
-              <p className="text-muted-foreground">Analyzing 90 points of interaction, personality, and aptitude.</p>
+              <p className="text-muted-foreground">Analyzing your grades and 90 points of interaction.</p>
             </div>
           </div>
         )}
 
-        {step === 3 && result && (
+        {step === 4 && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <Card className="border-none shadow-2xl bg-gradient-to-br from-indigo-700 to-blue-600 text-white overflow-hidden">
               <CardHeader className="text-center relative pt-12 pb-6">

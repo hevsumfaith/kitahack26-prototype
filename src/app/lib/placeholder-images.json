@@ -1,34 +1,35 @@
+
 {
   "placeholderImages": [
     {
       "id": "hero-student",
-      "description": "Your custom hero image from the public folder.",
+      "description": "Malaysian students exploring career paths together with AI guidance.",
       "imageUrl": "/hero-student.jpeg",
-      "imageHint": "custom hero"
+      "imageHint": "malaysian students"
     },
     {
-      "id": "student-1",
-      "description": "Students collaborating in a modern classroom setting.",
-      "imageUrl": "https://picsum.photos/seed/student-1/800/600",
-      "imageHint": "students studying"
+      "id": "science",
+      "description": "A science laboratory with a microscope and lab flasks.",
+      "imageUrl": "https://images.unsplash.com/photo-1614308456595-a59d48697ea8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtaWNyb3Njb3BlJTIwbGFib3JhdG9yeXxlbnwwfHx8fDE3NzIxNzYwMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "microscope laboratory"
     },
     {
-      "id": "student-2",
-      "description": "A student focused on their laptop in a bright library.",
-      "imageUrl": "https://picsum.photos/seed/student-2/800/600",
-      "imageHint": "student learning"
+      "id": "arts",
+      "description": "A creative arts studio with paint palettes and books.",
+      "imageUrl": "https://images.unsplash.com/photo-1629480795367-a183d8633e4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwYWludGluZyUyMHBhbGV0dGV8ZW58MHx8fHwxNzcyMTc2MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "painting palette"
     },
     {
-      "id": "student-3",
-      "description": "A group of young people discussing their future goals.",
-      "imageUrl": "https://picsum.photos/seed/student-3/800/600",
-      "imageHint": "group discussion"
+      "id": "business",
+      "description": "A professional business setting with bar charts and calculators.",
+      "imageUrl": "https://images.unsplash.com/photo-1551459533-781bb4648897?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnVzaW5lc3MlMjBmaW5hbmNlfGVufDB8fHx8MTc3MjE3NjAzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "business finance"
     },
     {
-      "id": "student-4",
-      "description": "Students participating in a hands-on learning activity.",
-      "imageUrl": "https://picsum.photos/seed/student-4/800/600",
-      "imageHint": "active learning"
+      "id": "tvet",
+      "description": "A technical workshop with gears and electronic circuits.",
+      "imageUrl": "https://images.unsplash.com/photo-1645258044234-f4ba2655baf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbmdpbmVlcmluZyUyMGdlYXJ8ZW58MHx8fHwxNzcyMTc2MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "engineering gear"
     }
   ]
 }
