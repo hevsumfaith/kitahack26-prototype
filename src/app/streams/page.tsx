@@ -25,10 +25,9 @@ export default function StreamsPage() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {AVAILABLE_STREAMS.map((stream, index) => {
-            // Use generic student images based on index
-            const imageIndex = (index % 4) + 1;
-            const streamImg = PlaceHolderImages.find(img => img.id === `student-${imageIndex}`) || PlaceHolderImages[0];
+          {AVAILABLE_STREAMS.map((stream) => {
+            // Find the image by stream ID, or fallback to hero if not found
+            const streamImg = PlaceHolderImages.find(img => img.id === stream.id) || PlaceHolderImages[0];
             
             return (
               <Card key={stream.id} className="flex flex-col h-full overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 group">
