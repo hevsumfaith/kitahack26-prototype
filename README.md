@@ -1,6 +1,6 @@
 # HalaTuju: The AI Career Oracle
 
-> **Transforming student anxiety into academic direction using Gemini AI and Firebase.**
+> **Empowering Malaysian Students**
 
 ## 📖 Project Overview
 HalaTuju is a decision-support platform designed for Malaysian secondary students. It bridges the gap between traditional counseling and the digital economy by providing an AI-driven "Oracle" that analyzes student psychometrics to suggest the ideal Form 4 stream and future career path.
