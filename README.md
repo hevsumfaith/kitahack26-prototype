@@ -25,12 +25,12 @@ Follow these steps to run the HalaTuju prototype locally for evaluation.
 * **npm:** v9 or higher
 
 ### 2. Installation
-```bash
+
   Clone the repository
-git clone [https://github.com/hevsumfaith/kitahack26-prototype.git](https://github.com/hevsumfaith/kitahack26-prototype.git)
+  git clone [https://github.com/hevsumfaith/kitahack26-prototype.git](https://github.com/hevsumfaith/kitahack26-prototype.git)
 
   Navigate to the project folder
-cd kitahack26-prototype
+  cd kitahack26-prototype
 
 ### 3. Environment Configuration
 Create a `.env.local` file in your root directory and fill in your own credentials:
