@@ -1,7 +1,7 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getAuth, Auth } from "firebase/auth";
 import { getFirestore, Firestore } from "firebase/firestore";
-console.log("My API Key is:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -15,7 +15,6 @@ let app: FirebaseApp | undefined;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
 
-// Only initialize if we have the required config and it's not the default "undefined" string
 const isValidConfig = firebaseConfig.apiKey && 
                       firebaseConfig.apiKey !== "undefined" && 
                       firebaseConfig.apiKey.length > 10;
@@ -28,8 +27,6 @@ if (isValidConfig) {
   } catch (error) {
     console.error("Firebase initialization failed:", error);
   }
-} else {
-  console.warn("Firebase configuration is missing or invalid. Please check your .env file.");
 }
 
 export { app, auth, db };

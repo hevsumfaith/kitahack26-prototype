@@ -31,12 +31,12 @@ export default function AssessmentPage() {
     if (!auth) return;
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser?.displayName && !name) {
-        setName(currentUser.displayName);
+      if (currentUser?.displayName) {
+        setName((prev) => prev || currentUser.displayName || "");
       }
     });
     return () => unsubscribe();
-  }, [name]);
+  }, []);
 
   const questions = CAREER_TEST_QUESTIONS;
   const totalQuestions = questions.length;
@@ -73,7 +73,7 @@ export default function AssessmentPage() {
       setStep(3);
 
       if (user && db) {
-        await addDoc(collection(db, "assessments"), {
+        addDoc(collection(db, "assessments"), {
           userId: user.uid,
           studentName: name,
           mostSuitableStream: output.mostSuitableStream,
@@ -81,7 +81,7 @@ export default function AssessmentPage() {
           timestamp: serverTimestamp(),
           language: language,
           fullOutput: output
-        });
+        }).catch(err => console.error("Firestore Error:", err));
       }
     } catch (error) {
       console.error(error);
