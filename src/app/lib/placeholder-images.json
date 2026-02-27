@@ -8,34 +8,28 @@
       "imageHint": "malaysian students"
     },
     {
-      "id": "pure",
-      "description": "A science laboratory with students conducting experiments.",
+      "id": "science",
+      "description": "A science laboratory with a microscope and lab flasks.",
       "imageUrl": "https://picsum.photos/seed/science-lab/800/600",
-      "imageHint": "science laboratory"
+      "imageHint": "microscope laboratory"
     },
     {
       "id": "arts",
-      "description": "A creative arts and humanities studio.",
+      "description": "A creative arts studio with paint palettes and books.",
       "imageUrl": "https://picsum.photos/seed/arts-studio/800/600",
-      "imageHint": "arts painting"
+      "imageHint": "painting palette"
     },
     {
-      "id": "stem",
-      "description": "Modern technology and engineering workshop.",
-      "imageUrl": "https://picsum.photos/seed/tech-workshop/800/600",
-      "imageHint": "technology engineering"
-    },
-    {
-      "id": "commerce",
-      "description": "A modern business and commerce setting.",
-      "imageUrl": "https://picsum.photos/seed/business/800/600",
+      "id": "business",
+      "description": "A professional business setting with bar charts and calculators.",
+      "imageUrl": "https://picsum.photos/seed/business-finance/800/600",
       "imageHint": "business finance"
     },
     {
-      "id": "technical",
-      "description": "Vocational and technical skills training.",
-      "imageUrl": "https://picsum.photos/seed/technical/800/600",
-      "imageHint": "technical skills"
+      "id": "tvet",
+      "description": "A technical workshop with gears and electronic circuits.",
+      "imageUrl": "https://picsum.photos/seed/tech-workshop/800/600",
+      "imageHint": "engineering gear"
     }
   ]
 }
