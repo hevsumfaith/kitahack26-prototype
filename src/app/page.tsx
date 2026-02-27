@@ -46,13 +46,14 @@ export default function Home() {
             
             <div className="lg:w-1/2 relative">
               <div className="absolute -inset-4 bg-secondary/10 rounded-3xl blur-2xl transform rotate-3"></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/3]">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white w-full aspect-[4/3]">
                 <Image
                   src={heroImage?.imageUrl || "/hero-student.jpeg"}
                   alt={heroImage?.description || "Student thinking about future"}
                   fill
                   className="object-cover"
                   priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
             </div>
