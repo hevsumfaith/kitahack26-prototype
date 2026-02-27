@@ -56,8 +56,10 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState<AssessmentHistory[]>([]);
   const [tipSetIndex, setTipSetIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setTipSetIndex((prev) => (prev + 1) % TIP_SETS.length);
     }, 10000);
@@ -122,6 +124,11 @@ export default function DashboardPage() {
   const profileProgress = user ? (history.length > 0 ? 100 : 50) : 0;
   const latestResult = history.length > 0 ? history[0] : null;
   const currentTipSet = TIP_SETS[tipSetIndex];
+
+  const formatDate = (timestamp: any) => {
+    if (!mounted || !timestamp?.toDate) return "...";
+    return timestamp.toDate().toLocaleDateString(undefined, { dateStyle: 'medium' });
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -269,7 +276,7 @@ export default function DashboardPage() {
                         <div className="flex flex-col">
                           <span className="font-bold text-foreground group-hover:text-primary transition-colors">{item.mostSuitableStream}</span>
                           <span className="text-xs text-muted-foreground">
-                            {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleDateString(undefined, { dateStyle: 'medium' }) : "Just now"}
+                            {formatDate(item.timestamp)}
                           </span>
                         </div>
                         <div className="flex items-center gap-4">

@@ -28,8 +28,10 @@ export default function ProfilePage() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState<AssessmentRecord[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (!auth) {
       setLoading(false);
       return;
@@ -75,6 +77,16 @@ export default function ProfilePage() {
     } catch (error) {
       console.error("Login failed:", error);
     }
+  };
+
+  const formatDate = (timestamp: any) => {
+    if (!mounted || !timestamp?.toDate) return "...";
+    return timestamp.toDate().toLocaleDateString(undefined, { dateStyle: 'medium' });
+  };
+
+  const formatJoinedDate = (creationTime: string | undefined) => {
+    if (!mounted || !creationTime) return "Recently";
+    return new Date(creationTime).toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
   };
 
   if (loading) {
@@ -187,7 +199,7 @@ export default function ProfilePage() {
               <h2 className="text-2xl font-headline font-bold text-foreground">{t("profile.recentResults")}</h2>
               <div className="flex gap-2">
                 <div className="bg-secondary/10 px-3 py-1 rounded-full text-secondary text-xs font-bold flex items-center gap-1">
-                  <Calendar size={12} /> Joined {user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }) : 'Recently'}
+                  <Calendar size={12} /> Joined {formatJoinedDate(user.metadata.creationTime)}
                 </div>
               </div>
             </div>
@@ -209,7 +221,7 @@ export default function ProfilePage() {
                             <div className="flex items-center gap-3 text-xs text-muted-foreground">
                               <span className="font-medium">"{item.personalityProfile}"</span>
                               <span>•</span>
-                              <span>{item.timestamp?.toDate ? item.timestamp.toDate().toLocaleDateString(undefined, { dateStyle: 'medium' }) : "Just now"}</span>
+                              <span>{formatDate(item.timestamp)}</span>
                             </div>
                           </div>
                         </div>
