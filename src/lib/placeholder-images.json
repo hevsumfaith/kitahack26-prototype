@@ -20,14 +20,14 @@
     },
     {
       "id": "business",
-      "description": "A professional business setting with charts.",
-      "imageUrl": "https://images.unsplash.com/photo-1551459533-781bb4648897?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnVzaW5lc3MlMjBmaW5hbmNlfGVufDB8fHx8MTc3MjE3NjAzNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "business finance"
+      "description": "Professional accounting and business theme.",
+      "imageUrl": "/account.jpg",
+      "imageHint": "accounting finance"
     },
     {
       "id": "tvet",
       "description": "Technical gears representing engineering and vocational skills.",
-      "imageUrl": "https://images.unsplash.com/photo-1645258044234-f4ba2655baf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbmdpbmVlcmluZyUyMGdlYXJ8ZW58MHx8fHwxNzcyMTc2MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/tvet.webp",
       "imageHint": "engineering gear"
     }
   ]
