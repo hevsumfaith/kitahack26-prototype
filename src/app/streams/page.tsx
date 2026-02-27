@@ -27,17 +27,18 @@ export default function StreamsPage() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {AVAILABLE_STREAMS.map((stream) => {
-            const streamImg = PlaceHolderImages.find(img => img.id === stream.id) || PlaceHolderImages[1];
+            // Find the specific image for this stream ID
+            const streamImg = PlaceHolderImages.find(img => img.id === stream.id);
             
             return (
               <Card key={stream.id} className="flex flex-col h-full overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 group">
                 <div className="h-56 relative overflow-hidden">
                   <Image 
-                    src={streamImg.imageUrl} 
+                    src={streamImg?.imageUrl || "https://picsum.photos/seed/default/800/600"} 
                     alt={stream.streamName[language]}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-ai-hint={streamImg.imageHint}
+                    data-ai-hint={streamImg?.imageHint || "education"}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-6 left-6">

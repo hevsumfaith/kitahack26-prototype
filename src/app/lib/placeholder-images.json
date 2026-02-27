@@ -4,7 +4,7 @@
     {
       "id": "hero-student",
       "description": "Malaysian students exploring career paths together with AI guidance.",
-      "imageUrl": "/hero-student.jpeg",
+      "imageUrl": "https://picsum.photos/seed/hala-hero/800/600",
       "imageHint": "malaysian students"
     },
     {
