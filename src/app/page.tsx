@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -45,15 +46,13 @@ export default function Home() {
             
             <div className="lg:w-1/2 relative">
               <div className="absolute -inset-4 bg-secondary/10 rounded-3xl blur-2xl transform rotate-3"></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/3]">
                 <Image
-                  src={heroImage?.imageUrl || "https://picsum.photos/seed/student-future/800/600"}
+                  src={heroImage?.imageUrl || "/hero-student.png"}
                   alt={heroImage?.description || "Student thinking about future"}
-                  width={800}
-                  height={600}
+                  fill
                   className="object-cover"
                   priority
-                  data-ai-hint="student education"
                 />
               </div>
             </div>

@@ -1,10 +1,11 @@
+
 {
   "placeholderImages": [
     {
       "id": "hero-student",
-      "description": "Malaysian students exploring career paths together with AI guidance.",
-      "imageUrl": "https://picsum.photos/seed/hala-hero/800/600",
-      "imageHint": "malaysian students"
+      "description": "Your custom hero image from the public folder.",
+      "imageUrl": "/hero-student.png",
+      "imageHint": "custom hero"
     },
     {
       "id": "student-1",
