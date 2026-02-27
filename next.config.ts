@@ -1,14 +1,15 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* 1. Core Build Settings */
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // ADD THIS SECTION BELOW
+
+  /* 2. Security Headers (Required for Firebase Auth Popups) */
   async headers() {
     return [
       {
@@ -22,8 +23,10 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // END OF NEW SECTION
+
+  /* 3. Image Optimization */
   images: {
+    unoptimized: true, // Required for static export (Firebase can't resize images on the fly)
     remotePatterns: [
       { protocol: 'https', hostname: 'placehold.co', port: '', pathname: '/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', port: '', pathname: '/**' },
