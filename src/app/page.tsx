@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -48,7 +47,7 @@ export default function Home() {
               <div className="absolute -inset-4 bg-secondary/10 rounded-3xl blur-2xl transform rotate-3"></div>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/3]">
                 <Image
-                  src={heroImage?.imageUrl || "/hero-student.png"}
+                  src={heroImage?.imageUrl || "/hero-student.jpeg"}
                   alt={heroImage?.description || "Student thinking about future"}
                   fill
                   className="object-cover"

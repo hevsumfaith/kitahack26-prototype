@@ -1,10 +1,9 @@
-
 {
   "placeholderImages": [
     {
       "id": "hero-student",
       "description": "Your custom hero image from the public folder.",
-      "imageUrl": "/hero-student.png",
+      "imageUrl": "/hero-student.jpeg",
       "imageHint": "custom hero"
     },
     {
