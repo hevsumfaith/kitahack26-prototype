@@ -9,26 +9,26 @@
     },
     {
       "id": "science",
-      "description": "A science laboratory with a microscope and lab flasks.",
-      "imageUrl": "https://picsum.photos/seed/science-lab/800/600",
+      "description": "A high-tech science laboratory with a microscope, DNA models, and lab flasks.",
+      "imageUrl": "https://picsum.photos/seed/science-lab-1/800/600",
       "imageHint": "microscope laboratory"
     },
     {
       "id": "arts",
-      "description": "A creative arts studio with paint palettes and books.",
-      "imageUrl": "https://picsum.photos/seed/arts-studio/800/600",
+      "description": "A creative arts studio with paint palettes, brushes, and open books.",
+      "imageUrl": "https://picsum.photos/seed/arts-studio-1/800/600",
       "imageHint": "painting palette"
     },
     {
       "id": "business",
-      "description": "A professional business setting with bar charts and calculators.",
-      "imageUrl": "https://picsum.photos/seed/business-finance/800/600",
+      "description": "A modern business setting featuring bar charts, a calculator, and financial reports.",
+      "imageUrl": "https://picsum.photos/seed/business-finance-1/800/600",
       "imageHint": "business finance"
     },
     {
       "id": "tvet",
-      "description": "A technical workshop with gears and electronic circuits.",
-      "imageUrl": "https://picsum.photos/seed/tech-workshop/800/600",
+      "description": "A technical workshop with industrial gears, wrenches, and electronic circuits.",
+      "imageUrl": "https://picsum.photos/seed/tech-workshop-1/800/600",
       "imageHint": "engineering gear"
     }
   ]
