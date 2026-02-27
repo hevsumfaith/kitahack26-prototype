@@ -12,6 +12,7 @@ import { useLanguage } from "@/components/providers/LanguageProvider";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, User as FirebaseUser, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { collection, query, where, getDocs, orderBy, limit } from "firebase/firestore";
+import { cn } from "@/lib/utils";
 
 interface AssessmentHistory {
   id: string;
@@ -21,11 +22,47 @@ interface AssessmentHistory {
   timestamp: any;
 }
 
+const TIP_SETS = [
+  {
+    bgColor: "bg-blue-50/50 dark:bg-blue-900/10",
+    accentColor: "text-blue-600 dark:text-blue-400",
+    tips: ["dashboard.tip1", "dashboard.tip2", "dashboard.tip3"]
+  },
+  {
+    bgColor: "bg-indigo-50/50 dark:bg-indigo-900/10",
+    accentColor: "text-indigo-600 dark:text-indigo-400",
+    tips: ["dashboard.tip4", "dashboard.tip5", "dashboard.tip6"]
+  },
+  {
+    bgColor: "bg-sky-50/50 dark:bg-sky-900/10",
+    accentColor: "text-sky-600 dark:text-sky-400",
+    tips: ["dashboard.tip7", "dashboard.tip8", "dashboard.tip9"]
+  },
+  {
+    bgColor: "bg-cyan-50/50 dark:bg-cyan-900/10",
+    accentColor: "text-cyan-600 dark:text-cyan-400",
+    tips: ["dashboard.tip10", "dashboard.tip11", "dashboard.tip12"]
+  },
+  {
+    bgColor: "bg-blue-100/30 dark:bg-blue-900/20",
+    accentColor: "text-blue-700 dark:text-blue-300",
+    tips: ["dashboard.tip13", "dashboard.tip14", "dashboard.tip15"]
+  }
+];
+
 export default function DashboardPage() {
   const { t, language } = useLanguage();
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState<AssessmentHistory[]>([]);
+  const [tipSetIndex, setTipSetIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTipSetIndex((prev) => (prev + 1) % TIP_SETS.length);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!auth) {
@@ -84,6 +121,7 @@ export default function DashboardPage() {
 
   const profileProgress = user ? (history.length > 0 ? 100 : 50) : 0;
   const latestResult = history.length > 0 ? history[0] : null;
+  const currentTipSet = TIP_SETS[tipSetIndex];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -261,25 +299,29 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <Card className="border-none shadow-md bg-accent text-accent-foreground overflow-hidden">
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Info size={18} /> {t("dashboard.quickTips")}
+            <Card className={cn("border-none shadow-md transition-colors duration-1000 overflow-hidden", currentTipSet.bgColor)}>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Info size={18} className={currentTipSet.accentColor} /> 
+                    {t("dashboard.quickTips")}
+                  </div>
+                  <div className="flex gap-1">
+                    {TIP_SETS.map((_, i) => (
+                      <div key={i} className={cn("w-1.5 h-1.5 rounded-full transition-all duration-300", i === tipSetIndex ? "bg-primary w-4" : "bg-muted-foreground/30")} />
+                    ))}
+                  </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-sm space-y-4">
-                <div className="flex gap-3">
-                  <span className="font-bold text-accent-foreground/50">01</span>
-                  <p>{t("dashboard.tip1")}</p>
-                </div>
-                <div className="flex gap-3">
-                  <span className="font-bold text-accent-foreground/50">02</span>
-                  <p>{t("dashboard.tip2")}</p>
-                </div>
-                <div className="flex gap-3">
-                  <span className="font-bold text-accent-foreground/50">03</span>
-                  <p>{t("dashboard.tip3")}</p>
-                </div>
+              <CardContent className="text-sm space-y-4 animate-in fade-in slide-in-from-right-2 duration-700">
+                {currentTipSet.tips.map((tipKey, i) => (
+                  <div key={tipKey} className="flex gap-3 group">
+                    <span className={cn("font-black text-xs mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 border border-current opacity-30 group-hover:opacity-100 transition-opacity", currentTipSet.accentColor)}>
+                      {i + 1}
+                    </span>
+                    <p className="text-foreground/80 leading-snug font-medium">{t(tipKey)}</p>
+                  </div>
+                ))}
               </CardContent>
             </Card>
 
