@@ -1,4 +1,3 @@
-
 "use client";
 
 import Navbar from "@/components/layout/Navbar";
@@ -26,19 +25,20 @@ export default function StreamsPage() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {AVAILABLE_STREAMS.map((stream) => {
-            // Find the specific image for this stream ID
-            const streamImg = PlaceHolderImages.find(img => img.id === stream.id);
+          {AVAILABLE_STREAMS.map((stream, index) => {
+            // Use generic student images based on index
+            const imageIndex = (index % 4) + 1;
+            const streamImg = PlaceHolderImages.find(img => img.id === `student-${imageIndex}`) || PlaceHolderImages[0];
             
             return (
               <Card key={stream.id} className="flex flex-col h-full overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 group">
                 <div className="h-56 relative overflow-hidden">
                   <Image 
-                    src={streamImg?.imageUrl || "https://picsum.photos/seed/default/800/600"} 
+                    src={streamImg.imageUrl} 
                     alt={stream.streamName[language]}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-ai-hint={streamImg?.imageHint || "education"}
+                    data-ai-hint={streamImg.imageHint}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-6 left-6">

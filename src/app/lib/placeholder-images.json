@@ -1,4 +1,3 @@
-
 {
   "placeholderImages": [
     {
@@ -8,28 +7,28 @@
       "imageHint": "malaysian students"
     },
     {
-      "id": "science",
-      "description": "A high-tech science laboratory with a microscope, DNA models, and lab flasks.",
-      "imageUrl": "https://picsum.photos/seed/science-lab-1/800/600",
-      "imageHint": "microscope laboratory"
+      "id": "student-1",
+      "description": "Students collaborating in a modern classroom setting.",
+      "imageUrl": "https://picsum.photos/seed/student-1/800/600",
+      "imageHint": "students studying"
     },
     {
-      "id": "arts",
-      "description": "A creative arts studio with paint palettes, brushes, and open books.",
-      "imageUrl": "https://picsum.photos/seed/arts-studio-1/800/600",
-      "imageHint": "painting palette"
+      "id": "student-2",
+      "description": "A student focused on their laptop in a bright library.",
+      "imageUrl": "https://picsum.photos/seed/student-2/800/600",
+      "imageHint": "student learning"
     },
     {
-      "id": "business",
-      "description": "A modern business setting featuring bar charts, a calculator, and financial reports.",
-      "imageUrl": "https://picsum.photos/seed/business-finance-1/800/600",
-      "imageHint": "business finance"
+      "id": "student-3",
+      "description": "A group of young people discussing their future goals.",
+      "imageUrl": "https://picsum.photos/seed/student-3/800/600",
+      "imageHint": "group discussion"
     },
     {
-      "id": "tvet",
-      "description": "A technical workshop with industrial gears, wrenches, and electronic circuits.",
-      "imageUrl": "https://picsum.photos/seed/tech-workshop-1/800/600",
-      "imageHint": "engineering gear"
+      "id": "student-4",
+      "description": "Students participating in a hands-on learning activity.",
+      "imageUrl": "https://picsum.photos/seed/student-4/800/600",
+      "imageHint": "active learning"
     }
   ]
 }
