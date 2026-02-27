@@ -5,7 +5,8 @@ import Navbar from "@/components/layout/Navbar";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { LayoutDashboard, History, Sparkles, TrendingUp, Info, LogIn, Loader2, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { LayoutDashboard, History, Sparkles, TrendingUp, Info, LogIn, Loader2, ChevronRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { auth, db } from "@/lib/firebase";
@@ -16,6 +17,7 @@ interface AssessmentHistory {
   id: string;
   mostSuitableStream: string;
   compatibilityPercentage: number;
+  grades?: Record<string, string>;
   timestamp: any;
 }
 
@@ -59,6 +61,7 @@ export default function DashboardPage() {
           id: doc.id, 
           mostSuitableStream: data.mostSuitableStream,
           compatibilityPercentage: data.fullOutput?.streamCompatibility?.find((s: any) => s.streamName === data.mostSuitableStream)?.compatibilityPercentage || 0,
+          grades: data.grades,
           timestamp: data.timestamp 
         } as AssessmentHistory);
       });
@@ -71,6 +74,7 @@ export default function DashboardPage() {
   const handleLogin = async () => {
     if (!auth) return;
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     try {
       await signInWithPopup(auth, provider);
     } catch (error) {
@@ -143,6 +147,55 @@ export default function DashboardPage() {
               </Card>
             </div>
 
+            {/* Academic Profile Card */}
+            <Card className="border-none shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-primary">
+                  <BookOpen size={20} /> {t("dashboard.academicProfile")}
+                </CardTitle>
+                <CardDescription>
+                  {t("dashboard.latestGrades")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <div className="py-8 flex justify-center">
+                    <Loader2 className="animate-spin text-muted-foreground" />
+                  </div>
+                ) : !user ? (
+                  <div className="py-8 text-center space-y-4 bg-muted/30 rounded-2xl border border-dashed">
+                    <LogIn className="mx-auto text-muted-foreground mb-2" size={32} />
+                    <p className="text-sm font-medium text-muted-foreground">
+                      {t("dashboard.loginRequiredGrades")}
+                    </p>
+                    <Button onClick={handleLogin} variant="outline" size="sm" className="rounded-full">
+                      {t("nav.login")}
+                    </Button>
+                  </div>
+                ) : latestResult?.grades ? (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                    {Object.entries(latestResult.grades).map(([subject, grade]) => (
+                      <div key={subject} className="bg-muted/50 p-3 rounded-xl border flex flex-col items-center gap-1 group hover:border-primary/50 transition-colors">
+                        <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-tighter text-center line-clamp-1">
+                          {t(`subject.${subject.toLowerCase()}`) || subject}
+                        </span>
+                        <span className="text-xl font-black text-primary group-hover:scale-110 transition-transform">
+                          {grade}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-8 text-center bg-muted/20 rounded-2xl">
+                    <p className="text-sm text-muted-foreground italic">{t("dashboard.noGrades")}</p>
+                    <Button asChild variant="link" className="mt-2 text-primary">
+                      <Link href="/assessment">{t("dashboard.newAssessment")}</Link>
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
             <Card className="border-none shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-accent">
@@ -183,7 +236,7 @@ export default function DashboardPage() {
                         </div>
                         <div className="flex items-center gap-4">
                           <div className="text-right hidden sm:block">
-                            <span className="text-sm font-bold block text-primary">{Math.round(item.compatibilityPercentage)}% {t("assessment.match")}</span>
+                            <span className="text-sm font-bold block text-primary">{Math.round(item.compatibilityPercentage)}% Match</span>
                             <span className="text-[10px] uppercase text-green-500 font-bold tracking-wider">{t("dashboard.high")}</span>
                           </div>
                           <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary hover:bg-secondary/10 rounded-full">
