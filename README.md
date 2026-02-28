@@ -56,7 +56,7 @@ npm run dev
 
 ### https://9000-firebase-studio-1771776777508.cluster-qxqlf3vb3nbf2r42l5qfoebdry.cloudworkstations.dev/?monospaceUid=791663
 
-#### Login through email and password as given below:
+## Login through email and password as given below:
 #### Email: bubbleberry@gmail.com
 #### Password: halatuju
 
