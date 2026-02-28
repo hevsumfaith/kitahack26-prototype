@@ -95,7 +95,17 @@ const translations: Record<Language, Record<string, string>> = {
     "profile.date": "Date",
     "profile.recommendation": "Recommended Stream",
     "profile.matchScore": "Match Score",
-    "profile.viewDetails": "View Details"
+    "profile.viewDetails": "View Details",
+    "auth.title": "Sign In",
+    "auth.subtitle": "Choose your preferred method to access HalaTuju",
+    "auth.google": "Continue with Google",
+    "auth.email": "Login with Email",
+    "auth.createAccount": "Create New Account",
+    "auth.testingMode": "Testing Mode: Registration is currently disabled.",
+    "auth.emailPlaceholder": "Email address",
+    "auth.passwordPlaceholder": "Password",
+    "auth.signIn": "Sign In",
+    "auth.back": "Back"
   },
   ms: {
     "nav.dashboard": "Papan Pemuka",
@@ -143,7 +153,7 @@ const translations: Record<Language, Record<string, string>> = {
     "dashboard.newAssessment": "Ambil Penilaian Baru",
     "dashboard.activeGoals": "Matlamat Aktif",
     "dashboard.goalDesc": "Anda belum menetapkan pilihan lagi. Ambil penilaian untuk bermula!",
-    "dashboard.profileProgress": "Tetapan Profil",
+    "dashboard.profileProgress": "Kesempurnaan Profil",
     "dashboard.history": "Sejarah Penilaian",
     "dashboard.noHistory": "Tiada sejarah penilaian lagi.",
     "dashboard.high": "Tinggi",
@@ -179,7 +189,17 @@ const translations: Record<Language, Record<string, string>> = {
     "profile.date": "Tarikh",
     "profile.recommendation": "Aliran Disyorkan",
     "profile.matchScore": "Skor Padanan",
-    "profile.viewDetails": "Lihat Butiran"
+    "profile.viewDetails": "Lihat Butiran",
+    "auth.title": "Log Masuk",
+    "auth.subtitle": "Pilih kaedah pilihan anda untuk mengakses HalaTuju",
+    "auth.google": "Teruskan dengan Google",
+    "auth.email": "Log masuk dengan E-mel",
+    "auth.createAccount": "Cipta Akaun Baru",
+    "auth.testingMode": "Mod Ujian: Pendaftaran sedang dilumpuhkan.",
+    "auth.emailPlaceholder": "Alamat e-mel",
+    "auth.passwordPlaceholder": "Kata laluan",
+    "auth.signIn": "Log Masuk",
+    "auth.back": "Kembali"
   }
 };
 
