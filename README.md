@@ -18,6 +18,7 @@ HalaTuju is a decision-support platform designed for Malaysian secondary student
 We offer you two ways:
 
 **1. Local Setup Instructions**
+
 **2. Viewing the prototype through preview link.**
 
 ## ⚙️1.  Local Setup Instructions
