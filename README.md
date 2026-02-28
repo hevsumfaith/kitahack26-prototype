@@ -15,8 +15,8 @@ HalaTuju is a decision-support platform designed for Malaysian secondary student
 * **Intelligence:** Google Gemini API
 * **Backend:** Firebase (Authentication & Realtime Database)
   
-
-## ⚙️ Local Setup Instructions
+We offer you two ways, 1. Local Setup Instructions, and 2. Viewing the prototype through preview link.
+## ⚙️1.  Local Setup Instructions
 
 Follow these steps to run the HalaTuju prototype locally for evaluation.
 
@@ -51,3 +51,13 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 npm run dev
 
 ##### Open http://localhost:9000 in your browser to view the application.
+
+## ⚙️2.  View the prototype through preview link
+
+### https://9000-firebase-studio-1771776777508.cluster-qxqlf3vb3nbf2r42l5qfoebdry.cloudworkstations.dev/?monospaceUid=791663
+
+#### Login through email and password as given below:
+# Email: bubbleberry@gmail.com
+# Password: halatuju
+
+
